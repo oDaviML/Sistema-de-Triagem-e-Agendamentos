@@ -1,5 +1,5 @@
 <h1>Diagnóstico de Doenças</h1>
-<p>A aplicação é voltada a sanar um dos principais problemas dos hospitais atualmente, o tempo para o atendimento, com atuação no processo de triagem.</p>
+<p>A aplicação é voltada a sanar um dos principais problemas dos hospitais atualmente, o tempo para o atendimento, com atuação no processo de triagem. Isso será feito através de um pré-diagnóstico online feito pelo paciente, permitindo que ele seja direcionado ao hospital e seja disponibilizado um menor tempo de atendimento, favorecendo um processo rápido e eficiente para seu registro diagnóstico ser realizado.</p>
 
 <h2>Integrantes</h2>
 <ul>
@@ -34,4 +34,10 @@
   <li>A aplicação deve ser intuitiva e fácil de usar, mesmo para usuários com pouca experiência em tecnologia, além de ter uma boa performance, mesmo em conexões de internet lentas.</li>
   <li>A aplicação deve permitir a integração com outros sistemas de saúde, como prontuários eletrônicos e sistemas de agendamento de consultas.</li>
   <li>A aplicação deve fornecer suporte técnico eficiente para os usuários em caso de problemas ou dúvidas.</li>
+  <li>A aplicação será implementada em Java.<li>
 </ul>
+
+<h2>Restrições<h2>
+<ul>
+  <li>A versão atual da aplicação não permitirá a consulta online.<li>
+<ul>
