@@ -34,10 +34,10 @@
   <li>A aplicação deve ser intuitiva e fácil de usar, mesmo para usuários com pouca experiência em tecnologia, além de ter uma boa performance, mesmo em conexões de internet lentas.</li>
   <li>A aplicação deve permitir a integração com outros sistemas de saúde, como prontuários eletrônicos e sistemas de agendamento de consultas.</li>
   <li>A aplicação deve fornecer suporte técnico eficiente para os usuários em caso de problemas ou dúvidas.</li>
-  <li>A aplicação será implementada em Java.<li>
+  <li>A aplicação será implementada em Java.</li>
 </ul>
 
 <h2>Restrições<h2>
 <ul>
-  <li>A versão atual da aplicação não permitirá a consulta online.<li>
+  <li>A versão atual da aplicação não permitirá a consulta online.</li>
 <ul>
