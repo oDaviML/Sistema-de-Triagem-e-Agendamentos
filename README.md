@@ -5,7 +5,7 @@
 <ul>
   <li>Davi Martins Lage</li>
   <li>Iasmin de Almeida Furtado</li>
-  <li>Israel Davi Resende</li>
+  <li>Israel Davi de Assis Resende</li>
   <li>Henrique Mateus</li>
   <li>João Pedro Torres</li>
 </ul>
