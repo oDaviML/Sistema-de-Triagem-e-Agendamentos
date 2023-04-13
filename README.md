@@ -37,7 +37,7 @@
   <li>A aplicação será implementada em Java.</li>
 </ul>
 
-<h2>Restrições<h2>
+<h2>Restrições</h2>
 <ul>
   <li>A versão atual da aplicação não permitirá a consulta online.</li>
-<ul>
+</ul>
