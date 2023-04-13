@@ -1,5 +1,5 @@
 <h1>Diagnóstico de Doenças</h1>
-<p>A aplicação é voltada a sanar um dos principais problemas dos hospitais atualmente, o tempo para o atendimento, com atuação no processo de triagem. Isso será realizado através de um pré-diagnóstico online feito pelo paciente, permitindo que ele seja direcionado ao hospital com o diagnóstico já execultado, favorecendo um processo rápido e eficiente para sua consulta.</p>
+<p>A aplicação é voltada a sanar um dos principais problemas dos hospitais atualmente, o tempo para o atendimento, com atuação no processo de triagem. Isso será realizado através de um pré-diagnóstico online feito pelo paciente, permitindo que ele seja direcionado ao hospital com o diagnóstico já executado, favorecendo um processo rápido e eficiente para sua consulta.</p>
 
 <h2>Integrantes</h2>
 <ul>
