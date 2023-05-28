@@ -6,8 +6,8 @@
     <version>1.0</version>
     <packaging>pom</packaging>
     <modules>
-        <module>quickcheck-web</module>
-        <module>quickcheck-model</module>
+        <module>quickcheckmodel</module>
+        <module>quickcheckweb</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
