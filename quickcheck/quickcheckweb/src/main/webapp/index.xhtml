@@ -1,91 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:jsf="http://xmlns.jcp.org/jsf"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>Quick Check</title>
-    </h:head>
-    <h:body>
-        
-        <h:form>
-            <div class="card">
-                <h5>Formulario</h5>
-                <div class="field grid">
-                    <p:outputLabel for="nome" styleClass="col-fixed" style="width:100px" value="Nome"/>
-                    <div class="col">
-                        <p:inputText id="nome" value="#{pacienteBean.paciente.nome}"/>
-                    </div>
-                </div>
-                <div class="field grid">
-                    <p:outputLabel for="email" styleClass="col-fixed" style="width:100px" value="Email"/>
-                    <div class="col">
-                        <p:inputText id="email" value="#{pacienteBean.paciente.email}"/>
-                    </div>
-                </div>
-                <div class="field grid">
-                    <p:outputLabel for="endereco" styleClass="col-fixed" style="width:100px" value="Endereco"/>
-                    <div class="col">
-                        <p:inputText id="endereco" value="#{pacienteBean.paciente.endereco}"/>
-                    </div>
-                </div>
-                <div class="field grid">
-                    <p:outputLabel for="telefone" styleClass="col-fixed" style="width:100px" value="Telefone"/>
-                    <div class="col">
-                        <p:inputMask mask="(99)99999-9999" validateMask="true" id="telefone" value="#{pacienteBean.paciente.telefone}"/>
-                    </div>
-                </div>
-                <div class="field grid">
-                    <p:outputLabel for="cpf" styleClass="col-fixed" style="width:100px" value="CPF"/>
-                    <div class="col">
-                        <p:inputMask mask="999.999.999-99" validateMask="true" id="cpf" value="#{pacienteBean.paciente.cpf}"/>
-                    </div>
-                </div>
-                <div class="field grid">
-                    <p:outputLabel for="convenio" styleClass="col-fixed" style="width:100px" value="Convenio"/>
-                    <div class="col">
-                        <p:inputText id="convenio" value="#{pacienteBean.paciente.convenio}"/>
-                    </div>
-                </div>
-<!--                <div class="field grid">
-                    <p:outputLabel for="navigator" styleClass="col-fixed" style="width:100px" value="Data Nascimento"/>
-                    <div class="col">
-                        <p:datePicker id="navigator" monthNavigator="true" yearNavigator="true" showWeek="true"/>
-                    </div>
-                </div>-->
-                <p:commandButton value="Adicionar" action="#{pacienteBean.inserirPaciente()}" update="@form" style="margin-top: 5px;"/>
-            </div>
-            
-            <div class="card" style="margin-top: 20px">
-                <p:dataTable value="#{pacienteBean.pacientes}" var="paciente">
-                    <p:column headerText="Nome">
-                        <h:outputText value="#{paciente.nome}" />
-                    </p:column>
-                    
-                    <p:column headerText="CPF">
-                        <h:outputText value="#{paciente.cpf}" />
-                    </p:column>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:jsf="http://xmlns.jcp.org/jsf"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Quick Check</title>
+</h:head>
+<h:body>
 
-                    <p:column headerText="E-mail">
-                        <h:outputText value="#{paciente.email}" />
-                    </p:column>
-
-                    <p:column headerText="Telefone">
-                        <h:outputText value="#{paciente.telefone}" />
-                    </p:column>
-                    
-                    <p:column headerText="Endereço">
-                        <h:outputText value="#{paciente.endereco}" />
-                    </p:column>
-                    
-                    <p:column headerText="Convênio">
-                        <h:outputText value="#{paciente.convenio}" />
-                    </p:column>
-                </p:dataTable>
+    <h:form>
+        <div class="card">
+            <h5>Formulario</h5>
+            <div class="field grid">
+                <p:outputLabel for="nome" styleClass="col-fixed" style="width:100px" value="Nome" />
+                <div class="col">
+                    <p:inputText id="nome" value="#{pacienteBean.paciente.nome}" />
+                </div>
             </div>
-        </h:form>
-    </h:body>
+            <div class="field grid">
+                <p:outputLabel for="email" styleClass="col-fixed" style="width:100px" value="Email" />
+                <div class="col">
+                    <p:inputText id="email" value="#{pacienteBean.paciente.email}" />
+                </div>
+            </div>
+            <div class="field grid">
+                <p:outputLabel for="endereco" styleClass="col-fixed" style="width:100px" value="Endereco" />
+                <div class="col">
+                    <p:inputText id="endereco" value="#{pacienteBean.paciente.endereco}" />
+                </div>
+            </div>
+            <div class="field grid">
+                <p:outputLabel for="telefone" styleClass="col-fixed" style="width:100px" value="Telefone" />
+                <div class="col">
+                    <p:inputMask mask="(99) 99999-9999" validateMask="true" id="telefone"
+                        value="#{pacienteBean.paciente.telefone}" />
+                </div>
+            </div>
+            <div class="field grid">
+                <p:outputLabel for="cpf" styleClass="col-fixed" style="width:100px" value="CPF" />
+                <div class="col">
+                    <p:inputMask mask="999.999.999-99" validateMask="true" id="cpf"
+                        value="#{pacienteBean.paciente.cpf}" />
+                </div>
+            </div>
+            <div class="field grid">
+                <p:outputLabel for="convenio" styleClass="col-fixed" style="width:100px" value="Convenio" />
+                <div class="col">
+                    <p:inputText id="convenio" value="#{pacienteBean.paciente.convenio}" />
+                </div>
+            </div>
+            <div class="field grid">
+                <p:outputLabel for="navigator" styleClass="col-fixed" style="width:100px" value="Data Nascimento" />
+                <div class="col">
+                    <p:datePicker id="navigator" monthNavigator="true" yearNavigator="true" yearRange="1900:2023" showWeek="true" value="#{pacienteBean.paciente.datanascimento}" />
+                </div>
+            </div>
+            <p:commandButton value="Adicionar" action="#{pacienteBean.inserirPaciente()}" update="@form"
+                style="margin-top: 5px;" />
+            <p:commandButton value="Listar" action="#{pacienteBean.listar()}" update="@form"
+            style="margin-top: 5px;" />
+        </div>
+
+        <div class="card" style="margin-top: 20px">
+            <p:dataTable value="#{pacienteBean.pacientes}" var="paciente">
+                <p:column headerText="Nome">
+                    <h:outputText value="#{paciente.nome}" />
+                </p:column>
+
+                <p:column headerText="CPF">
+                    <h:outputText value="#{paciente.cpf}" />
+                </p:column>
+
+                <p:column headerText="E-mail">
+                    <h:outputText value="#{paciente.email}" />
+                </p:column>
+
+                <p:column headerText="Telefone">
+                    <h:outputText value="#{paciente.telefone}" />
+                </p:column>
+
+                <p:column headerText="Endereço">
+                    <h:outputText value="#{paciente.endereco}" />
+                </p:column>
+
+                <p:column headerText="Convênio">
+                    <h:outputText value="#{paciente.convenio}" />
+                </p:column>
+
+                <p:column headerText="Data Nascimento">
+                    <h:outputText value="#{paciente.datanascimento}" />
+                </p:column>
+
+            </p:dataTable>
+        </div>
+    </h:form>
+</h:body>
+
 </html>

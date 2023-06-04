@@ -1,4 +1,0 @@
-dao\PacienteDAO.class
-db\DBConnector.class
-dto\PacienteDTO.class
-service\PacienteService.class

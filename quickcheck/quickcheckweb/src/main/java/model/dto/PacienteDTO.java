@@ -1,27 +1,14 @@
-package sistemadiagnostico.quickcheck.web;
+package model.dto;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class PacienteDTO {
     private String nome, endereco, email, convenio, cpf, telefone;
     private Date datanascimento;
-    private Integer codigo;
 
     public PacienteDTO() {
     }
    
-    public PacienteDTO(String nome, String endereco, String email, String convenio, String cpf, String telefone,
-            Date datanascimento, Integer codigo) {
-        this.nome = nome;
-        this.endereco = endereco;
-        this.email = email;
-        this.convenio = convenio;
-        this.cpf = cpf;
-        this.telefone = telefone;
-        this.datanascimento = datanascimento;
-        this.codigo = codigo;
-    }
-
     public PacienteDTO(String nome, String endereco, String email, String convenio, String cpf, String telefone, Date datanascimento) {
         this.nome = nome;
         this.endereco = endereco;
@@ -86,14 +73,6 @@ public class PacienteDTO {
 
     public void setDatanascimento(Date datanascimento) {
         this.datanascimento = datanascimento;
-    }
-
-    public Integer getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
     }
 
 }
