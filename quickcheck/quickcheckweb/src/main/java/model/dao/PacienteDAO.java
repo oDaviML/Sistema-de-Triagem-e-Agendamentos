@@ -8,6 +8,7 @@ import java.util.List;
 
 import model.db.DBConnector;
 import model.dto.PacienteDTO;
+import model.service.SenhaService;
 
 public class PacienteDAO {
     public static void inserirPaciente(PacienteDTO pacienteDTO) {
@@ -28,6 +29,14 @@ public class PacienteDAO {
 
             preparedStatement.executeUpdate();
             
+            sql = "INSERT INTO senhaspacientes (cpf, senha) VALUES (?, ?)";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, pacienteDTO.getCpf());
+            String senha = new SenhaService().criptografar(pacienteDTO.getCpf());
+            preparedStatement.setString(2, senha);
+
+            preparedStatement.executeUpdate();
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
