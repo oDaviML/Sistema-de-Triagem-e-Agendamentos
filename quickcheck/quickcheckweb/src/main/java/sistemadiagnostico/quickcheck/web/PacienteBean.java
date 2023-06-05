@@ -2,25 +2,26 @@ package sistemadiagnostico.quickcheck.web;
 
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
-import java.util.ArrayList;
-import java.util.List;
-
-import model.db.DBConnector;
 import model.dto.PacienteDTO;
 import model.service.PacienteService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SessionScoped
 @ManagedBean
 public class PacienteBean {
     private PacienteDTO paciente = new PacienteDTO();
     private PacienteService pacienteService = new PacienteService();
+    private String senha;
 
     private List<PacienteDTO> pacientes = new ArrayList<>();
 
-    public void inserirPaciente() {
+    public String inserirPaciente() {
         pacienteService.cadastrarPaciente(paciente);
-        pacientes = pacienteService.listar();
         paciente = new PacienteDTO();
+        return "/login.xhtml?faces-redirect=true";
+
     }
 
     public void listar() {

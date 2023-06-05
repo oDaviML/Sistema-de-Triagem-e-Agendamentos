@@ -1,7 +1,5 @@
 package model.service;
 
-import java.util.Scanner;
-
 import model.dao.SenhaDAO;
 
 public class SenhaService {

@@ -32,7 +32,7 @@ public class PacienteDAO {
             sql = "INSERT INTO senhaspacientes (cpf, senha) VALUES (?, ?)";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, pacienteDTO.getCpf());
-            String senha = new SenhaService().criptografar(pacienteDTO.getCpf());
+            String senha = new SenhaService().criptografar(pacienteDTO.getSenha());
             preparedStatement.setString(2, senha);
 
             preparedStatement.executeUpdate();
@@ -41,6 +41,7 @@ public class PacienteDAO {
             throw new RuntimeException(e);
         }
     }
+    
     public static List<PacienteDTO> buscar() {
         try (Connection connection = DBConnector.getConexao()) {
             String sql = "SELECT * FROM paciente";

@@ -3,19 +3,21 @@ package model.dto;
 import java.util.Date;
 
 public class PacienteDTO {
-    private String nome, endereco, email, convenio, cpf, telefone;
+    private String nome, endereco, email, convenio, cpf, telefone, senha;
     private Date datanascimento;
 
     public PacienteDTO() {
     }
-   
-    public PacienteDTO(String nome, String endereco, String email, String convenio, String cpf, String telefone, Date datanascimento) {
+    
+    public PacienteDTO(String nome, String endereco, String email, String convenio, String cpf, String telefone,
+            String senha, Date datanascimento) {
         this.nome = nome;
         this.endereco = endereco;
         this.email = email;
         this.convenio = convenio;
         this.cpf = cpf;
         this.telefone = telefone;
+        this.senha = senha;
         this.datanascimento = datanascimento;
     }
 
@@ -73,6 +75,14 @@ public class PacienteDTO {
 
     public void setDatanascimento(Date datanascimento) {
         this.datanascimento = datanascimento;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
 }
