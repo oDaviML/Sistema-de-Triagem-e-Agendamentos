@@ -1,6 +1,6 @@
-package model.service;
+package quickcheckmodel.service;
 
-import model.dao.SenhaDAO;
+import quickcheckmodel.dao.SenhaDAO;
 
 public class SenhaService {
 

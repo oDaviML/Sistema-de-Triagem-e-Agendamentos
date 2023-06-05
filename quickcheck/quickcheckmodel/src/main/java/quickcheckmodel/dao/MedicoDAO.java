@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package model.dao;
+package quickcheckmodel.dao;
 
-import model.db.DBConnector;
-import model.dto.MedicoDTO;
+import quickcheckmodel.db.DBConnector;
+import quickcheckmodel.dto.MedicoDTO;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;

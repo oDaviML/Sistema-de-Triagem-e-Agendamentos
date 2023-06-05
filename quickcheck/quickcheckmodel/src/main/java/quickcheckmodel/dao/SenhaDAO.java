@@ -1,4 +1,4 @@
-package model.dao;
+package quickcheckmodel.dao;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

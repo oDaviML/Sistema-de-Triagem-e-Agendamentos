@@ -1,9 +1,9 @@
-package model.service;
+package quickcheckmodel.service;
 
 import java.util.List;
 
-import model.dao.PacienteDAO;
-import model.dto.PacienteDTO;
+import quickcheckmodel.dao.PacienteDAO;
+import quickcheckmodel.dto.PacienteDTO;
 
 public class PacienteService {
     public void cadastrarPaciente(PacienteDTO pacienteDTO) {

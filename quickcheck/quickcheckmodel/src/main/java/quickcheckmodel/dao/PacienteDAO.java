@@ -1,4 +1,4 @@
-package model.dao;
+package quickcheckmodel.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.db.DBConnector;
-import model.dto.PacienteDTO;
-import model.service.SenhaService;
+import quickcheckmodel.db.DBConnector;
+import quickcheckmodel.dto.PacienteDTO;
+import quickcheckmodel.service.SenhaService;
 
 public class PacienteDAO {
     public static void inserirPaciente(PacienteDTO pacienteDTO) {

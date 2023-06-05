@@ -2,11 +2,12 @@ package sistemadiagnostico.quickcheck.web;
 
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
-import model.dto.PacienteDTO;
-import model.service.PacienteService;
+
 
 import java.util.ArrayList;
 import java.util.List;
+import quickcheckmodel.dto.PacienteDTO;
+import quickcheckmodel.service.PacienteService;
 
 @SessionScoped
 @ManagedBean
@@ -21,7 +22,6 @@ public class PacienteBean {
         pacienteService.cadastrarPaciente(paciente);
         paciente = new PacienteDTO();
         return "/login.xhtml?faces-redirect=true";
-
     }
 
     public void listar() {

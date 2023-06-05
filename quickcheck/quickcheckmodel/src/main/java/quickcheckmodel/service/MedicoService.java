@@ -2,15 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package model.service;
+package quickcheckmodel.service;
 
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.sql.SQLException;
 
-import model.dao.MedicoDAO;
-import model.dto.MedicoDTO;
+import quickcheckmodel.dao.MedicoDAO;
+import quickcheckmodel.dto.MedicoDTO;
 
 public class MedicoService {
     public static int cadastrarMedico(String nome, String senha, String endereco, String email, String crm, String cpf, String telefone,
