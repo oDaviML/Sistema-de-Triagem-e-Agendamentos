@@ -27,6 +27,14 @@ public class PacienteBean {
     public void listar() {
         pacientes = pacienteService.listar();
     }
+    
+    public void login() {
+        
+    }
+    
+    public void logout() {
+        
+    }
 
     public PacienteDTO getPaciente() {
         return paciente;
