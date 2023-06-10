@@ -66,4 +66,21 @@ public class PacienteDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public static Boolean login(String cpf, String senha) {
+        try (Connection connection = DBConnector.getConexao()) {
+            String senhacriptografada = new SenhaService().criptografar(senha);
+            String sql = "SELECT * FROM paciente p INNER JOIN senhaspacientes s ON s.cpf = p.cpf WHERE s.senha = '"+senhacriptografada+"' AND p.cpf = '"+cpf+"';";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return true;
+            }
+            return false;
+        
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

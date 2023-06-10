@@ -1,9 +1,13 @@
 package sistemadiagnostico.quickcheck.web;
 
+import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
+import jakarta.servlet.http.HttpSession;
 
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import quickcheckmodel.dto.PacienteDTO;
@@ -28,12 +32,27 @@ public class PacienteBean {
         pacientes = pacienteService.listar();
     }
     
-    public void login() {
+    public void login() throws IOException {
+        if (pacienteService.login(paciente.getCpf(), paciente.getSenha()) == true) {
+            HttpSession session = (HttpSession)FacesContext.getCurrentInstance( ).getExternalContext().getSession(false);
+            session.setAttribute("usuario", paciente);
+            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+            context.redirect(context.getRequestContextPath() + "/inicioPaciente.xhtml?faces-redirect=true");
+        }
+        else {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Usuário ou senha incorretos");
+            FacesContext.getCurrentInstance().addMessage(null,message);
+        }
         
     }
     
-    public void logout() {
-        
+    public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, detail));
+    }
+
+    public String logout() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "/login.xhtml?faces-redirect=true";
     }
 
     public PacienteDTO getPaciente() {

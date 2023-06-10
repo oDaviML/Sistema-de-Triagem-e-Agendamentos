@@ -13,4 +13,8 @@ public class PacienteService {
     public List<PacienteDTO> listar() {
         return PacienteDAO.buscar();
     }
+
+    public Boolean login(String cpf, String senha) {
+        return PacienteDAO.login(cpf, senha);
+    }
 }
