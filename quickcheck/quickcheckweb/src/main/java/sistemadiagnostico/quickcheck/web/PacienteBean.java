@@ -37,7 +37,7 @@ public class PacienteBean {
             HttpSession session = (HttpSession)FacesContext.getCurrentInstance( ).getExternalContext().getSession(false);
             session.setAttribute("usuario", paciente);
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-            context.redirect(context.getRequestContextPath() + "/inicioPaciente.xhtml?faces-redirect=true");
+            context.redirect(context.getRequestContextPath() + "/faces/inicioPaciente.xhtml?faces-redirect=true");
         }
         else {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Usuário ou senha incorretos");
@@ -51,7 +51,7 @@ public class PacienteBean {
 
     public String logout() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "/login.xhtml?faces-redirect=true";
+        return "/faces/loginPaciente.xhtml?faces-redirect=true";
     }
 
     public PacienteDTO getPaciente() {

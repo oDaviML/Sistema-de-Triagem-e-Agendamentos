@@ -36,49 +36,25 @@
             <p:commandButton value="Sair" action="#{pacienteBean.logout()}" styleClass="ui-button-secondary ui-button-flat" />
         </header>
 
-        <div class="tituloAba">
-
-            <h2>CONSULTAS</h2>
+        <div class="card">
+            <h:form id="form">
+                <p:dataTable id="customers" var="customer" value="#{dtColumnsView.customers}" widgetVar="customersTable"
+                             filteredValue="#{dtColumnsView.filteredCustomers}">
+        
+                    <p:columns value="#{dtColumnsView.columns}" var="column" headerText="#{column.header}" field="#{column.property}">
+                        <f:facet name="filter">
+                            <p:datePicker selectionMode="range" onchange="PF('customersTable').filter()" rendered="#{column.type eq 'date'}"/>
+                            <p:selectOneMenu onchange="PF('customersTable').filter()" rendered="#{column.type eq 'enum'}">
+                                <f:selectItem itemValue="#{null}" itemLabel=""/>
+                                <f:selectItems value="#{column.klazz.enumConstants}" />
+                            </p:selectOneMenu>
+                        </f:facet>
+                    </p:columns>
+        
+                </p:dataTable>
+            </h:form>
         </div>
 
-        <div class="conteudo">
-
-            <div class="func" onclick="location.href='https://www.minecraft.net/pt-br/download';">
-
-                <div class="position">
-                    <img src="resources/images/imgAgendar.png" class="imgCont" alt="" />
-
-                    <div class="legendaAbove">
-
-                        <h1>Agendar</h1>
-                    </div>
-                </div>
-
-                <div class="legendaBelow">
-
-                    <h1>AQUI VOCÊ PODE MARCAR
-                        SUA CONSULTA COM UM
-                        MÉDICO QUALIFICADO</h1>
-                </div>
-            </div>
-
-            <div class="func" onclick="location.href='/envioPaciente.xhtml';">
-
-                <div class="position">
-                    <img src="resources/images/imgEnviar.png" class="imgCont" alt="" />
-
-                    <div class="legendaAbove">
-
-                        <h1>Enviar</h1>
-                    </div>
-                </div>
-
-                <div class="legendaBelow">
-
-                    <h1>AQUI VOCÊ PODE FAZER UPLOAD DE SEUS DOCUMENTOS</h1>
-                </div>
-            </div>
-        </div>
     </h:form>
 </h:body>
 

@@ -147,6 +147,9 @@
     <div class="container">
         <div class="form">
             <h:form>
+                <p:growl id="growl" showDetail="true">
+                    <p:autoUpdate />
+                </p:growl>
                 <div class="form-header">
                     <div class="title">
                         <h1>Cadastre-se</h1>
@@ -155,41 +158,41 @@
                 <div class="input-group">
                     <div class="input-box">
                         <label for="name">Nome completo</label>
-                        <p:inputText id="name" value="#{medicoBean.medico.nome}" type="text" placeholder="Digite seu nome" required="" />
+                        <p:inputText id="name" value="#{medicoBean.medico.nome}" type="text" placeholder="Digite seu nome" required="true" label="Nome" />
                     </div>
                     <div class="input-box">
                         <label for="cpf">CPF</label>
-                        <p:inputMask mask="999.999.999-99" validateMask="true" id="cpf" value="#{medicoBean.medico.cpf}" required=""  />
+                        <p:inputMask mask="999.999.999-99" validateMask="true" id="cpf" value="#{medicoBean.medico.cpf}" required="true" label="CPF"   />
                     </div>
                     <div class="input-box">
                         <label for="email">E-mail</label>
-                        <p:inputText id="email" value="#{medicoBean.medico.email}" type="email"  placeholder="Digite seu e-mail" required="" />
+                        <p:inputText id="email" value="#{medicoBean.medico.email}" type="email"  placeholder="Digite seu e-mail" required="true" label="E-mail" />
                     </div>
                     <div class="input-box">
                         <label for="telefone">Telefone</label>
                        <p:inputMask mask="(99) 99999-9999" validateMask="true" id="telefone"
-                        value="#{medicoBean.medico.telefone}" />
+                        value="#{medicoBean.medico.telefone}" required="true" label="Telefone" />
                     </div>
                     <div class="input-box">
                         <label for="password">Senha</label>
-                        <p:inputText id="password" value="#{medicoBean.medico.senha}" type="password" placeholder="Digite sua senha" required="" />
+                        <p:inputText id="password" value="#{medicoBean.medico.senha}" type="password" placeholder="Digite sua senha" required="true" label="Senha" />
                     </div>
                     <div class="input-box">
                         <label for="address">Endereço</label>
-                        <p:inputText id="address" value="#{medicoBean.medico.endereco}" type="text" placeholder="Digite seu endereço" required="" />
+                        <p:inputText id="address" value="#{medicoBean.medico.endereco}" type="text" placeholder="Digite seu endereço"  required="true" label="Endereço" />
                     </div>
                     <div class="input-box">
                         <label for="crm">CRM</label>
-                        <p:inputText id="convenio" placeholder="Digite seu convênio" value="#{medicoBean.medico.crm}"  type="text" required="" />
+                        <p:inputText id="convenio" placeholder="Digite seu CRM" value="#{medicoBean.medico.crm}"  type="text" required="true" label="CRM" />
                     </div>
                     <div class="input-box">
                         <label for="navigator">Data Nascimento</label>
-                        <p:datePicker id="navigator" monthNavigator="true" yearNavigator="true" yearRange="1900:2023" showWeek="true" value="#{medicoBean.medico.dataNascimento}" />
+                        <p:datePicker id="navigator" monthNavigator="true" yearNavigator="true" yearRange="1900:2023" showWeek="true" value="#{medicoBean.medico.dataNascimento}" required="true" label="Data de Nascimento" />
                     </div>
                 </div>
                 
                 <div class="continue-button">
-                    <p:commandButton value="Cadastrar" action="#{medicoBean.inserirMedico()}" />
+                    <p:commandButton value="Cadastrar" validateClient="true" action="#{medicoBean.inserirMedico()}" />
                 </div>
             </h:form>
         </div>

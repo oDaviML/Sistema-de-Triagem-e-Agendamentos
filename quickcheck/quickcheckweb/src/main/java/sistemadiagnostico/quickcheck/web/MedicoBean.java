@@ -38,7 +38,7 @@ public class MedicoBean {
             HttpSession session = (HttpSession)FacesContext.getCurrentInstance( ).getExternalContext().getSession(false);
             session.setAttribute("usuario", medico);
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-            context.redirect(context.getRequestContextPath() + "/inicioMedico.xhtml?faces-redirect=true");
+            context.redirect(context.getRequestContextPath() + "/faces/inicioMedico.xhtml?faces-redirect=true");
         }
         else {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Usuário ou senha incorretos");
