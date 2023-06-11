@@ -33,7 +33,8 @@ public class PacienteBean {
     }
     
     public void login() throws IOException {
-        if (pacienteService.login(paciente.getCpf(), paciente.getSenha()) == true) {
+        paciente = pacienteService.login(paciente.getCpf(), paciente.getSenha());
+        if (paciente != null) {
             HttpSession session = (HttpSession)FacesContext.getCurrentInstance( ).getExternalContext().getSession(false);
             session.setAttribute("usuario", paciente);
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();

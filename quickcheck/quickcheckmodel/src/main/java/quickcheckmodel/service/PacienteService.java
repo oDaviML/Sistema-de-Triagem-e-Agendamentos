@@ -14,7 +14,7 @@ public class PacienteService {
         return PacienteDAO.buscar();
     }
 
-    public Boolean login(String cpf, String senha) {
+    public PacienteDTO login(String cpf, String senha) {
         return PacienteDAO.login(cpf, senha);
     }
 }

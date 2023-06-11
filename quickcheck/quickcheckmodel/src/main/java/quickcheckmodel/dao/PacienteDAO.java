@@ -67,17 +67,25 @@ public class PacienteDAO {
         }
     }
 
-    public static Boolean login(String cpf, String senha) {
+    public static PacienteDTO login(String cpf, String senha) {
         try (Connection connection = DBConnector.getConexao()) {
             String senhacriptografada = new SenhaService().criptografar(senha);
             String sql = "SELECT * FROM paciente p INNER JOIN senhaspacientes s ON s.cpf = p.cpf WHERE s.senha = '"+senhacriptografada+"' AND p.cpf = '"+cpf+"';";
-
+            PacienteDTO pacienteDTO = new PacienteDTO();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return true;
+                
+                pacienteDTO.setCpf(resultSet.getString("cpf"));
+                pacienteDTO.setNome(resultSet.getString("nome"));
+                pacienteDTO.setEndereco(resultSet.getString("endereco"));
+                pacienteDTO.setEmail(resultSet.getString("email"));
+                pacienteDTO.setConvenio(resultSet.getString("convenio"));
+                pacienteDTO.setTelefone(resultSet.getString("telefone"));
+                pacienteDTO.setDatanascimento(resultSet.getDate("nascimento"));
+                return pacienteDTO;
             }
-            return false;
+        return null;
         
         } catch (Exception e) {
             throw new RuntimeException(e);
