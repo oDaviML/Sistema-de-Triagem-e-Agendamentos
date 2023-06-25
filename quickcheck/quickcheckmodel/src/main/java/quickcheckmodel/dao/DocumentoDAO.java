@@ -3,6 +3,8 @@ package quickcheckmodel.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,16 +30,59 @@ public class DocumentoDAO {
         }
     }
 
-    public static List<DocumentoDTO> listar(DocumentoDTO documentoDTO) {
+    public static void atualizarDocumento(DocumentoDTO documentoDTO) {
         try (Connection connection = DBConnector.getConexao()) {
-            String sql = "SELECT d.* FROM documentospacientes d JOIN paciente p ON p.cpf = d.cpfpaciente WHERE p.cpf = '"+documentoDTO.getCpf()+"';";
+
+            String sql = "UPDATE documentospacientes SET tipo = ?, nome = ?, link = ? WHERE id = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, documentoDTO.getTipo());
+            preparedStatement.setString(2, documentoDTO.getNome());
+            preparedStatement.setString(3, documentoDTO.getLink());
+            preparedStatement.setInt(4, documentoDTO.getId());
+
+            preparedStatement.executeUpdate();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void removerDocumento(DocumentoDTO documentoDTO) {
+        try (Connection connection = DBConnector.getConexao()) {
+
+            String sql = "DELETE FROM documentospacientes WHERE id = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, documentoDTO.getId());
+
+            preparedStatement.executeUpdate();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static List<DocumentoDTO> listar(String cpf) {
+        try (Connection connection = DBConnector.getConexao()) {
+            String sql = "SELECT d.* FROM documentospacientes d JOIN paciente p ON p.cpf = d.cpfpaciente WHERE p.cpf = '"+cpf+"';";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
             List<DocumentoDTO> documentos = new ArrayList<>();
             while (resultSet.next()) {
-  
+                DocumentoDTO documentoDTO = new DocumentoDTO();
+                documentoDTO.setLink(resultSet.getString("link"));
+                documentoDTO.setNome(resultSet.getString("nome"));
+                documentoDTO.setTipo(resultSet.getString("tipo"));
 
+                Timestamp timestamp = resultSet.getTimestamp("data");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                String formattedDate = dateFormat.format(timestamp);
+                documentoDTO.setData(formattedDate);
+                documentoDTO.setId(resultSet.getInt("id"));
+
+                documentos.add(documentoDTO);
             }
             return documentos;
         

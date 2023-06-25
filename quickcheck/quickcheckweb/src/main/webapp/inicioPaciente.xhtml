@@ -29,7 +29,6 @@
             </div>
 
             <div class="linksHeader">
-
                 <h4><a href="perfilPaciente.xhtml">Perfil</a></h4>
             </div>
             <p:commandButton value="Sair" action="#{pacienteBean.logout()}" styleClass="ui-button-secondary ui-button-flat" />
@@ -56,21 +55,22 @@
                         MÉDICO QUALIFICADO</h1>
                 </div>
             </div>
+            <a class="func" href="envioPaciente.xhtml">
+                <div>
+                    <div class="position">
+                        <img src="resources/images/imgEnviar.png" class="imgCont" alt="" />
+                        <div class="legendaAbove">
+                            <h1>Enviar</h1>
+                        </div>
+                    </div>
 
-            <div class="func" onclick="location.href='/envioPaciente.xhtml';">
+                    <div class="legendaBelow">
 
-                <div class="position">
-                    <img src="resources/images/imgEnviar.png" class="imgCont" alt="" />
-                    <div class="legendaAbove">
-                        <h1>Enviar</h1>
+                        <h1>AQUI VOCÊ PODE FAZER UPLOAD DE SEUS DOCUMENTOS</h1>
                     </div>
                 </div>
-
-                <div class="legendaBelow">
-
-                    <h1>AQUI VOCÊ PODE FAZER UPLOAD DE SEUS DOCUMENTOS</h1>
-                </div>
-            </div>
+            </a>
+            
         </div>
     </h:form>
 </h:body>
