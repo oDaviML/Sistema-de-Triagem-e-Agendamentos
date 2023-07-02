@@ -22,13 +22,13 @@ public class EmailDAO {
         Session session = Session.getInstance(prop,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("academiaelitefit.org@gmail.com", "gcuvzyewiecdcjxp");
+                        return new PasswordAuthentication("quickcheck380@gmail.com", "gcuvzyewiecdcjxp");
                     }
                 });
 
         try {
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("academiaelitefit.org@gmail.com"));
+            message.setFrom(new InternetAddress("quickcheck380@gmail.com"));
             message.setRecipients(
                     Message.RecipientType.TO,
                     InternetAddress.parse(email)
