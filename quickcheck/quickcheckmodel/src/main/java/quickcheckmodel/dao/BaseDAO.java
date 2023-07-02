@@ -9,6 +9,14 @@ import java.util.List;
 import quickcheckmodel.db.DBConnector;
 
 public abstract class BaseDAO<T> { 
+    /*
+     * a classe BaseDAO fornece uma estrutura comum para operações de acesso ao banco de dados, 
+     * enquanto permite que as subclasses forneçam a implementação específica para cada tipo de 
+     * dado que será manipulado. Dessa forma, a lógica básica de conexão ao banco de dados e execução 
+     * de consultas é centralizada e reutilizada em todas as subclasses, evitando duplicação de código e promovendo 
+     * a consistência das operações.
+     */
+
     // <T> = tipo genérico
 
     // Cadastro usuario e senha
