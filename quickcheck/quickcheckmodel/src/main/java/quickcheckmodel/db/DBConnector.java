@@ -6,6 +6,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DBConnector {
+    /*
+     * Nesta implementação, o construtor da classe DBConnector é declarado como privado, o que 
+     * impede a criação de instâncias externamente. Além disso, o método getConexao() é declarado como synchronized, 
+     * garantindo que apenas uma thread possa acessá-lo por vez. Essas alterações tornam a classe DBConnector mais alinhada 
+     * com o padrão Singleton;
+     * 
+     */
 
     private static Connection conexao;
 
