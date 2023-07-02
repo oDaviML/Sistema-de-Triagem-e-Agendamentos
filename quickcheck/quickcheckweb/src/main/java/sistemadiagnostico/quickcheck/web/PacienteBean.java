@@ -29,6 +29,7 @@ public class PacienteBean {
 
     public void inserirDocumento() {
         documento.setCpf(paciente.getCpf());
+ 
         documentoService.inserirDocumento(documento);
         documento = new DocumentoDTO();
         documentos = documentoService.listar(paciente.getCpf());

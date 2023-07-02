@@ -7,15 +7,18 @@ import quickcheckmodel.dao.MedicoDAO;
 import quickcheckmodel.dto.MedicoDTO;
 
 public class MedicoService {
+
+    MedicoDAO medicoDAO = new MedicoDAO();
     public void cadastrarMedico(MedicoDTO medicoDTO) throws ClassNotFoundException, SQLException{
-        MedicoDAO.inserirMedico(medicoDTO);
+        medicoDAO.inserir(medicoDTO);
+        medicoDAO.inserirSenha(medicoDTO);
     }
 
-     public List<MedicoDTO> listar() {
-        return MedicoDAO.buscar();
+    public List<MedicoDTO> listar() {
+        return medicoDAO.listar();
     }
 
-    public Boolean login(String cpf, String senha) {
-        return MedicoDAO.login(cpf, senha);
+    public MedicoDTO login(String cpf, String senha) {
+        return medicoDAO.login(cpf, senha);
     }
 }

@@ -1,94 +1,87 @@
 package quickcheckmodel.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
 
-import quickcheckmodel.db.DBConnector;
 import quickcheckmodel.dto.PacienteDTO;
 import quickcheckmodel.service.SenhaService;
 
-public class PacienteDAO {
-    public static void inserirPaciente(PacienteDTO pacienteDTO) {
-        try (Connection connection = DBConnector.getConexao()) {
+public class PacienteDAO extends BaseDAO<PacienteDTO> {
 
-            String sql = "INSERT INTO paciente (cpf, nome, endereco, email, convenio, telefone, nascimento) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, pacienteDTO.getCpf());
-            preparedStatement.setString(2, pacienteDTO.getNome());
-            preparedStatement.setString(3, pacienteDTO.getEndereco());
-            preparedStatement.setString(4, pacienteDTO.getEmail());
-            preparedStatement.setString(5, pacienteDTO.getConvenio());
-            preparedStatement.setString(6, pacienteDTO.getTelefone());
+    //Cadastro Paciente e Senha
+    @Override
+    protected String getInsertQuery() {
+        return "INSERT INTO paciente (cpf, nome, endereco, email, convenio, telefone, nascimento) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    }
 
-            java.sql.Date sqlDate = new java.sql.Date(pacienteDTO.getDatanascimento().getTime());
-            preparedStatement.setDate(7, sqlDate);
+    @Override
+    protected void setInsertParameters(PreparedStatement preparedStatement, PacienteDTO pacienteDTO) throws SQLException {
+        preparedStatement.setString(1, pacienteDTO.getCpf());
+        preparedStatement.setString(2, pacienteDTO.getNome());
+        preparedStatement.setString(3, pacienteDTO.getEndereco());
+        preparedStatement.setString(4, pacienteDTO.getEmail());
+        preparedStatement.setString(5, pacienteDTO.getConvenio());
+        preparedStatement.setString(6, pacienteDTO.getTelefone());
 
-            preparedStatement.executeUpdate();
-            
-            sql = "INSERT INTO senhaspacientes (cpf, senha) VALUES (?, ?)";
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, pacienteDTO.getCpf());
-            String senha = new SenhaService().criptografar(pacienteDTO.getSenha());
-            preparedStatement.setString(2, senha);
+        java.sql.Date sqlDate = new java.sql.Date(pacienteDTO.getDatanascimento().getTime());
+        preparedStatement.setDate(7, sqlDate);
+    }
 
-            preparedStatement.executeUpdate();
+    @Override
+    protected String getInsertSenhaQuery() {
+        return "INSERT INTO senhaspacientes (cpf, senha) VALUES (?, ?)";
+    }
 
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+    @Override
+    protected void setInsertSenhaParameters(PreparedStatement preparedStatement, PacienteDTO pacienteDTO) throws SQLException {
+        preparedStatement.setString(1, pacienteDTO.getCpf());
+        String senha = new SenhaService().criptografar(pacienteDTO.getSenha());
+        preparedStatement.setString(2, senha);
+    }
+
+    //listar
+
+     @Override
+    protected String getListQuery() {
+        return "SELECT * FROM paciente";
+    }
+
+    @Override
+    protected List<PacienteDTO> processListResult(ResultSet resultSet) throws SQLException {
+        return null;
+        // Processar o resultado da listagem específico para pacientes
+    }  
+
+    //Login
+
+    @Override
+    protected String getLoginQuery() {
+        return "SELECT * FROM paciente p INNER JOIN senhaspacientes s ON s.cpf = p.cpf WHERE s.senha = ? AND p.cpf = ?;";
+    }
+
+    @Override
+    protected void setLoginParameters(PreparedStatement preparedStatement, String cpf, String senha) throws SQLException {
+        String senhacriptografada = new SenhaService().criptografar(senha);
+        preparedStatement.setString(1, senhacriptografada);
+        preparedStatement.setString(2, cpf);
+    }
+
+    @Override
+    protected PacienteDTO processLoginResult(ResultSet resultSet) throws SQLException {
+        PacienteDTO pacienteDTO = new PacienteDTO();
+        if (resultSet.next()) {
+            pacienteDTO.setCpf(resultSet.getString("cpf"));
+            pacienteDTO.setNome(resultSet.getString("nome"));
+            pacienteDTO.setEndereco(resultSet.getString("endereco"));
+            pacienteDTO.setEmail(resultSet.getString("email"));
+            pacienteDTO.setConvenio(resultSet.getString("convenio"));
+            pacienteDTO.setTelefone(resultSet.getString("telefone"));
+            pacienteDTO.setDatanascimento(resultSet.getDate("nascimento"));
+            return pacienteDTO;
         }
+        return null;
     }
     
-    public static List<PacienteDTO> buscar() {
-        try (Connection connection = DBConnector.getConexao()) {
-            String sql = "SELECT * FROM paciente";
-
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            List<PacienteDTO> pacientes = new ArrayList<>();
-            while (resultSet.next()) {
-                PacienteDTO pacienteDTO = new PacienteDTO();
-                pacienteDTO.setCpf(resultSet.getString("cpf"));
-                pacienteDTO.setNome(resultSet.getString("nome"));
-                pacienteDTO.setEndereco(resultSet.getString("endereco"));
-                pacienteDTO.setEmail(resultSet.getString("email"));
-                pacienteDTO.setConvenio(resultSet.getString("convenio"));
-                pacienteDTO.setTelefone(resultSet.getString("telefone"));
-                pacienteDTO.setDatanascimento(resultSet.getDate("nascimento"));
-                pacientes.add(pacienteDTO);
-            }
-            return pacientes;
-        
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static PacienteDTO login(String cpf, String senha) {
-        try (Connection connection = DBConnector.getConexao()) {
-            String senhacriptografada = new SenhaService().criptografar(senha);
-            String sql = "SELECT * FROM paciente p INNER JOIN senhaspacientes s ON s.cpf = p.cpf WHERE s.senha = '"+senhacriptografada+"' AND p.cpf = '"+cpf+"';";
-            PacienteDTO pacienteDTO = new PacienteDTO();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                
-                pacienteDTO.setCpf(resultSet.getString("cpf"));
-                pacienteDTO.setNome(resultSet.getString("nome"));
-                pacienteDTO.setEndereco(resultSet.getString("endereco"));
-                pacienteDTO.setEmail(resultSet.getString("email"));
-                pacienteDTO.setConvenio(resultSet.getString("convenio"));
-                pacienteDTO.setTelefone(resultSet.getString("telefone"));
-                pacienteDTO.setDatanascimento(resultSet.getDate("nascimento"));
-                return pacienteDTO;
-            }
-        return null;
-        
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

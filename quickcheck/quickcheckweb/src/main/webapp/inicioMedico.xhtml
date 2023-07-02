@@ -7,81 +7,76 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
       xmlns:p="http://primefaces.org/ui" >
 
-<head>
+<h:head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="faces/resources/css/style.css" />
 
     <title>QuickCheck</title>
-</head>
+</h:head>
 
-<body>
-    <header class="header">
+<h:body>
+    <h:form>
+        <header class="header">
+            <div class="logoInicio">
+                <img src="resources/images/logoPrinc.png" id="imgLogoPrinc" alt="" />
+            </div>
 
-        <div class="logoInicio">
-            <img src="resources/images/logoPrinc.png" id="imgLogoPrinc" alt="" />
+            <div class="linksHeader">
+                <h4><a href="inicioMedico.xhtml">INÍCIO</a></h4>
+            </div>
+
+            <div class="linksHeader">
+
+                <h4><a href="">PRÉ-DIAGNÓSTICO</a></h4>
+            </div>
+
+            <div class="linksHeader">
+                <h4><a href="perfilMedico.xhtml">Perfil</a></h4>
+            </div>
+            <p:commandButton value="Sair" action="#{medicoBean.logout()}" styleClass="ui-button-secondary ui-button-flat" />
+        </header>
+        <div class="tituloAba">
+
+            <h2>CONSULTAS(Área Médica)</h2>
         </div>
 
-        <div class="linksHeader">
+        <div class="conteudo">
 
-            <h4><a href="">INÍCIO</a></h4>
-        </div>
+            <div class="func" onclick="location.href='https://www.minecraft.net/pt-br/download';">
 
-        <div class="linksHeader">
+                <div class="position">
+                    <img src="resources/images/imgVisualizar.png" class="imgCont" alt="" />
 
-            <h4><a href="">PRÉ-DIAGNÓSTICO</a></h4>
-        </div>
+                    <div class="legendaAbove">
 
-        <div class="linksHeader">
+                        <h1>Visualizar</h1>
+                    </div>
+                </div>
 
-            <h4><a href="">SOBRE NÓS</a></h4>
-        </div>
+                <div class="legendaBelow">
 
-        <div class="linksHeader pesqHeader">
-            <input class="inputPesq" type="text" />
-        </div>
-    </header>
-
-    <div class="tituloAba">
-
-        <h2>CONSULTAS(Área Médica)</h2>
-    </div>
-
-    <div class="conteudo">
-
-        <div class="func" onclick="location.href='https://www.minecraft.net/pt-br/download';">
-
-            <div class="position">
-                <img src="resources/images/imgVisualizar.png" class="imgCont" alt="" />
-
-                <div class="legendaAbove">
-
-                    <h1>Visualizar</h1>
+                    <h1>ACOMPANHE O HISTÓRICO DE SEUS PACIENTES</h1>
                 </div>
             </div>
 
-            <div class="legendaBelow">
+            <div class="func" onclick="location.href='https://www.minecraft.net/pt-br/download';">
 
-                <h1>ACOMPANHE O HISTÓRICO DE SEUS PACIENTES</h1>
-            </div>
-        </div>
+                <div class="position">
+                    <img src="resources/images/imgChecar.png" class="imgCont" alt="" />
 
-        <div class="func" onclick="location.href='https://www.minecraft.net/pt-br/download';">
+                    <div class="legendaAbove">
 
-            <div class="position">
-                <img src="resources/images/imgChecar.png" class="imgCont" alt="" />
+                        <h1>Checar</h1>
+                    </div>
+                </div>
 
-                <div class="legendaAbove">
+                <div class="legendaBelow">
 
-                    <h1>Checar</h1>
+                    <h1>ACOMPANHE SUAS CONSULTAS AGENDADAS</h1>
                 </div>
             </div>
-
-            <div class="legendaBelow">
-
-                <h1>ACOMPANHE SUAS CONSULTAS AGENDADAS</h1>
-            </div>
         </div>
-    </div>
-</body>
+    </h:form>
+</h:body>
 
 </html>

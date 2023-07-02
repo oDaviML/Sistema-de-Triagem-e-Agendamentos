@@ -34,13 +34,15 @@ public class MedicoBean {
     }
     
     public void login() throws IOException {
-        if (medicoService.login(medico.getCpf(), medico.getSenha()) == true) {
+        medico = medicoService.login(medico.getCpf(), medico.getSenha());
+        if (medico != null) {
             HttpSession session = (HttpSession)FacesContext.getCurrentInstance( ).getExternalContext().getSession(false);
             session.setAttribute("usuario", medico);
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             context.redirect(context.getRequestContextPath() + "/faces/inicioMedico.xhtml?faces-redirect=true");
         }
         else {
+            medico = new MedicoDTO();
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Usuário ou senha incorretos");
             FacesContext.getCurrentInstance().addMessage(null,message);
         }
