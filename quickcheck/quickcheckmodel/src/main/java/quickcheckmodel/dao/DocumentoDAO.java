@@ -12,6 +12,7 @@ import quickcheckmodel.db.DBConnector;
 import quickcheckmodel.dto.DocumentoDTO;
 
 public class DocumentoDAO {
+    
     public static void inserirDocumento(DocumentoDTO documentoDTO) {
         try (Connection connection = DBConnector.getConexao()) {
 
