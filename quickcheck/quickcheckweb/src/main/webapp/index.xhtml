@@ -1,91 +1,128 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" 
       xmlns:jsf="http://xmlns.jcp.org/jsf"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>Quick Check</title>
-    </h:head>
-    <h:body>
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui" >
+    <head>
         
-        <h:form>
-            <div class="card">
-                <h5>Formulario</h5>
-                <div class="field grid">
-                    <p:outputLabel for="nome" styleClass="col-fixed" style="width:100px" value="Nome"/>
-                    <div class="col">
-                        <p:inputText id="nome" value="#{pacienteBean.paciente.nome}"/>
-                    </div>
-                </div>
-                <div class="field grid">
-                    <p:outputLabel for="email" styleClass="col-fixed" style="width:100px" value="Email"/>
-                    <div class="col">
-                        <p:inputText id="email" value="#{pacienteBean.paciente.email}"/>
-                    </div>
-                </div>
-                <div class="field grid">
-                    <p:outputLabel for="endereco" styleClass="col-fixed" style="width:100px" value="Endereco"/>
-                    <div class="col">
-                        <p:inputText id="endereco" value="#{pacienteBean.paciente.endereco}"/>
-                    </div>
-                </div>
-                <div class="field grid">
-                    <p:outputLabel for="telefone" styleClass="col-fixed" style="width:100px" value="Telefone"/>
-                    <div class="col">
-                        <p:inputMask mask="(99)99999-9999" validateMask="true" id="telefone" value="#{pacienteBean.paciente.telefone}"/>
-                    </div>
-                </div>
-                <div class="field grid">
-                    <p:outputLabel for="cpf" styleClass="col-fixed" style="width:100px" value="CPF"/>
-                    <div class="col">
-                        <p:inputMask mask="999.999.999-99" validateMask="true" id="cpf" value="#{pacienteBean.paciente.cpf}"/>
-                    </div>
-                </div>
-                <div class="field grid">
-                    <p:outputLabel for="convenio" styleClass="col-fixed" style="width:100px" value="Convenio"/>
-                    <div class="col">
-                        <p:inputText id="convenio" value="#{pacienteBean.paciente.convenio}"/>
-                    </div>
-                </div>
-<!--                <div class="field grid">
-                    <p:outputLabel for="navigator" styleClass="col-fixed" style="width:100px" value="Data Nascimento"/>
-                    <div class="col">
-                        <p:datePicker id="navigator" monthNavigator="true" yearNavigator="true" showWeek="true"/>
-                    </div>
-                </div>-->
-                <p:commandButton value="Adicionar" action="#{pacienteBean.inserirPaciente()}" update="@form" style="margin-top: 5px;"/>
-            </div>
-            
-            <div class="card" style="margin-top: 20px">
-                <p:dataTable value="#{pacienteBean.pacientes}" var="paciente">
-                    <p:column headerText="Nome">
-                        <h:outputText value="#{paciente.nome}" />
-                    </p:column>
-                    
-                    <p:column headerText="CPF">
-                        <h:outputText value="#{paciente.cpf}" />
-                    </p:column>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-                    <p:column headerText="E-mail">
-                        <h:outputText value="#{paciente.email}" />
-                    </p:column>
-
-                    <p:column headerText="Telefone">
-                        <h:outputText value="#{paciente.telefone}" />
-                    </p:column>
-                    
-                    <p:column headerText="Endereço">
-                        <h:outputText value="#{paciente.endereco}" />
-                    </p:column>
-                    
-                    <p:column headerText="Convênio">
-                        <h:outputText value="#{paciente.convenio}" />
-                    </p:column>
-                </p:dataTable>
+        <title>QuickCheck</title>
+        <style>
+            body {
+                background-color: rgb(201, 221, 216);
+                color: white;
+                font-family: 'Poppins', sans-serif;
+                max-width: 1200px;
+                padding: 15px;
+                margin: auto;
+            }
+            header {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+            #title {
+                flex-direction: column;
+                line-height: 10px;
+            }
+            #logo {
+                width: 300px;
+            }
+            li {
+                display: inline-block;
+                margin: 20px;
+            }
+            a {
+                color: white;
+            }
+            h1 {
+                font-weight: 200;
+            }
+            main {
+                display: flex;
+                margin-top: 50px;
+            }
+            aside {
+                margin-top: 60px;
+                margin-left: 90px;
+            }
+            h2 {
+                font-size: 56px;
+                line-height: 10px;
+            }
+            span {
+                color: rgb(0, 173, 145);
+            }
+            p {
+                line-height: 20px;
+                max-width: 500px;
+                font-size: 20px;
+            }
+            #hospital {
+                width: 680px;
+                margin-top: 40px;
+            }
+            .buttons {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 40px;
+                margin-top: 40px;
+            }
+            .buttons .cta {
+                background-color: rgb(0, 173, 145);
+                color: #ffffff;
+                display: inline-block;
+                padding: 10px 130px;
+                border-radius: 30px;
+                font-size: 24px;
+                text-decoration: none;
+                margin-bottom: 10px;
+                transition: background-color 0.3s;
+            }
+            .buttons .cta:hover {
+                background-color: rgb(0, 126, 105);
+            }
+            #login2 {
+                margin-top: 10px;
+            }
+            input {
+                margin-top: 20px;
+                height: 20px;
+                padding: 15px;
+                border-radius: 20px;
+                border: none;
+                font-size: 15px;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <div id="title">
+                <img id="logo" src="imgs/logo.png" alt="" />
             </div>
-        </h:form>
-    </h:body>
+        </header>
+        <main>
+            <aside>
+                <h2><span>Seja bem-vindo</span></h2>
+                <h2>ao QuickCheck</h2>
+
+                <p>Aqui você pode receber um pré-diagnóstico de suas doenças, ser encaminhado para um hospital
+                    com prioridade de acordo com o risco, marcar consultas online e muito mais.</p>
+
+                <div class="buttons">
+                    <a href="faces/loginPaciente.xhtml" class="cta">Login Paciente</a>
+                    <a id="login2" href="faces/loginFunc.xhtml" class="cta">Login Médico</a>
+                </div>
+            </aside>
+            <article>
+                <img id="hospital" src="imgs/hospital.png" alt="" />
+            </article>
+        </main>
+    </body>
 </html>

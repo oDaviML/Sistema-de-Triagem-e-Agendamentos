@@ -1,0 +1,11 @@
+model\dao\PacienteDAO.class
+model\dao\MedicoDAO.class
+model\dto\MedicoDTO.class
+model\db\DBConnector.class
+model\service\MedicoService.class
+model\service\PacienteService.class
+sistemadiagnostico\quickcheck\web\PacienteBean.class
+model\service\SenhaService.class
+model\dao\PasswordEncryptionStrategy.class
+model\dao\SenhaDAO.class
+model\dto\PacienteDTO.class

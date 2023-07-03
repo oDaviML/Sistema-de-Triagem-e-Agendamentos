@@ -1,0 +1,88 @@
+*{
+    margin:0px;
+    border:0px;
+    padding: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.header{
+    max-height: 130px;
+    display: flex;
+}
+a{
+    text-decoration: none;
+    color:black;
+  }
+a:hover{
+    color:lightslategray;
+}
+.logoInicio{
+    margin-left: 3%;
+    margin-right: 2%;
+}
+#imgLogoPrinc{
+    height: 100px;
+    flex:1;
+}
+.linksHeader{
+    flex:1;
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align:center;
+}
+.pesqHeader{
+    flex: 0 0 auto ;
+    width: 30%;
+}
+.inputPesq{
+    border-radius: 20px;
+    height: 30px;
+    width: 250px;
+    border: 3px black solid;
+    background-image: url("https://media.istockphoto.com/id/1151843591/pt/vetorial/loupe-sign-icon-in-transparent-style-magnifier-vector-illustration-on-isolated-background.jpg?s=612x612&w=0&k=20&c=aFS8gdcNtX4gS6Igermq75eztxVdDvHp0S-Rw3aRLD8=");
+    background-position: right;
+    background-size: 30px;
+    background-repeat: no-repeat;
+    padding-left: 20px; 
+}
+.tituloAba{
+    height: 60px;
+    width: auto;
+    background-color: #3FC1C8;
+    color: white;
+    padding-left: 6%;
+    margin-bottom: auto;
+    line-height: 60px;
+}
+.conteudo{
+    display: flex;
+}
+.func{
+    margin-top: 40px;
+    margin-left: 30px;
+    margin-right: 30px;
+    flex:1;
+}
+.position{
+    position: relative;
+}
+.imgCont{
+    width: 100%;
+}
+.legendaAbove{
+    font-size: 250%;
+    position: absolute;
+    bottom: 10px;
+    background-color: azure;
+    width: 100%;
+    opacity : 0.8;
+    padding-left: 30px;
+    color: rgb(70, 70, 70)
+}
+.legendaBelow{
+    margin-top:15px;
+    text-align:center;
+    font-size: 90%;
+}
+.func:hover{
+    opacity: 0.7;
+}
