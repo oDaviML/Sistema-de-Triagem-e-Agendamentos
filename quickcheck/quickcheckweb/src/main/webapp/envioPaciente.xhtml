@@ -18,29 +18,25 @@
 
 <h:body>
     <h:form>
-        <p:growl id="msgs" showDetail="true"/>
-        <h:form>
-            <header class="header"> 
-                <div class="logoInicio">
-                    <img src="resources/images/logoPrinc.png" id="imgLogoPrinc" alt="" />
-                </div>
+        <header class="header"> 
+            <div class="logoInicio">
+                <img src="resources/images/logoPrinc.png" id="imgLogoPrinc" alt="" />
+            </div>
 
-                <div class="linksHeader">
-                    <h4><a href="inicioPaciente.xhtml">INÍCIO</a></h4>
-                </div>
+            <div class="linksHeader">
+                <h4><a href="inicioPaciente.xhtml">INÍCIO</a></h4>
+            </div>
 
-                <div class="linksHeader">
+            <div class="linksHeader">
 
-                    <h4><a href="">PRÉ-DIAGNÓSTICO</a></h4>
-                </div>
+                <h4><a href="">PRÉ-DIAGNÓSTICO</a></h4>
+            </div>
 
-                <div class="linksHeader">
-                    <h4><a href="perfilPaciente.xhtml">Perfil</a></h4>
-                </div>
-                <p:commandButton value="Sair" action="#{pacienteBean.logout()}" styleClass="ui-button-secondary ui-button-flat" />
-            </header>
-        </h:form>
-        <h:form>
+            <div class="linksHeader">
+                <h4><a href="perfilPaciente.xhtml">Perfil</a></h4>
+            </div>
+            <p:commandButton value="Sair" action="#{pacienteBean.logout()}" styleClass="ui-button-secondary ui-button-flat" />
+        </header>
         <div class="card">
             <div class="input-group">
                 <div class="input-box">
@@ -57,17 +53,16 @@
                     <label for="link">Link: </label>
                     <p:inputText id="link" value="#{pacienteBean.documento.link}" type="text" required="true" label="Link" />
                     
-                    <p:commandButton value="Adicionar" icon="pi pi-upload" validateClient="true" style="margin-left: 1rem;" update="documentos" action="#{pacienteBean.inserirDocumento}" process="@this" styleClass="mr-2 ui-button-outlined"/>
+                    <p:commandButton value="Adicionar" icon="pi pi-upload" validateClient="true" style="margin-left: 1rem;" update="documentos" action="#{pacienteBean.inserirDocumento()}" styleClass="mr-2 ui-button-outlined"/>
                 </div>
             </div>
         </div>
 
-
+        <p:growl id="msgs" showDetail="true"/>
         <div class="card">
             <p:dataTable id="documentos" var="documento" value="#{pacienteBean.documentos}" editable="true"
             style="margin-bottom:20px">
 
-            
                 <p:ajax event="rowEdit" listener="#{pacienteBean.atualizarDocumento}" update="documentos" immediate="true"/>
 
                 <p:column headerText="Tipo">
@@ -114,8 +109,7 @@
                 </p:column>
 
             </p:dataTable>
-        </div>  
-    </h:form>
+        </div> 
     </h:form>
 </h:body>
 
