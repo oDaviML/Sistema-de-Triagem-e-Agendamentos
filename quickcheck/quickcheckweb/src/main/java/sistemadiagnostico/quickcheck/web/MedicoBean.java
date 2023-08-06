@@ -12,6 +12,7 @@ import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.servlet.http.HttpSession;
 import quickcheckmodel.dto.MedicoDTO;
+import quickcheckmodel.service.EmailService;
 import quickcheckmodel.service.MedicoService;
 
 @SessionScoped
@@ -19,12 +20,14 @@ import quickcheckmodel.service.MedicoService;
 public class MedicoBean {
     private MedicoDTO medico = new MedicoDTO();
     private MedicoService medicoService = new MedicoService();
+    private EmailService emailService = new EmailService(); 
     private String senha;
 
     private List<MedicoDTO> medicos = new ArrayList<>();
 
     public String inserirMedico() throws ClassNotFoundException, SQLException {
         medicoService.cadastrarMedico(medico);
+        emailService.confimarCadastro(medico.getEmail(), medico.getNome());
         medico = new MedicoDTO();
         return "/loginFunc.xhtml?faces-redirect=true";
     }

@@ -14,6 +14,7 @@ import org.primefaces.event.RowEditEvent;
 import quickcheckmodel.dto.DocumentoDTO;
 import quickcheckmodel.dto.PacienteDTO;
 import quickcheckmodel.service.DocumentoService;
+import quickcheckmodel.service.EmailService;
 import quickcheckmodel.service.PacienteService;
 
 @SessionScoped
@@ -23,6 +24,7 @@ public class PacienteBean {
     private DocumentoDTO documento = new DocumentoDTO();
     private PacienteService pacienteService = new PacienteService();
     private DocumentoService documentoService = new DocumentoService();
+    private EmailService emailService = new EmailService();
 
     private List<PacienteDTO> pacientes = new ArrayList<>();
     private List<DocumentoDTO> documentos = new ArrayList<>();
@@ -33,6 +35,7 @@ public class PacienteBean {
         documentoService.inserirDocumento(documento);
         documento = new DocumentoDTO();
         documentos = documentoService.listar(paciente.getCpf());
+        addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Documento inserido");
     }
 
     public void atualizarDocumento(RowEditEvent<DocumentoDTO> event) {
@@ -40,6 +43,7 @@ public class PacienteBean {
         documentoService.atualizarDocumento(documento);
         documento = new DocumentoDTO();
         documentos = documentoService.listar(paciente.getCpf());
+        addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Documento atualizado");
     }
 
     public void removerDocumento(DocumentoDTO event) {
@@ -49,8 +53,10 @@ public class PacienteBean {
         documentoService.removerDocumento(documento);
         documento = new DocumentoDTO();
         documentos = documentoService.listar(paciente.getCpf());
+        addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Documento removido");
     }
     public String inserirPaciente() {
+        emailService.confimarCadastro(paciente.getEmail(),paciente.getNome());
         pacienteService.cadastrarPaciente(paciente);
         paciente = new PacienteDTO();
         return "/loginPaciente.xhtml?faces-redirect=true";
