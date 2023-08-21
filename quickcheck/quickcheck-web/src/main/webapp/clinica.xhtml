@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" 
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui" >
+<head>
+  
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+        <title>Cadastro de clínica</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f5f5f5;
+            }
+            .container {
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #e4e4e4;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+            h1 {
+                text-align: center;
+                color: #333;
+            }
+            .input-group {
+                display: flex;
+                flex-wrap: wrap;
+                flex-direction: column;
+                justify-content: space-between;
+                padding: 1rem 0;
+            }
+            .input-box {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 1.1rem;
+            }
+            .input-box input {
+                margin: 0.6rem 0;
+                padding: 0.8rem 1.2rem;
+                border: none;
+                border-radius: 10px;
+                box-shadow: 1px 1px 6px #0000001c;
+                font-size: 0.8rem;
+            }
+            .input-box input:hover {
+                background-color: #eeeeee75;
+            }
+            #convenio {
+                width: 20px;
+            }
+            .continue-button input {
+                width: 100;
+                margin-top: 10px;
+                margin-bottom: 20px;
+                border: none;
+                background-color: #130d2b;
+                padding: 0.62rem;
+                border-radius: 5px;
+                cursor: pointer;
+                color: white;
+            }
+            .continue-button input:hover {
+                background-color: #6e6e6ef1;
+            }
+            .continue-button input a {
+                text-decoration: none;
+                font-size: 0.93rem;
+                font-weight: 500;
+                color: #fff;
+            }
+        </style>
+</head>
+    <body>
+        <div class="container">
+            <h1>Cadastro de clínica</h1>
+            <div class="input-group">
+                <div class="input-box">
+                    <label for="name">Nome da clínica</label>
+                    <input id="name" type="text" name="name" placeholder="Digite o nome" required="" />
+                </div>
+
+                <div class="input-box">
+                    <label for="number">Telefone</label>
+                    <input id="number" type="tel" name="number" placeholder="(xx) xxxx-xxxx" required="" />
+                </div>
+
+                <div class="input-box">
+                    <label for="address">Endereço</label>
+                    <input id="address" type="text" name="endereço" placeholder="Digite o endereço" required="" />
+                </div>
+
+                <div class="input-box">
+                    <label for="convenio">Convênio</label>
+                    <input type="checkbox" name="convenio" id="convenio" />
+                </div>
+            </div>
+
+            <div class="continue-button">
+                <input class="botao" type="submit" value="Cadastrar" />
+            </div>
+        </div>
+    </body>
+</html>
