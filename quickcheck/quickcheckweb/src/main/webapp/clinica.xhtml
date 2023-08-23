@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:jsf="http://xmlns.jcp.org/jsf"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="resources/css/style.css" />
+        <title>QuickCheck</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+            }
+
+            .container {
+                max-width: 80%;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #f3f2f2;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                margin-bottom: 10px;
+            }
+
+            h1 {
+                text-align: center;
+                color: #333;
+            }
+
+            .input-group {
+                display: flex;
+                flex-wrap: wrap;
+                flex-direction: column;
+                justify-content: space-between;
+                padding: 1rem 0;
+            }
+
+            .input-box {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 1.1rem;
+            }
+
+            .input-box input {
+                margin: 0.6rem 0;
+                padding: 0.8rem 1.2rem;
+                border: none;
+                border-radius: 10px;
+                box-shadow: 1px 1px 6px #0000001c;
+                font-size: 0.8rem;
+            }
+
+            .input-box input:hover {
+                background-color: #eeeeee75;
+            }
+
+            #convenio {
+                width: 20px;
+            }
+
+            .continue-button input {
+                width: 100;
+                margin-top: 10px;
+                margin-bottom: 20px;
+                border: none;
+                background-color: #130d2b;
+                padding: 0.62rem;
+                border-radius: 5px;
+                cursor: pointer;
+                color: white;
+            }
+
+            .continue-button input:hover {
+                background-color: #6e6e6ef1;
+            }
+
+            .continue-button input a {
+                text-decoration: none;
+                font-size: 0.93rem;
+                font-weight: 500;
+                color: #fff;
+            }
+
+            gmp-map {
+                width: 100%;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            }
+        </style>
+    </h:head>
+
+    <h:body>
+        <h:form>
+            <header class="header">
+
+                <div class="logoInicio">
+                    <img src="resources/images/logoPrinc.png" id="imgLogoPrinc" alt="" />
+                </div>
+    
+                <div class="linksHeader">
+                    <h4><a href="inicioMedico.xhtml">Início</a></h4>
+                </div>
+    
+                <div class="linksHeader">
+                    <h4><a href="">Clinica</a></h4>
+                </div>
+    
+                <div class="linksHeader">
+                    <h4><a href="perfilMedico.xhtml">Perfil</a></h4>
+                </div>
+                <p:commandButton value="Sair" action="#{pacienteBean.logout()}" styleClass="ui-button-secondary ui-button-flat" />
+            </header>
+            
+            <div class="container">
+                <h1>Cadastro de clínica</h1>
+                <div class="input-group">
+                    <div class="input-box">
+                        <label for="name">Nome da clínica</label>
+                        <input id="name" type="text" name="name" placeholder="Digite o nome" required="" />
+                    </div>
+
+                    <div class="input-box">
+                        <label for="number">Telefone</label>
+                        <input id="number" type="tel" name="number" placeholder="(xx) xxxx-xxxx" required="" />
+                    </div>
+
+                    <div class="input-box">
+                        <label for="address">Endereço</label>
+                        <input id="address" type="text" name="endereço" placeholder="Digite o endereço" required="" />
+                    </div>
+                    <h3>Convênios</h3>
+                    <p:selectManyCheckbox id="grid"  layout="grid" columns="3" styleClass="grid-checkbox">
+                        <f:selectItem itemLabel="Unimed" itemValue="Option 1"/>
+                        <f:selectItem itemLabel="Amil" itemValue="Option 2"/>
+                        <f:selectItem itemLabel="NotreDame" itemValue="Option 3"/>
+                        <f:selectItem itemLabel="Ipsemg" itemValue="Option 3"/>
+                        <f:selectItem itemLabel="Medsênior" itemValue="Option 3" />
+                        <f:selectItem itemLabel="Particular" itemValue="Option 3" />
+                    </p:selectManyCheckbox>
+                </div>
+
+                <div class="continue-button">
+                    <input class="botao" type="submit" value="Cadastrar/Atualizar" />
+                </div>
+
+                <div class="card">
+                    <p:gmap center="-19.919082641601562,-43.9387321472168" zoom="15" type="HYBRID" style="width:100%;height:400px"/>
+                </div>
+
+            </div>
+
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0QG_G0LdTKu_AIzR9awlnzqIMOU0g3pI" type="text/javascript"></script>   
+        </h:form>
+    </h:body>
+
+</html>
