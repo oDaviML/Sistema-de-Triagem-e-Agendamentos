@@ -1,5 +1,7 @@
 package quickcheckmodel.dto;
 
+import java.util.List;
+
 public class ClinicaDTO {
     private String nome, endereco, telefone, cpfmedico, especialidade, coordenada;
     private String[] convenios;
