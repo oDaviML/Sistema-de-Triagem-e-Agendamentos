@@ -41,16 +41,18 @@ public class MedicoBean {
     public void inserirOuAtualizarClinica() throws ClassNotFoundException {
         try {
             clinica.setCpfmedico(medico.getCpf());
-            clinicaService.inserirOuAtualizarClinica(clinica);
-            model = new DefaultMapModel<>();
-            String[] coordenadas = clinica.getCoordenada().split(",");
-            LatLng coord = new LatLng(Double.parseDouble(coordenadas[0]), Double.parseDouble(coordenadas[1]));
-            model.addOverlay(new Marker<>(coord, clinica.getNome(), clinica.getEndereco()));
+            clinica = clinicaService.inserirOuAtualizarClinica(clinica);
+            carregarMapa(clinica);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+    }
 
+    public void carregarMapa(ClinicaDTO clinica) {
+        model = new DefaultMapModel<>();
+        String[] coordenadas = clinica.getCoordenada().split(",");
+        LatLng coord = new LatLng(Double.parseDouble(coordenadas[0]), Double.parseDouble(coordenadas[1]));
+        model.addOverlay(new Marker<>(coord, clinica.getNome(), clinica.getEndereco()));
     }
 
     public String inserirMedico() throws ClassNotFoundException, SQLException {
@@ -71,6 +73,7 @@ public class MedicoBean {
             session.setAttribute("usuario", medico);
             if (clinicaService.obterClinicaPorCPF(medico.getCpf()) != null) {
                 clinica = clinicaService.obterClinicaPorCPF(medico.getCpf());
+                carregarMapa(clinica);
             }
             else {
                 clinica = new ClinicaDTO("", "", "", new String[0], "", "", "");

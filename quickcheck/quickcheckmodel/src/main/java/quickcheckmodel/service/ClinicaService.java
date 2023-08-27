@@ -4,8 +4,8 @@ import quickcheckmodel.dao.ClinicaDAO;
 import quickcheckmodel.dto.ClinicaDTO;
 
 public class ClinicaService {
-    public void inserirOuAtualizarClinica(ClinicaDTO clinicaDTO) throws ClassNotFoundException {
-        ClinicaDAO.inserirOuAtualizarClinica(clinicaDTO);
+    public ClinicaDTO inserirOuAtualizarClinica(ClinicaDTO clinicaDTO) throws ClassNotFoundException {
+        return ClinicaDAO.inserirOuAtualizarClinica(clinicaDTO);
     }
 
     public ClinicaDTO obterClinicaPorCPF(String cpf) throws ClassNotFoundException {

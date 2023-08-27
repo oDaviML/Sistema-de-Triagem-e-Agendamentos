@@ -15,7 +15,7 @@ import quickcheckmodel.dto.ClinicaDTO;
 
 public class ClinicaDAO {
 
-    public static void inserirOuAtualizarClinica(ClinicaDTO clinica) throws ClassNotFoundException {
+    public static ClinicaDTO inserirOuAtualizarClinica(ClinicaDTO clinica) throws ClassNotFoundException {
         try (Connection connection = DBConnector.getConexao()) {
             String sql = "INSERT INTO clinicas (cpfmedico, nome, endereco, telefone, convenio, especialidade, coordenada) " +
                          "VALUES (?, ?, ?, ?, ?, ?, ?) " +
@@ -29,15 +29,18 @@ public class ClinicaDAO {
 
                 String conveniosString = String.join(",", clinica.getConvenios());
                 preparedStatement.setString(5, conveniosString);
-
+                
                 preparedStatement.setString(6, clinica.getEspecialidade());
+                clinica.setCoordenada(obterCoordenadas(clinica.getEndereco()));
                 preparedStatement.setString(7, clinica.getCoordenada());
-                System.out.println(obterCoordenadas(clinica.getEndereco()));
+
                 preparedStatement.executeUpdate();
+                return clinica;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return clinica;
     }
 
     public static ClinicaDTO obterClinicaPorCPF(String cpf) throws ClassNotFoundException {
