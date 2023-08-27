@@ -24,7 +24,7 @@ public class DBConnector {
         if (conexao == null || conexao.isClosed()) {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                conexao = DriverManager.getConnection("jdbc:mysql://database-1.cty2gsaowhzj.us-east-2.rds.amazonaws.com:3306/quickcheck?zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false", "admin", "12345678");
+                conexao = DriverManager.getConnection("jdbc:mysql://quickcheck.cty2gsaowhzj.us-east-2.rds.amazonaws.com:3306/quickcheck?zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false", "admin", "n6D3lEStHlkDvj0");
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

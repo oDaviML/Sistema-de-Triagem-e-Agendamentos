@@ -177,7 +177,7 @@
                     <div class="input-box">
                         <label for="password">Senha</label>
                         <p:inputText id="password" value="#{pacienteBean.paciente.senha}" type="password"
-                            placeholder="Digite sua senha" required="true" label="Senha" />
+                            placeholder="Digite sua senha" required="true" label="Senha"/>
                     </div>
                     <div class="input-box">
                         <label for="address">Endereço</label>
@@ -186,8 +186,14 @@
                     </div>
                     <div class="input-box">
                         <label for="convenio">Convênio</label>
-                        <p:inputText id="convenio" placeholder="Digite seu Convênio"
-                            value="#{pacienteBean.paciente.convenio}" type="text" required="true" label="Convênio" />
+                        <p:selectOneMenu id="convenio" value="#{pacienteBean.paciente.convenio}" required="true" style="margin-top: 10px;">
+                            <f:selectItem itemLabel="Unimed" itemValue="Unimed"/>
+                            <f:selectItem itemLabel="Amil" itemValue="Amil"/>
+                            <f:selectItem itemLabel="NotreDame" itemValue="NotreDame"/>
+                            <f:selectItem itemLabel="Ipsemg" itemValue="Ipsemg"/>
+                            <f:selectItem itemLabel="Medsênior" itemValue="Medsênior" />
+                            <f:selectItem itemLabel="Particular" itemValue="Particular" />
+                        </p:selectOneMenu>
                     </div>
                     <div class="input-box">
                         <label for="navigator">Data Nascimento</label>

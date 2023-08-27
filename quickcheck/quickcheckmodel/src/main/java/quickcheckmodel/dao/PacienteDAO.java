@@ -3,6 +3,7 @@ package quickcheckmodel.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import quickcheckmodel.dto.PacienteDTO;
@@ -50,9 +51,21 @@ public class PacienteDAO extends BaseDAO<PacienteDTO> {
 
     @Override
     protected List<PacienteDTO> processListResult(ResultSet resultSet) throws SQLException {
-        return null;
-        // Processar o resultado da listagem específico para pacientes
-    }  
+        List<PacienteDTO> pacientes = new ArrayList<>();
+        while (resultSet.next()) {
+            // Aqui você pode criar objetos Paciente com os dados do resultSet e adicioná-los à lista
+            PacienteDTO paciente = new PacienteDTO();
+            paciente.setCpf(resultSet.getString("cpf"));
+            paciente.setNome(resultSet.getString("nome"));
+            paciente.setEndereco(resultSet.getString("endereco"));
+            paciente.setEmail(resultSet.getString("email"));
+            paciente.setConvenio(resultSet.getString("convenio"));
+            paciente.setTelefone(resultSet.getString("telefone"));
+            paciente.setDatanascimento(resultSet.getDate("nascimento"));      
+            pacientes.add(paciente);
+        }
+        return pacientes;
+    }
 
     //Login
 
@@ -83,5 +96,6 @@ public class PacienteDAO extends BaseDAO<PacienteDTO> {
         }
         return null;
     }
+    
     
 }

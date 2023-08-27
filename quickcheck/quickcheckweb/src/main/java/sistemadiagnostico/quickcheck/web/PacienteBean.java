@@ -4,16 +4,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.primefaces.event.RowEditEvent;
+
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.servlet.http.HttpSession;
-import org.primefaces.event.RowEditEvent;
 import quickcheckmodel.dto.DocumentoDTO;
 import quickcheckmodel.dto.PacienteDTO;
 import quickcheckmodel.service.DocumentoService;
+import quickcheckmodel.service.EmailService;
 import quickcheckmodel.service.PacienteService;
 
 @SessionScoped
@@ -23,6 +25,7 @@ public class PacienteBean {
     private DocumentoDTO documento = new DocumentoDTO();
     private PacienteService pacienteService = new PacienteService();
     private DocumentoService documentoService = new DocumentoService();
+    private EmailService emailService = new EmailService();
 
     private List<PacienteDTO> pacientes = new ArrayList<>();
     private List<DocumentoDTO> documentos = new ArrayList<>();
@@ -33,6 +36,7 @@ public class PacienteBean {
         documentoService.inserirDocumento(documento);
         documento = new DocumentoDTO();
         documentos = documentoService.listar(paciente.getCpf());
+        addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Documento inserido");
     }
 
     public void atualizarDocumento(RowEditEvent<DocumentoDTO> event) {
@@ -40,6 +44,7 @@ public class PacienteBean {
         documentoService.atualizarDocumento(documento);
         documento = new DocumentoDTO();
         documentos = documentoService.listar(paciente.getCpf());
+        addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Documento atualizado");
     }
 
     public void removerDocumento(DocumentoDTO event) {
@@ -49,8 +54,10 @@ public class PacienteBean {
         documentoService.removerDocumento(documento);
         documento = new DocumentoDTO();
         documentos = documentoService.listar(paciente.getCpf());
+        addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Documento removido");
     }
     public String inserirPaciente() {
+        emailService.confimarCadastro(paciente.getEmail(),paciente.getNome());
         pacienteService.cadastrarPaciente(paciente);
         paciente = new PacienteDTO();
         return "/loginPaciente.xhtml?faces-redirect=true";
@@ -80,9 +87,14 @@ public class PacienteBean {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, detail));
     }
 
-    public String logout() {
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "/faces/loginPaciente.xhtml?faces-redirect=true";
+    public void logout() {
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+            context.redirect(context.getRequestContextPath() + "/faces/loginPaciente.xhtml?faces-redirect=true");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public PacienteDTO getPaciente() {
