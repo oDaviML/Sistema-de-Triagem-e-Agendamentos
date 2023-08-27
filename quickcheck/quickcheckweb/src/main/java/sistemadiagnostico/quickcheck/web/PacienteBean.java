@@ -4,13 +4,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.primefaces.event.RowEditEvent;
+
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.servlet.http.HttpSession;
-import org.primefaces.event.RowEditEvent;
 import quickcheckmodel.dto.DocumentoDTO;
 import quickcheckmodel.dto.PacienteDTO;
 import quickcheckmodel.service.DocumentoService;
@@ -86,9 +87,14 @@ public class PacienteBean {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, detail));
     }
 
-    public String logout() {
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "/faces/loginPaciente.xhtml?faces-redirect=true";
+    public void logout() {
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+            context.redirect(context.getRequestContextPath() + "/faces/loginPaciente.xhtml?faces-redirect=true");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public PacienteDTO getPaciente() {

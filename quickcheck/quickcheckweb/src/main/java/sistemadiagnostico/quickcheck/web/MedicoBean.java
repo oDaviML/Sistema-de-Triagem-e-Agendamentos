@@ -5,6 +5,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.primefaces.event.map.OverlaySelectEvent;
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
+
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
@@ -16,7 +22,6 @@ import quickcheckmodel.dto.MedicoDTO;
 import quickcheckmodel.service.ClinicaService;
 import quickcheckmodel.service.EmailService;
 import quickcheckmodel.service.MedicoService;
-
 @SessionScoped
 @ManagedBean
 public class MedicoBean {
@@ -26,14 +31,26 @@ public class MedicoBean {
     private ClinicaDTO clinica = new ClinicaDTO();
     private ClinicaService clinicaService = new ClinicaService();
 
-    private EmailService emailService = new EmailService(); 
+    private EmailService emailService = new EmailService();
     private String senha;
 
     private List<MedicoDTO> medicos = new ArrayList<>();
+    private MapModel model;
+    private Marker<String> marker;
 
     public void inserirOuAtualizarClinica() throws ClassNotFoundException {
-        clinica.setCpfmedico(medico.getCpf());
-        clinicaService.inserirOuAtualizarClinica(clinica);
+        try {
+            clinica.setCpfmedico(medico.getCpf());
+            clinicaService.inserirOuAtualizarClinica(clinica);
+            model = new DefaultMapModel<>();
+            String[] coordenadas = clinica.getCoordenada().split(",");
+            LatLng coord = new LatLng(Double.parseDouble(coordenadas[0]), Double.parseDouble(coordenadas[1]));
+            model.addOverlay(new Marker<>(coord, clinica.getNome(), clinica.getEndereco()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+
     }
 
     public String inserirMedico() throws ClassNotFoundException, SQLException {
@@ -72,9 +89,14 @@ public class MedicoBean {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, detail));
     }
     
-    public String logout() {
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "./loginFunc.xhtml?faces-redirect=true";
+    public void logout() {
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+            context.redirect(context.getRequestContextPath() + "/faces/loginFunc.xhtml?faces-redirect=true");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public MedicoDTO getMedico() {
@@ -99,6 +121,16 @@ public class MedicoBean {
 
     public void setClinica(ClinicaDTO clinica){
         this.clinica = clinica;
+    }
+
+    public MapModel getModel() { 
+        return model; 
+    }
+    public Marker getMarker() { 
+        return marker; 
+    }
+    public void onMarkerSelect(OverlaySelectEvent event) {
+        this.marker = (Marker) event.getOverlay();
     }
 
 }

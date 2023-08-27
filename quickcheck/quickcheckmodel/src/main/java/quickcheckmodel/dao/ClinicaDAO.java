@@ -31,7 +31,8 @@ public class ClinicaDAO {
                 preparedStatement.setString(5, conveniosString);
 
                 preparedStatement.setString(6, clinica.getEspecialidade());
-                preparedStatement.setString(7, obterCoordenadas(clinica.getEndereco()));
+                preparedStatement.setString(7, clinica.getCoordenada());
+                System.out.println(obterCoordenadas(clinica.getEndereco()));
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -49,11 +50,11 @@ public class ClinicaDAO {
                     String convenioString = resultSet.getString("convenio");
                     String[] convenios = convenioString.split(",");
                     return new ClinicaDTO(
-                            resultSet.getString("cpfmedico"),
                             resultSet.getString("nome"),
                             resultSet.getString("endereco"),
-                            convenios,
                             resultSet.getString("telefone"),
+                            convenios,
+                            resultSet.getString("cpfmedico"),
                             resultSet.getString("especialidade"),
                             resultSet.getString("coordenada")
                     );

@@ -149,6 +149,11 @@
                         <p:inputText id="address" value="#{medicoBean.clinica.endereco}" type="text" required="true" label="Endereço" />
                     </div>
 
+                    <div class="input-box">
+                        <label for="coordenada">Coordenada</label>
+                        <p:inputText id="coordenada" value="#{medicoBean.clinica.coordenada}" type="text" required="true" label="Coordenada" />
+                    </div>
+
                     <label for="Convenios">Convenios</label>
                     <p:selectManyCheckbox id="Convenios" value="#{medicoBean.clinica.convenios}" layout="grid" columns="3" styleClass="grid-checkbox" required="true">
                         <f:selectItem itemLabel="Unimed" itemValue="Unimed"/>
@@ -166,7 +171,17 @@
                 </div>
 
                 <div class="card">
-                    <p:gmap id="mapa" center="#{medicoBean.clinica.coordenada}" zoom="15" type="HYBRID" style="width:100%;height:400px;"/>
+                    <p:gmap id="mapa" center="#{medicoBean.clinica.coordenada}" model="#{medicoBean.model}" zoom="15" type="HYBRID" style="width:100%;height:400px;">
+                        <p:ajax event="overlaySelect" listener="#{medicoBean.setMarker}"/>
+
+                        <p:gmapInfoWindow id="infoWindow">
+                            <p:outputPanel style="text-align: center; display: block; margin: auto">
+                                <h:outputText value="#{medicoBean.clinica.nome}"/>
+                                <br/>
+                                <h:outputText value="#{medicoBean.clinica.endereco}"/>
+                            </p:outputPanel>
+                        </p:gmapInfoWindow>
+                    </p:gmap>
                 </div>
             </div>
 
