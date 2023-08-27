@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" 
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui" >
+    <h:head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="resources/css/style.css" />
+        <title>QuickCheck</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            html, body {
+                height: 100%;
+            }
+
+            .main {
+                display: flex;
+                flex-wrap: wrap;
+                height: 100%;
+            }
+
+            .container {
+                display: flex;
+                width: 100%;
+            }
+
+            .sidebar {
+                width: 25%;
+                background-color: rgb(255, 255, 255);
+                height: 100%;
+            }
+
+            .sidebar h2 {
+                margin-left: 5px;
+                margin: 10px;
+            }
+
+            .sidebar a {
+                display: block;
+                text-decoration: none;
+                padding: 5px 15px;
+                color: black;
+            }
+            
+            .sidebar a:hover {
+                background-color: rgb(228, 228, 228);
+                border-left: 4px solid rgb(45, 184, 149);
+                font-weight: bold;
+            }
+
+            .content {
+                flex-grow: 1;
+                background-color: rgb(238, 238, 238);
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                border-spacing: 0;
+            }
+            
+            td , th {
+                padding: 15px 20px;
+                text-align: center;
+            }
+
+            th {
+                background-color: #cecece;
+                color: #fafafa;
+                font-weight: bold;
+                color: black;
+            }
+
+            tr {
+                width: 100%;
+                background-color: #fafafa;
+                font-family: 'Montserrat', sans-serif;
+            }
+
+            tr:nth-child(even) {
+                background-color: #eeeeee;
+            }
+
+            .container {
+                margin-top: 2rem;
+                width: 100%;
+                max-width: 100vw;
+                display: flex;
+                max-height: 100vh; /* Adicione esta linha para limitar a altura da .container à altura da viewport */
+                overflow: hidden; /* Adicione esta linha para ocultar o overflow vertical */
+            }
+
+            .tabela,
+            .p-scrollpanel {
+                flex-grow: 1;
+                max-height: 100%; 
+                overflow: auto;
+            }
+
+            .card {
+                margin-bottom: 1rem;
+                width: 20rem;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <header class="header">
+                <div class="logoInicio">
+                    <img src="resources/images/logoPrinc.png" id="imgLogoPrinc" alt="" />
+                </div>
+
+                <div class="linksHeader">
+                    <h4><a href="inicioMedico.xhtml">Início</a></h4>
+                </div>
+
+                <div class="linksHeader">
+
+                    <h4><a href="clinica.xhtml">Clinica</a></h4>
+                </div>
+
+                <div class="linksHeader">
+                    <h4><a href="perfilMedico.xhtml">Perfil</a></h4>
+                </div>
+                <p:commandButton value="Sair" action="#{medicoBean.logout()}"
+                    styleClass="ui-button-secondary ui-button-flat" />
+            </header>
+            <section class="main">
+                <div class="container">
+                    <div class="sidebar">
+                        <h2>Pacientes</h2>
+                        <p:scrollPanel mode="native" styleClass="p-scrollpanel">
+                            <ui:repeat value="#{medicoBean.pacientes}" var="paciente">
+                                <p:commandLink action="#{medicoBean.carregarDocumentos(paciente.cpf)}" update="form">
+                                    <p:card styleClass="card">
+                                        <f:facet name="title">
+                                            <h:outputText value="#{paciente.nome}" />
+                                        </f:facet>
+                                        <p>Data Nascimento: 
+                                            <strong>
+                                                <h:outputText value="#{paciente.datanascimento}" />
+                                            </strong>
+                                        </p>
+                                        <p>Convenio: 
+                                            <strong>
+                                                <h:outputText value="#{paciente.convenio}" />
+                                            </strong>
+                                        </p>
+                                        <h3>Horário: 
+                                            <h:outputText value="22/09/2023 - 12:00" />
+                                        </h3>
+                                    </p:card>
+                                </p:commandLink>
+                            </ui:repeat>
+                        </p:scrollPanel>
+                    </div>
+                    <div class="content">
+                        <p:dataTable id="tabela" var="documento" value="#{medicoBean.documentos}" scrollable="true" styleClass="table">
+                            <p:column headerText="Tipo" >
+                                <h:outputText value="#{documento.tipo}"/>
+                            </p:column>
+                            <p:column headerText="Nome">
+                                <h:outputText value="#{documento.nome}"/>
+                            </p:column>
+                            <p:column headerText="Link">
+                                <a href="#{documento.link}"><h:outputText value="#{documento.link}"/></a>
+                            </p:column>
+                            <p:column headerText="Envio">
+                               <h:outputText value="#{documento.data}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+            </section>
+        </h:form>
+    </h:body>
+</html>

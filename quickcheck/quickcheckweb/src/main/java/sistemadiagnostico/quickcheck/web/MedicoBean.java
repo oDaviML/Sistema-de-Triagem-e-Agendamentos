@@ -18,10 +18,14 @@ import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.servlet.http.HttpSession;
 import quickcheckmodel.dto.ClinicaDTO;
+import quickcheckmodel.dto.DocumentoDTO;
 import quickcheckmodel.dto.MedicoDTO;
+import quickcheckmodel.dto.PacienteDTO;
 import quickcheckmodel.service.ClinicaService;
+import quickcheckmodel.service.DocumentoService;
 import quickcheckmodel.service.EmailService;
 import quickcheckmodel.service.MedicoService;
+import quickcheckmodel.service.PacienteService;
 @SessionScoped
 @ManagedBean
 public class MedicoBean {
@@ -31,12 +35,23 @@ public class MedicoBean {
     private ClinicaDTO clinica = new ClinicaDTO();
     private ClinicaService clinicaService = new ClinicaService();
 
+  
+    private DocumentoService documentoService = new DocumentoService();
+
     private EmailService emailService = new EmailService();
+    private PacienteService pacienteService = new PacienteService();
     private String senha;
 
     private List<MedicoDTO> medicos = new ArrayList<>();
+    private List<PacienteDTO> pacientes = new ArrayList<>();
+    private List<DocumentoDTO> documentos = new ArrayList<>();
+
     private MapModel model;
     private Marker<String> marker;
+
+    public void carregarDocumentos(String cpf) {
+        documentos = documentoService.listar(cpf);
+    }
 
     public void inserirOuAtualizarClinica() throws ClassNotFoundException {
         try {
@@ -74,6 +89,7 @@ public class MedicoBean {
             if (clinicaService.obterClinicaPorCPF(medico.getCpf()) != null) {
                 clinica = clinicaService.obterClinicaPorCPF(medico.getCpf());
                 carregarMapa(clinica);
+                pacientes = pacienteService.listar();
             }
             else {
                 clinica = new ClinicaDTO("", "", "", new String[0], "", "", "");
@@ -136,4 +152,19 @@ public class MedicoBean {
         this.marker = (Marker) event.getOverlay();
     }
 
+    public List<PacienteDTO> getPacientes() {
+        return pacientes;
+    }
+
+    public void setPacientes(List<PacienteDTO> pacientes) {
+        this.pacientes = pacientes;
+    }
+
+    public List<DocumentoDTO> getDocumentos() {
+        return documentos;
+    }
+
+    public void setDocumentos(List<DocumentoDTO> documentos) {
+        this.documentos = documentos;
+    }
 }
