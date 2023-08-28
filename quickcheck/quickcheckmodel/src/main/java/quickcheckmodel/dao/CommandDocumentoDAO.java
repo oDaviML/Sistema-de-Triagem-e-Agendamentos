@@ -4,7 +4,7 @@
  */
 package quickcheckmodel.dao;
 
-import java.sql.Connection;
+/*import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -228,4 +228,4 @@ public class CommandDocumentoDAO {
     invoker.setCommand(listarCommand);
     // Executa o comando de excluir
     invoker.executeCommand();
-}
+}*/
