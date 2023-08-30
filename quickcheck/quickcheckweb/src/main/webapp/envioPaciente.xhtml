@@ -6,7 +6,7 @@
 
 <h:head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="faces/resources/css/style.css" />
+    <link rel="stylesheet" href="resources/css/style.css" />
 
     <title>QuickCheck</title>
     <style>
@@ -90,7 +90,7 @@
                 <p:column headerText="Link">
                     <p:cellEditor>
                         <f:facet name="output">
-                            <a href="#{documento.link}"><h:outputText value="#{documento.link}"/></a>
+                            <a href="#{documento.link}" target="_blank"><h:outputText value="#{documento.link}"/></a>
                         </f:facet>
                         <f:facet name="input">
                             <p:inputText value="#{documento.link}" style="width:100%" label="Name"/>
