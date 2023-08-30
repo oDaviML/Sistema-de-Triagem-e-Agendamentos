@@ -35,14 +35,14 @@
         </header>
 
         <div class="tituloAba">
-            <h2>PRÉ-DIAGNÓSTICO</h2>
+            <h2>CONSULTAS</h2>
         </div>
         
         <div class="Description">
             <div id="bolha1">
-              <h2>Olá, aqui você pode realizar um pré-diagnóstico com base em seus sintomas,
-                e em seguida pode ser encaminhado para o hospital ou posto mais próximo para ser atendido,
-                tendo prioridade de acordo com a gravidade de seu problema.
+              <h2>Olá, aqui você pode cadastrar suas consultas para que seja 
+                  notificado quando chegar a data. Preencha todos os campos
+                  abaixo e defina suas preferências de lembrete.
               </h2>
             </div>
             <div id="medica">
@@ -51,20 +51,50 @@
         </div>
         
         <div class="Sign-In_Bubble">
-            <div class="input-box">
-                <label for="sintoma">Escreva abaixo quais sintomas você está sentindo.</label>
-                <input id="sintoma" type="text" sintoma="sintoma"></input>
+            <div class="titulo-1b">
+                <h3>Adicionar Consultas</h3>
             </div>
 
             <div class="input-box">
-                <label for="sintoma_dias">Há quantos dias você vêm sentindo estes sintomas?</label>
-                <input id="sintoma_dias" type="text" sintoma_dias="sintoma_dias"></input>
+                <label for="cons_especialidade">Escolha o tipo de consulta.</label>
+                <select id="cons_especialidade">
+                    <option value="0">Especialidade</option>
+                    <option value="1">exemplo A</option>
+                    <option value="2">exemplo B</option>
+                    <option value="3">exemplo C</option>
+                </select>
+            </div>
+
+            <div class="input-box">
+                <label for="cons_local">Determine seu local.</label>
+                <select id="cons_local">
+                    <option value="0">Placeholder</option>
+                    <option value="1">exemplo A</option>
+                    <option value="2">exemplo B</option>
+                    <option value="3">exemplo C</option>
+                </select>
             </div>
             
             <div class="input-box">
-                <label for="febre">Em caso de febre, quantos graus?</label>
-                <input id="febre" type="text" febre="febre"></input>
+                <label for="cons_hosp">Escolha o hospital.</label>
+                <select id="cons_hosp">
+                    <option value="0">Hospital</option>
+                    <option value="1">exemplo A</option>
+                    <option value="2">exemplo B</option>
+                    <option value="3">exemplo C</option>
+                </select>
             </div>
+            
+            <div class="verificação">
+                <label for="cons_notif">Ser notificado da consulta?</label>
+                <label> <input id="cons_notif" cons_notif="cons_notif" type="radio" checked="checked" name="radio"> Sim </input> </label>
+                <label> <input type="radio" name="radio"> Não </input> </label>
+            </div>
+            
+            <div class="Mapa_yay" onclick="location.href='https://genshin-impact-map.appsample.com/'">
+                <img scr="resources/images/imgVisualizar.png" />
+            </div>
+
         </div>
     </h:form>
 </h:body>

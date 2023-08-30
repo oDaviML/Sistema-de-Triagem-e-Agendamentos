@@ -134,3 +134,15 @@ a:hover{
 .input-box input:focus-visible {
     outline: 1px solid #0abbaf;
 }
+
+.titulo-1b {
+  border-right: 7px solid transparent;
+  border-left: 7px solid transparent;
+  border: 7px solid black;
+  margin: 5px;
+  padding: 5px;
+}
+
+.Mapa_yay img {
+    width: 225px;
+}
