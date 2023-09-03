@@ -11,20 +11,20 @@ import quickcheckmodel.dao.ConsultaDAO;
 import quickcheckmodel.dto.ConsultaDTO;
 
 public class ConsultaService {
-    public void cadastrarConsulta(ConsultaDTO consultaDTO) throws ClassNotFoundException, SQLException{
-        ConsultaDAO.inserirConsulta(consultaDTO);
-    }
-   
-    public void atualizarConsulta(ConsultaDTO consultaDTO) throws SQLException {
-        ConsultaDAO.atualizarConsulta(consultaDTO);
+    public void inserirConsultaPaciente(ConsultaDTO consultaDTO) throws ClassNotFoundException, SQLException{
+        ConsultaDAO.inserirConsultaPaciente(consultaDTO);
     }
 
-    public void removerConsulta(ConsultaDTO consultaDTO) throws SQLException {
-        ConsultaDAO.removerConsulta(consultaDTO);
+    public void removerConsultaPaciente(ConsultaDTO consultaDTO) throws SQLException {
+        ConsultaDAO.removerConsultaPaciente(consultaDTO);
     }
 
-     public List<ConsultaDTO> listar() {
-        return ConsultaDAO.buscar();
+     public List<ConsultaDTO> listarConsultaPaciente(String cpf) {
+        return ConsultaDAO.listarConsultaPaciente(cpf);
     }
+     
+    public List<ConsultaDTO> listarConsultaCadastradas(ConsultaDTO consultaDTO) {
+        return ConsultaDAO.listarConsultaCadastradas(consultaDTO);
+    } 
 }
 
