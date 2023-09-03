@@ -40,8 +40,7 @@
 
         <div class="conteudo">
 
-            <div class="func" onclick="location.href='consultaPaciente.xhtml';">
-
+            <p:commandLink styleClass="func" action="#{pacienteBean.carregarClinicas()}">
                 <div class="position">
                     <img src="resources/images/imgAgendar.png" class="imgCont" alt="" />
                     <div class="legendaAbove">
@@ -53,7 +52,7 @@
                         SUA CONSULTA COM UM
                         MÉDICO QUALIFICADO</h1>
                 </div>
-            </div>
+            </p:commandLink>
             <a class="func" href="envioPaciente.xhtml">
                 <div>
                     <div class="position">

@@ -20,9 +20,27 @@
             width: 100%;
             padding: 3rem;
         }
+        
         .card{
             padding: 2rem;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar {
+            float: right;
+            width: 300px;
+            height: 93.2vh;
+            background: #CDDEDF;
+            padding: 20px;
+            box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        .content {
+            width: calc(100% - 300px); 
+            float: left;
         }
     </style>
 </h:head>
@@ -40,7 +58,6 @@
             </div>
 
             <div class="linksHeader">
-
                 <h4><a href="">Pré-Diagnóstico</a></h4>
             </div>
 
@@ -53,40 +70,88 @@
         <div class="tituloAba">
             <h2>CONSULTAS</h2>
         </div>
-
-        <div class="Sign-In_Bubble">
-            <h2 style="margin-bottom: 1rem;">Pesquisar Clínicas</h2>
-            <div class="input-box">
-                <label for="especialidade">Especialidade: </label>
-                <p:selectOneMenu id="especialidade">
-                    <f:selectItem itemLabel="Todos" itemValue="Todos" />
-                    <f:selectItem itemLabel="Clinico Geral" itemValue="Clinico Geral" />
-                    <f:selectItem itemLabel="Pediatra" itemValue="Pediatra" />
-                    <f:selectItem itemLabel="Cardiologista" itemValue="Cardiologista" />
-                    <f:selectItem itemLabel="Psiquiatra" itemValue="Psiquiatra" />
-                    <f:selectItem itemLabel="Oftalmologista" itemValue="Oftalmologista" />
-                    <f:selectItem itemLabel="Otorrinolaringologista" itemValue="Otorrinolaringologista" />
-                    <f:selectItem itemLabel="Oncologista" itemValue="Oncologista" />
-                    <f:selectItem itemLabel="Urologista" itemValue="Urologista" />
-                    <f:selectItem itemLabel="Dermatologista" itemValue="Dermatologista" />
-                    <f:selectItem itemLabel="Ginecologista" itemValue="Ginecologista" />
-                </p:selectOneMenu>
-
-                <label for="convenio" style="margin-left: 1rem;">Convênio: </label>
-                <p:selectOneMenu id="convenio">
-                    <f:selectItem itemLabel="Todos" itemValue="Todos" />
-                    <f:selectItem itemLabel="Unimed" itemValue="Unimed"/>
-                    <f:selectItem itemLabel="Amil" itemValue="Amil"/>
-                    <f:selectItem itemLabel="NotreDame" itemValue="NotreDame"/>
-                    <f:selectItem itemLabel="Ipsemg" itemValue="Ipsemg"/>
-                    <f:selectItem itemLabel="Medsênior" itemValue="Medsênior" />
-                    <f:selectItem itemLabel="Particular" itemValue="Particular" />
+        <div class="content">
+            <div class="Sign-In_Bubble">
+                <h2 style="margin-bottom: 1rem;">Pesquisar Clínicas</h2>
+                <div class="input-box">
+                    <label for="especialidade">Especialidade: </label>
+                    <p:selectOneMenu id="especialidade">
+                        <f:selectItem itemLabel="Todos" itemValue="Todos" />
+                        <f:selectItem itemLabel="Clinico Geral" itemValue="Clinico Geral" />
+                        <f:selectItem itemLabel="Pediatra" itemValue="Pediatra" />
+                        <f:selectItem itemLabel="Cardiologista" itemValue="Cardiologista" />
+                        <f:selectItem itemLabel="Psiquiatra" itemValue="Psiquiatra" />
+                        <f:selectItem itemLabel="Oftalmologista" itemValue="Oftalmologista" />
+                        <f:selectItem itemLabel="Otorrinolaringologista" itemValue="Otorrinolaringologista" />
+                        <f:selectItem itemLabel="Oncologista" itemValue="Oncologista" />
+                        <f:selectItem itemLabel="Urologista" itemValue="Urologista" />
+                        <f:selectItem itemLabel="Dermatologista" itemValue="Dermatologista" />
+                        <f:selectItem itemLabel="Ginecologista" itemValue="Ginecologista" />
+                    </p:selectOneMenu>
+    
+                    <label for="convenio" style="margin-left: 1rem;">Convênio: </label>
+                    <p:selectOneMenu id="convenio">
+                        <f:selectItem itemLabel="Todos" itemValue="Todos" />
+                        <f:selectItem itemLabel="Unimed" itemValue="Unimed"/>
+                        <f:selectItem itemLabel="Amil" itemValue="Amil"/>
+                        <f:selectItem itemLabel="NotreDame" itemValue="NotreDame"/>
+                        <f:selectItem itemLabel="Ipsemg" itemValue="Ipsemg"/>
+                        <f:selectItem itemLabel="Medsênior" itemValue="Medsênior" />
+                        <f:selectItem itemLabel="Particular" itemValue="Particular" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+    
+            <div class="card">
+                <p:gmap center="#{pacienteBean.coordenadaEndereco}" model="#{pacienteBean.model}" zoom="15" type="HYBRID" style="width:100%;height:400px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
+                    <p:ajax event="overlaySelect" listener="#{pacienteBean.onMarkerSelect}" />
+        
+                    <p:gmapInfoWindow id="infoWindow">
+                        <p:panelGrid columns="2">
+                            <h:outputText value="Nome: #{pacienteBean.marker.title}" />
+                            <h:outputText value="Especialidade: #{pacienteBean.marker.data.especialidade}" />
+                            <h:outputText value="Endereço: #{pacienteBean.marker.data.endereco}" />
+                            <h:outputText value="Telefone: #{pacienteBean.marker.data.telefone}" />
+                            <h:outputText value="Convenios: " />
+                            <ui:repeat value="#{pacienteBean.marker.data.convenios}" var="convenio">
+                                <h:outputText value="#{convenio}" />
+                                <br/>
+                            </ui:repeat>
+                        </p:panelGrid>
+                    </p:gmapInfoWindow>
+                </p:gmap>
+            </div>
+    
+        </div>
+        
+        <div class="sidebar">
+            <h2 style="padding-bottom: 1rem;">Agendar Horário</h2>
+            <h3>Clínica: </h3>
+            <h3>Medico: </h3>
+            <div>
+                <p:outputLabel for="agenda" value="Data: " style="margin-left: 0.2rem;"/>
+                <p:datePicker id="agenda" readonlyInput="true" />
+            </div>
+            
+            <div>
+                <p:outputLabel for="@next" value="Horário: " style="margin-left: 0.2rem;"/>
+                <p:selectOneMenu id="option">
+                    <f:selectItem itemLabel="8:00" itemValue="Option1"/>
+                    <f:selectItem itemLabel="9:00" itemValue="Option1"/>
+                    <f:selectItem itemLabel="10:00" itemValue="Option2"/>
+                    <f:selectItem itemLabel="11:00" itemValue="Option3"/>
                 </p:selectOneMenu>
             </div>
-        </div>
-
-        <div class="card">
-            <p:gmap center="41.381542, 2.122893" zoom="15" type="HYBRID" style="width:100%;height:400px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);"/>
+            
+            <div>
+                <p:outputLabel for="@next" value="Convenio: " style="margin-left: 0.2rem;"/>
+                <p:selectOneMenu id="dasd">
+                    <f:selectItem itemLabel="8:00" itemValue="Option1"/>
+                    <f:selectItem itemLabel="9:00" itemValue="Option1"/>
+                    <f:selectItem itemLabel="10:00" itemValue="Option2"/>
+                    <f:selectItem itemLabel="11:00" itemValue="Option3"/>
+                </p:selectOneMenu>
+            </div>
         </div>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0QG_G0LdTKu_AIzR9awlnzqIMOU0g3pI" type="text/javascript"></script>   
     </h:form>

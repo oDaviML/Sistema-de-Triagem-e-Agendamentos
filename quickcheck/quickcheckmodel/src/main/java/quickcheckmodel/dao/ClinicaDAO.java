@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
@@ -73,6 +75,7 @@ public class ClinicaDAO {
         try {
             GeoApiContext context = new GeoApiContext.Builder().apiKey("AIzaSyC0QG_G0LdTKu_AIzR9awlnzqIMOU0g3pI").build();
             GeocodingResult[] results;
+            System.out.println(endereco);
             results = GeocodingApi.geocode(context, endereco).await();
             context.shutdown();
             LatLng coordenadas = new LatLng(results[0].geometry.location.lat, results[0].geometry.location.lng);
@@ -81,5 +84,33 @@ public class ClinicaDAO {
             e.printStackTrace();
         }
         return null;
+    }
+    public static List<ClinicaDTO> listarClinicas() throws ClassNotFoundException {
+        List<ClinicaDTO> clinicas = new ArrayList<>();
+
+        try (Connection connection = DBConnector.getConexao()) {
+            String sql = "SELECT * FROM clinicas";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    String convenioString = resultSet.getString("convenio");
+                    String[] convenios = convenioString.split(",");
+                    ClinicaDTO clinica = new ClinicaDTO(
+                            resultSet.getString("nome"),
+                            resultSet.getString("endereco"),
+                            resultSet.getString("telefone"),
+                            convenios,
+                            resultSet.getString("cpfmedico"),
+                            resultSet.getString("especialidade"),
+                            resultSet.getString("coordenada")
+                    );
+                    clinicas.add(clinica);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return clinicas;
     }
 }
