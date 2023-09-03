@@ -47,7 +47,6 @@
         }
         header {
             background-color: white;
-            margin-bottom: 3rem;
         }
     </style>
 </h:head>
@@ -73,46 +72,49 @@
             </div>
             <p:commandButton value="Sair" action="#{medicoBean.logout()}" styleClass="ui-button-secondary ui-button-flat" />
         </header>
+        <div class="tituloAba">
+            <h2>Perfil</h2>
+        </div>
+        <div class="container">
+            <h1>Dados do Usuário</h1>
+            <table>
+                <tbody>
+                    <tr>
+                        <th>Nome:</th>
+                        <td id="nome">#{medicoBean.medico.nome}</td>
+                    </tr>
+
+                    <tr>
+                        <th>CPF:</th>
+                        <td id="cpf">#{medicoBean.medico.cpf}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Endereço:</th>
+                        <td id="endereco">#{medicoBean.medico.endereco}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Email:</th>
+                        <td id="email">#{medicoBean.medico.email}</td>
+                    </tr>
+
+                    <tr>
+                        <th>CRM:</th>
+                        <td id="CRM">#{medicoBean.medico.crm}</td>
+                    </tr>
+                    <tr>
+                        <th>Telefone:</th>
+                        <td id="telefone">#{medicoBean.medico.telefone}</td>
+                    </tr>
+                    <tr>
+                        <th>Data de Nascimento:</th>
+                        <td id="data-nascimento">#{medicoBean.medico.dataNascimento}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </h:form>
-    <div class="container">
-        <h1>Dados do Usuário</h1>
-        <table>
-            <tbody>
-                <tr>
-                    <th>Nome:</th>
-                    <td id="nome">#{medicoBean.medico.nome}</td>
-                </tr>
-
-                <tr>
-                    <th>CPF:</th>
-                    <td id="cpf">#{medicoBean.medico.cpf}</td>
-                </tr>
-
-                <tr>
-                    <th>Endereço:</th>
-                    <td id="endereco">#{medicoBean.medico.endereco}</td>
-                </tr>
-
-                <tr>
-                    <th>Email:</th>
-                    <td id="email">#{medicoBean.medico.email}</td>
-                </tr>
-
-                <tr>
-                    <th>CRM:</th>
-                    <td id="CRM">#{medicoBean.medico.crm}</td>
-                </tr>
-                <tr>
-                    <th>Telefone:</th>
-                    <td id="telefone">#{medicoBean.medico.telefone}</td>
-                </tr>
-                <tr>
-                    <th>Data de Nascimento:</th>
-                    <td id="data-nascimento">#{medicoBean.medico.dataNascimento}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
 </h:body>
 
 </html>
