@@ -113,7 +113,7 @@
         </style>
     </h:head>
     <h:body>
-        <h:form id="form">
+        <h:form id="form1">
             <header class="header">
                 <div class="logoInicio">
                     <img src="resources/images/logoPrinc.png" id="imgLogoPrinc" alt="" />
@@ -134,13 +134,18 @@
                 <p:commandButton value="Sair" action="#{medicoBean.logout()}"
                     styleClass="ui-button-secondary ui-button-flat" />
             </header>
+            <div class="tituloAba">
+                <h2>Documentos</h2>
+            </div>
+        </h:form>
+        <h:form id="form2">
             <section class="main">
                 <div class="container">
                     <div class="sidebar">
                         <h2>Pacientes</h2>
                         <p:scrollPanel mode="native" styleClass="p-scrollpanel">
                             <ui:repeat value="#{medicoBean.pacientes}" var="paciente">
-                                <p:commandLink action="#{medicoBean.carregarDocumentos(paciente.cpf)}" update="form">
+                                <p:commandLink action="#{medicoBean.carregarDocumentos(paciente.cpf)}" update="form2">
                                     <p:card styleClass="card">
                                         <f:facet name="title">
                                             <h:outputText value="#{paciente.nome}" />
@@ -155,9 +160,6 @@
                                                 <h:outputText value="#{paciente.convenio}" />
                                             </strong>
                                         </p>
-                                        <h3>Horário: 
-                                            <h:outputText value="22/09/2023 - 12:00" />
-                                        </h3>
                                     </p:card>
                                 </p:commandLink>
                             </ui:repeat>

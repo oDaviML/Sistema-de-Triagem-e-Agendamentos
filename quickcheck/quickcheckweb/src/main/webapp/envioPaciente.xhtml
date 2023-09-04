@@ -17,19 +17,19 @@
 </h:head>
 
 <h:body>
-    <h:form>
+    <h:form id="form1">
         <header class="header"> 
             <div class="logoInicio">
                 <img src="resources/images/logoPrinc.png" id="imgLogoPrinc" alt="" />
             </div>
 
             <div class="linksHeader">
-                <h4><a href="inicioPaciente.xhtml">INÍCIO</a></h4>
+                <h4><a href="inicioPaciente.xhtml">Início</a></h4>
             </div>
 
             <div class="linksHeader">
 
-                <h4><a href="">PRÉ-DIAGNÓSTICO</a></h4>
+                <h4><a href="">Pré-Diagnóstico</a></h4>
             </div>
 
             <div class="linksHeader">
@@ -37,6 +37,11 @@
             </div>
             <p:commandButton value="Sair" action="#{pacienteBean.logout()}" styleClass="ui-button-secondary ui-button-flat" />
         </header>
+        <div class="tituloAba">
+            <h2>Documentos</h2>
+        </div>
+    </h:form>
+    <h:form id="form2">
         <div class="card">
             <div class="input-group">
                 <div class="input-box">

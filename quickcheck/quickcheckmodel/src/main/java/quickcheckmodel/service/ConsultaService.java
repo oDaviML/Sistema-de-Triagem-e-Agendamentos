@@ -23,8 +23,12 @@ public class ConsultaService {
         return ConsultaDAO.listarConsultaPaciente(cpf);
     }
      
-    public List<ConsultaDTO> listarConsultaCadastradas(ConsultaDTO consultaDTO) {
-        return ConsultaDAO.listarConsultaCadastradas(consultaDTO);
+    public List<ConsultaDTO> listarConsultaCadastradas() {
+        return ConsultaDAO.listarConsultaCadastradas();
     } 
+
+    public List<ConsultaDTO> listarConsultasMedicos(String cpf) {
+        return ConsultaDAO.listarConsultasMedicos(cpf);
+    }
 }
 

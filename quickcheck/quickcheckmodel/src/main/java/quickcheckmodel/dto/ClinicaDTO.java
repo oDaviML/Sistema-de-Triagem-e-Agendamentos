@@ -1,14 +1,14 @@
 package quickcheckmodel.dto;
 
 public class ClinicaDTO {
-    private String nome, endereco, telefone, cpfmedico, especialidade, coordenada;
+    private String nome, endereco, telefone, cpfmedico, especialidade, coordenada, nomemedico;
     private String[] convenios;
 
     public ClinicaDTO() {
         
     }
 
-    public ClinicaDTO(String nome, String endereco, String telefone, String[] convenios, String cpfmedico, String especialidade, String coordenada) {
+    public ClinicaDTO(String nome, String endereco, String telefone, String[] convenios, String cpfmedico, String especialidade, String coordenada, String nomemedico) {
         this.nome = nome;
         this.endereco = endereco;
         this.telefone = telefone;
@@ -16,6 +16,7 @@ public class ClinicaDTO {
         this.cpfmedico = cpfmedico;
         this.especialidade = especialidade;
         this.coordenada = coordenada;
+        this.nomemedico = nomemedico;
     }
     public String getNome() {
         return nome;
@@ -64,5 +65,13 @@ public class ClinicaDTO {
 
     public void setCoordenada(String coordenada) {
         this.coordenada = coordenada;
+    }
+
+    public String getNomemedico() {
+        return nomemedico;
+    }
+
+    public void setNomemedico(String nomemedico) {
+        this.nomemedico = nomemedico;
     }
 }

@@ -31,11 +31,8 @@ import quickcheckmodel.service.PacienteService;
 public class MedicoBean {
     private MedicoDTO medico = new MedicoDTO();
     private MedicoService medicoService = new MedicoService();
-
     private ClinicaDTO clinica = new ClinicaDTO();
     private ClinicaService clinicaService = new ClinicaService();
-
-  
     private DocumentoService documentoService = new DocumentoService();
 
     private EmailService emailService = new EmailService();
@@ -56,6 +53,7 @@ public class MedicoBean {
     public void inserirOuAtualizarClinica() throws ClassNotFoundException {
         try {
             clinica.setCpfmedico(medico.getCpf());
+            clinica.setNomemedico(medico.getNome());
             clinica = clinicaService.inserirOuAtualizarClinica(clinica);
             carregarMapa(clinica);
         } catch (Exception e) {
@@ -81,7 +79,7 @@ public class MedicoBean {
         medicos = medicoService.listar();
     }
     
-    public void login() throws IOException, ClassNotFoundException {
+    public void login() throws IOException, ClassNotFoundException, SQLException {
         medico = medicoService.login(medico.getCpf(), medico.getSenha());
         if (medico != null) {
             HttpSession session = (HttpSession)FacesContext.getCurrentInstance( ).getExternalContext().getSession(false);
@@ -89,10 +87,10 @@ public class MedicoBean {
             if (clinicaService.obterClinicaPorCPF(medico.getCpf()) != null) {
                 clinica = clinicaService.obterClinicaPorCPF(medico.getCpf());
                 carregarMapa(clinica);
-                pacientes = pacienteService.listar();
+                pacientes = documentoService.listarPacientes(medico.getCpf());
             }
             else {
-                clinica = new ClinicaDTO("", "", "", new String[0], "", "", "");
+                clinica = new ClinicaDTO("", "", "", new String[0], "", "", "", "");
             }
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             context.redirect(context.getRequestContextPath() + "/faces/inicioMedico.xhtml?faces-redirect=true");

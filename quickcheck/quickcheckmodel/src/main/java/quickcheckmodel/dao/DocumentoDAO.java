@@ -3,6 +3,7 @@ package quickcheckmodel.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 
 import quickcheckmodel.db.DBConnector;
 import quickcheckmodel.dto.DocumentoDTO;
+import quickcheckmodel.dto.PacienteDTO;
 
 public class DocumentoDAO {
     
@@ -89,6 +91,28 @@ public class DocumentoDAO {
         
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public static List<PacienteDTO> listarPacientes(String cpf) throws ClassNotFoundException, SQLException {
+        try (Connection connection = DBConnector.getConexao()) {
+            String sql = "SELECT p.* FROM paciente p JOIN consulta c ON p.cpf = c.cpfpaciente WHERE c.cpfmedico = '"+cpf+"';";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<PacienteDTO> pacientes = new ArrayList<>();
+            while (resultSet.next()) {
+                PacienteDTO paciente = new PacienteDTO();
+                paciente.setCpf(resultSet.getString("cpf"));
+                paciente.setNome(resultSet.getString("nome"));
+                paciente.setEndereco(resultSet.getString("endereco"));
+                paciente.setEmail(resultSet.getString("email"));
+                paciente.setConvenio(resultSet.getString("convenio"));
+                paciente.setTelefone(resultSet.getString("telefone"));
+                paciente.setDatanascimento(resultSet.getDate("nascimento"));      
+                pacientes.add(paciente);
+            }
+            return pacientes;
         }
     }
 }

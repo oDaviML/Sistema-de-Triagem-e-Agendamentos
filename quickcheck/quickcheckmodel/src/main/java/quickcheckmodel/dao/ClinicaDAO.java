@@ -19,9 +19,9 @@ public class ClinicaDAO {
 
     public static ClinicaDTO inserirOuAtualizarClinica(ClinicaDTO clinica) throws ClassNotFoundException {
         try (Connection connection = DBConnector.getConexao()) {
-            String sql = "INSERT INTO clinicas (cpfmedico, nome, endereco, telefone, convenio, especialidade, coordenada) " +
-                         "VALUES (?, ?, ?, ?, ?, ?, ?) " +
-                         "ON DUPLICATE KEY UPDATE nome = VALUES(nome), endereco = VALUES(endereco), telefone = VALUES(telefone), convenio = VALUES(convenio), especialidade = VALUES(especialidade), coordenada = VALUES(coordenada);";
+            String sql = "INSERT INTO clinicas (cpfmedico, nome, endereco, telefone, convenio, especialidade, coordenada, nomemedico) " +
+                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?) " +
+                         "ON DUPLICATE KEY UPDATE nome = VALUES(nome), endereco = VALUES(endereco), telefone = VALUES(telefone), convenio = VALUES(convenio), especialidade = VALUES(especialidade), coordenada = VALUES(coordenada), nomemedico = VALUES(nomemedico);";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, clinica.getCpfmedico());
@@ -35,6 +35,8 @@ public class ClinicaDAO {
                 preparedStatement.setString(6, clinica.getEspecialidade());
                 clinica.setCoordenada(obterCoordenadas(clinica.getEndereco()));
                 preparedStatement.setString(7, clinica.getCoordenada());
+                preparedStatement.setString(8, clinica.getNomemedico());
+
 
                 preparedStatement.executeUpdate();
                 return clinica;
@@ -61,7 +63,8 @@ public class ClinicaDAO {
                             convenios,
                             resultSet.getString("cpfmedico"),
                             resultSet.getString("especialidade"),
-                            resultSet.getString("coordenada")
+                            resultSet.getString("coordenada"),
+                            resultSet.getString("nomemedico")
                     );
                 }
             }
@@ -75,7 +78,6 @@ public class ClinicaDAO {
         try {
             GeoApiContext context = new GeoApiContext.Builder().apiKey("AIzaSyC0QG_G0LdTKu_AIzR9awlnzqIMOU0g3pI").build();
             GeocodingResult[] results;
-            System.out.println(endereco);
             results = GeocodingApi.geocode(context, endereco).await();
             context.shutdown();
             LatLng coordenadas = new LatLng(results[0].geometry.location.lat, results[0].geometry.location.lng);
@@ -102,7 +104,8 @@ public class ClinicaDAO {
                             convenios,
                             resultSet.getString("cpfmedico"),
                             resultSet.getString("especialidade"),
-                            resultSet.getString("coordenada")
+                            resultSet.getString("coordenada"),
+                            resultSet.getString("nomemedico")
                     );
                     clinicas.add(clinica);
                 }
