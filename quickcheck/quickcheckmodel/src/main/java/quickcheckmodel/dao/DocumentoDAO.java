@@ -96,7 +96,7 @@ public class DocumentoDAO {
 
     public static List<PacienteDTO> listarPacientes(String cpf) throws ClassNotFoundException, SQLException {
         try (Connection connection = DBConnector.getConexao()) {
-            String sql = "SELECT p.* FROM paciente p JOIN consulta c ON p.cpf = c.cpfpaciente WHERE c.cpfmedico = '"+cpf+"';";
+            String sql = "SELECT DISTINCT p.* FROM paciente p JOIN consulta c ON p.cpf = c.cpfpaciente WHERE c.cpfmedico = '"+cpf+"';";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();

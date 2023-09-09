@@ -131,7 +131,7 @@
             <h3><h:outputText value="Medico: #{pacienteBean.clinica.nomemedico}" /></h3>
             <div>
                 <p:outputLabel for="@next" value="Data: " style="margin-left: 0.2rem;"/>
-                <p:calendar id="agenda" value="#{pacienteBean.consulta.data}">
+                <p:calendar id="agenda" disabledWeekends="true" mindate="#{pacienteBean.dataAtual}" value="#{pacienteBean.consulta.data}">
                     <p:ajax event="dateSelect" listener="#{pacienteBean.onDateSelect}" update="horarios"/>
                 </p:calendar>
             </div>

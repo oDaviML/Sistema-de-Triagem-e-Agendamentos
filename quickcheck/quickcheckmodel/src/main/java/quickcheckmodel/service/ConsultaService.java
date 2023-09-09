@@ -30,5 +30,9 @@ public class ConsultaService {
     public List<ConsultaDTO> listarConsultasMedicos(String cpf) {
         return ConsultaDAO.listarConsultasMedicos(cpf);
     }
+
+    public void removerConsultaMedico(ConsultaDTO consultaDTO) {
+        ConsultaDAO.removerConsultaMedico(consultaDTO);
+    }
 }
 

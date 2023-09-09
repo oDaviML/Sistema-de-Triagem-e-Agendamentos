@@ -50,7 +50,6 @@ public class PacienteBean {
     private List<PacienteDTO> pacientes = new ArrayList<>();
     private List<DocumentoDTO> documentos = new ArrayList<>();
     private List<ClinicaDTO> clinicas = new ArrayList<>();
-
     private List<ConsultaDTO> consultasMedico = new ArrayList<>();
     private List<ConsultaDTO> consultas = new ArrayList<>();
     private String[] horariosArray = {"8:00", "8:30","9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00"};
@@ -62,6 +61,7 @@ public class PacienteBean {
     private MapModel model;
     private Marker<ClinicaDTO> marker;
     private Date dataSelecionada;
+    private Date dataAtual;
 
     public void removerConsulta(ConsultaDTO event) throws SQLException {
         consultaService.removerConsultaPaciente(event);
@@ -90,14 +90,19 @@ public class PacienteBean {
         convenios = conveniosCopy; 
     }
 
+    public void filtrarClinicas() {
+
+    }
+
     public void cadastrarConsulta() throws ClassNotFoundException, SQLException {
         consulta.setCpfpaciente(paciente.getCpf());
         consulta.setCpfmedico(clinica.getCpfmedico());
         consulta.setEspecialidade(clinica.getEspecialidade());
         consultaService.inserirConsultaPaciente(consulta);
-        consulta.setNomemedico(clinica.getNomemedico());
+        consulta.setNome(clinica.getNomemedico());
         emailService.agendamento(paciente, consulta);
         carregarConsultas();
+        carregarHorarios(consulta.getData());
 
         addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Consulta agendada");
     }
@@ -287,6 +292,10 @@ public class PacienteBean {
 
     public Date getDataSelecionada() {
         return dataSelecionada;
+    }
+
+    public Date getDataAtual() {
+        return dataAtual = new Date();
     }
 
     public void setDataSelecionada(Date dataSelecionada) {

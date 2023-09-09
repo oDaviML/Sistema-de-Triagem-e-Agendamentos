@@ -5,23 +5,24 @@ import java.util.Date;
 public class ConsultaDTO {
 
     private int id;
-    private String cpfpaciente, cpfmedico, especialidade, convenio, horario, nomemedico;
+    private String cpfpaciente, cpfmedico, especialidade, convenio, horario, nome;
     private Date data;
    
     public ConsultaDTO() {
     }
 
-    public ConsultaDTO(String cpfpaciente, String cpfmedico, String especialidade, String convenio, Date data, String horario, String nomemedico) {
+    public ConsultaDTO(int id, String cpfpaciente, String cpfmedico, String especialidade, String convenio, String horario, String nome, Date data) {
+        this.id = id;
         this.cpfpaciente = cpfpaciente;
         this.cpfmedico = cpfmedico;
         this.especialidade = especialidade;
         this.convenio = convenio;
-        this.data = data;
         this.horario = horario;
-        this.nomemedico = nomemedico;
+        this.nome = nome;
+        this.data = data;
     }
-
-    public ConsultaDTO(int id,String cpfpaciente, String cpfmedico, String especialidade, String convenio, Date data, String horario) {
+    public ConsultaDTO(int id, String cpfpaciente, String cpfmedico, String especialidade, String convenio, Date data, String horario) {
+        this.id = id;
         this.cpfpaciente = cpfpaciente;
         this.cpfmedico = cpfmedico;
         this.especialidade = especialidade;
@@ -86,12 +87,12 @@ public class ConsultaDTO {
         this.horario = horario;
     }
 
-    public String getNomemedico() {
-        return nomemedico;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNomemedico(String nomemedico) {
-        this.nomemedico = nomemedico;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
-    
+
 }

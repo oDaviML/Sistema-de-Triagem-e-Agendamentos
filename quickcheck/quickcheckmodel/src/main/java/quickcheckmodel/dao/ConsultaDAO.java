@@ -17,6 +17,7 @@ import java.util.TimeZone;
 
 import quickcheckmodel.db.DBConnector;
 import quickcheckmodel.dto.ConsultaDTO;
+import quickcheckmodel.dto.PacienteDTO;
 
 public class ConsultaDAO {
 
@@ -75,7 +76,6 @@ public class ConsultaDAO {
             ps = connection.prepareStatement("DELETE FROM consulta WHERE id = ?");
            
             //Executa a função SQL recebida como parâmetro.
-            System.out.println("ID: " + consultaDTO.getId());
             ps.setInt(1, consultaDTO.getId());
 
             ps.executeUpdate();
@@ -94,9 +94,10 @@ public class ConsultaDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
             List<ConsultaDTO> consultas = new ArrayList<>();
+            TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
             while (resultSet.next()) {
                 ConsultaDTO consultaDTO = new ConsultaDTO();
-                consultaDTO.setNomemedico(resultSet.getString("nome"));
+                consultaDTO.setNome(resultSet.getString("nome"));
                 consultaDTO.setId(resultSet.getInt("id"));
                 consultaDTO.setCpfmedico(resultSet.getString("cpfmedico"));
                 consultaDTO.setCpfpaciente(resultSet.getString("cpfpaciente"));
@@ -120,6 +121,7 @@ public class ConsultaDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
             List<ConsultaDTO> consultas = new ArrayList<>();
+            TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
             while (resultSet.next()) {
                 ConsultaDTO consultaDTO = new ConsultaDTO();
                 consultaDTO.setId(resultSet.getInt("id"));
@@ -140,10 +142,11 @@ public class ConsultaDAO {
 
     public static List<ConsultaDTO> listarConsultasMedicos(String cpf) {
         try (Connection connection = DBConnector.getConexao()) {
-            String sql = "SELECT * FROM consulta WHERE cpfmedico = '"+cpf+"';";
+            String sql = "SELECT c.*, p.nome FROM consulta c JOIN paciente p ON c.cpfpaciente = p.cpf WHERE c.cpfmedico='"+cpf+"';";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
             List<ConsultaDTO> consultas = new ArrayList<>();
+            TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
             while (resultSet.next()) {
                 ConsultaDTO consultaDTO = new ConsultaDTO();
                 consultaDTO.setId(resultSet.getInt("id"));
@@ -151,20 +154,43 @@ public class ConsultaDAO {
                 consultaDTO.setCpfpaciente(resultSet.getString("cpfpaciente"));
                 consultaDTO.setEspecialidade(resultSet.getString("especialidade"));
                 consultaDTO.setConvenio(resultSet.getString("convenio"));
-
-                Timestamp timestamp = resultSet.getTimestamp("data");
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-                String formattedDate = dateFormat.format(timestamp);
-                
-                consultaDTO.setData(new Date(formattedDate));
-
-                consultaDTO.setHorario(resultSet.getString("horario")); 
+                consultaDTO.setData(resultSet.getDate("data"));
+                consultaDTO.setHorario(resultSet.getString("horario"));
+                consultaDTO.setNome(resultSet.getString("nome"));
                 consultas.add(consultaDTO);
             }
             return consultas;
         }catch (Exception e) {
             throw new RuntimeException(e);
         }
-    } 
+    }
+
+    public static void removerConsultaMedico(ConsultaDTO consultaDTO) {
+        try (Connection connection = DBConnector.getConexao()) {
+            String sql = "DELETE FROM consulta WHERE id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, consultaDTO.getId());
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static PacienteDTO getPacientePorConsulta(ConsultaDTO consultaDTO) {
+        try (Connection connection = DBConnector.getConexao()) {
+            String sql = "SELECT * FROM paciente WHERE cpf = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, consultaDTO.getCpfpaciente());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                PacienteDTO pacienteDTO = new PacienteDTO();
+                pacienteDTO.setNome(resultSet.getString("nome"));
+                pacienteDTO.setEmail(resultSet.getString("email"));
+                return pacienteDTO;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
 }

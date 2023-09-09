@@ -56,7 +56,6 @@
 
 <h:body>
     <h:form id="form1">
-        <p:remoteCommand name="carregarConsultas" actionListener="#{pacienteBean.carregarConsultas()}" process="@this" autoRun="true" />
         <header class="header">
 
             <div class="logoInicio">
@@ -126,7 +125,7 @@
             <p:dataTable id="consultas"  var="consulta" value="#{pacienteBean.consultas}"
             style="margin-bottom:20px">
                 <p:column headerText="Médico">
-                    <h:outputText value="#{consulta.nomemedico}"/>
+                    <h:outputText value="#{consulta.nome}"/>
                 </p:column>
 
                 <p:column headerText="Especialidade">

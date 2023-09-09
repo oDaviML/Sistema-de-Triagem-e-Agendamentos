@@ -23,7 +23,6 @@
             </div>
 
             <div class="linksHeader">
-
                 <h4><a href="clinica.xhtml">Clinica</a></h4>
             </div>
 
@@ -38,7 +37,6 @@
         </div>
 
         <div class="conteudo">
-
             <a class="func" href="documentosPaciente.xhtml">
                 <div class="position">
                     <img src="resources/images/imgVisualizar.png" class="imgCont" alt="" />
@@ -51,23 +49,18 @@
                     <h1>ACOMPANHE O HISTÓRICO DE SEUS PACIENTES</h1>
                 </div>
             </a>
-
-            <div class="func" onclick="location.href='https://www.minecraft.net/pt-br/download';">
-
-                <div class="position">
-                    <img src="resources/images/imgChecar.png" class="imgCont" alt="" />
-
-                    <div class="legendaAbove">
-
-                        <h1>Checar</h1>
+            <p:commandLink styleClass="func" action="#{medicoBean.consultasMedico()}" style="text-decoration: none; color: black;">
+                    <div class="position">
+                        <img src="resources/images/imgChecar.png" class="imgCont" alt="" />
+                        <div class="legendaAbove">
+                            <h1>Checar</h1>
+                        </div>
                     </div>
-                </div>
 
-                <div class="legendaBelow">
-
-                    <h1>ACOMPANHE SUAS CONSULTAS AGENDADAS</h1>
-                </div>
-            </div>
+                    <div class="legendaBelow">
+                        <h1>ACOMPANHE SUAS CONSULTAS AGENDADAS</h1>
+                    </div>
+            </p:commandLink>
         </div>
     </h:form>
 </h:body>
