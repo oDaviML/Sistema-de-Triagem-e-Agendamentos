@@ -43,7 +43,7 @@ public class ConsultaDAO {
            
             ps.setString(1, consultaDTO.getCpfmedico());
             ps.setString(2, consultaDTO.getCpfpaciente());
-            ps.setString(3, consultaDTO.getEspecialdiade());
+            ps.setString(3, consultaDTO.getEspecialidade());
             ps.setString(4, consultaDTO.getConvenio());
             ps.setDate(5, new java.sql.Date(consultaDTO.getData().getTime()));
             ps.setString(6, consultaDTO.getHorario());
@@ -72,10 +72,10 @@ public class ConsultaDAO {
             - Cada '?' é um campo subtstituído por um valor.
             */
            
-            ps = connection.prepareStatement("DELETE FROM consultaspacientes WHERE id = ?");
+            ps = connection.prepareStatement("DELETE FROM consulta WHERE id = ?");
            
             //Executa a função SQL recebida como parâmetro.
-
+            System.out.println("ID: " + consultaDTO.getId());
             ps.setInt(1, consultaDTO.getId());
 
             ps.executeUpdate();
@@ -89,17 +89,18 @@ public class ConsultaDAO {
    
     public static List<ConsultaDTO> listarConsultaPaciente(String cpf) {
         try (Connection connection = DBConnector.getConexao()) {
-            String sql = "SELECT c.* FROM consultaspacientes c JOIN paciente p ON p.cpf = c.cpfpaciente WHERE p.cpf = '"+cpf+"';";
+            String sql = "SELECT m.nome, c.* FROM medico m JOIN consulta c ON m.cpf = c.cpfmedico WHERE c.cpfpaciente = '"+cpf+"';";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
             List<ConsultaDTO> consultas = new ArrayList<>();
             while (resultSet.next()) {
                 ConsultaDTO consultaDTO = new ConsultaDTO();
+                consultaDTO.setNomemedico(resultSet.getString("nome"));
                 consultaDTO.setId(resultSet.getInt("id"));
                 consultaDTO.setCpfmedico(resultSet.getString("cpfmedico"));
                 consultaDTO.setCpfpaciente(resultSet.getString("cpfpaciente"));
-                consultaDTO.setEspecialdiade(resultSet.getString("especialidade"));
+                consultaDTO.setEspecialidade(resultSet.getString("especialidade"));
                 consultaDTO.setConvenio(resultSet.getString("convenio"));
                 consultaDTO.setData(resultSet.getDate("data")); 
                 consultaDTO.setHorario(resultSet.getString("horario"));
@@ -124,7 +125,7 @@ public class ConsultaDAO {
                 consultaDTO.setId(resultSet.getInt("id"));
                 consultaDTO.setCpfmedico(resultSet.getString("cpfmedico"));
                 consultaDTO.setCpfpaciente(resultSet.getString("cpfpaciente"));
-                consultaDTO.setEspecialdiade(resultSet.getString("especialidade"));
+                consultaDTO.setEspecialidade(resultSet.getString("especialidade"));
                 consultaDTO.setConvenio(resultSet.getString("convenio"));
                 consultaDTO.setData(resultSet.getDate("data")); 
                 consultaDTO.setHorario(resultSet.getString("horario")); 
@@ -148,7 +149,7 @@ public class ConsultaDAO {
                 consultaDTO.setId(resultSet.getInt("id"));
                 consultaDTO.setCpfmedico(resultSet.getString("cpfmedico"));
                 consultaDTO.setCpfpaciente(resultSet.getString("cpfpaciente"));
-                consultaDTO.setEspecialdiade(resultSet.getString("especialidade"));
+                consultaDTO.setEspecialidade(resultSet.getString("especialidade"));
                 consultaDTO.setConvenio(resultSet.getString("convenio"));
 
                 Timestamp timestamp = resultSet.getTimestamp("data");

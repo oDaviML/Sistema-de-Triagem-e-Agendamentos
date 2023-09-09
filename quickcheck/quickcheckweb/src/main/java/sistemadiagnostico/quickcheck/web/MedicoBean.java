@@ -70,7 +70,7 @@ public class MedicoBean {
 
     public String inserirMedico() throws ClassNotFoundException, SQLException {
         medicoService.cadastrarMedico(medico);
-        //emailService.confimarCadastro(medico.getEmail(), medico.getNome());
+        emailService.confimarCadastro(medico.getEmail(), medico.getNome());
         medico = new MedicoDTO();
         return "/loginFunc.xhtml?faces-redirect=true";
     }

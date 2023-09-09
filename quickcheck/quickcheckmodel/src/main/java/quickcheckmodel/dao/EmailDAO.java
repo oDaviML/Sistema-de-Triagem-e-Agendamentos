@@ -1,43 +1,40 @@
 package quickcheckmodel.dao;
 
-import java.util.Properties;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+import quickcheckmodel.dto.EmailDTO;
 
-import jakarta.mail.Authenticator;
-import jakarta.mail.Message;
-import jakarta.mail.MessagingException;
-import jakarta.mail.PasswordAuthentication;
-import jakarta.mail.Session;
-import jakarta.mail.Transport;
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeMessage;
+import java.io.IOException;
 
 public class EmailDAO {
-    public static void enviarEmail(String email ,String assunto, String mensagem) {
+    public static void enviarEmail(EmailDTO emailDTO) {
+        new Thread(() -> {
+            HttpClient httpClient = HttpClients.createDefault();
 
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587"); 
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+            HttpPost httpPost = new HttpPost("http://localhost:3000/enviaremail");
+            httpPost.setHeader("Content-Type", "application/json");
 
-        Session session = Session.getInstance(props, new Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("quickcheck380@gmail.com", "hvdulpovykyeupra");
+            String requestBody = String.format("{\"email\": \"%s\", \"subject\": \"%s\", \"html\": \"%s\"}", emailDTO.getEmail(), emailDTO.getAssunto(), emailDTO.getMensagem());
+            httpPost.setEntity(new StringEntity(requestBody, ContentType.APPLICATION_JSON));
+
+            try {
+                HttpResponse response = httpClient.execute(httpPost);
+                int statusCode = response.getStatusLine().getStatusCode();
+                String responseBody = EntityUtils.toString(response.getEntity());
+
+                if (statusCode == 200) {
+                    System.out.println("Email enviado com sucesso");
+                } else {
+                    System.out.println("Erro ao enviar email: " + responseBody);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        });
-
-        try {
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("quickcheck380@gmail.com"));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
-            message.setSubject(assunto);
-            message.setContent(mensagem, "text/html; charset=utf-8");
-            Transport.send(message);
-
-        } catch (MessagingException e) {
-            e.printStackTrace();
-            System.out.println("Erro ao enviar o email: " + e.getMessage());
-        }
+        }).start();
     }
 }

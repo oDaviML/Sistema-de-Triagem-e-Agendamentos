@@ -50,6 +50,8 @@ public class PacienteBean {
     private List<PacienteDTO> pacientes = new ArrayList<>();
     private List<DocumentoDTO> documentos = new ArrayList<>();
     private List<ClinicaDTO> clinicas = new ArrayList<>();
+
+    private List<ConsultaDTO> consultasMedico = new ArrayList<>();
     private List<ConsultaDTO> consultas = new ArrayList<>();
     private String[] horariosArray = {"8:00", "8:30","9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00"};
     private List<String> horarios = new ArrayList<>();
@@ -61,10 +63,21 @@ public class PacienteBean {
     private Marker<ClinicaDTO> marker;
     private Date dataSelecionada;
 
+    public void removerConsulta(ConsultaDTO event) throws SQLException {
+        consultaService.removerConsultaPaciente(event);
+        carregarConsultas();
+        emailService.cancelarConsulta(paciente, event);
+        addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Consulta desmarcada");
+    }
+
+    public void carregarConsultas() {
+        consultas = consultaService.listarConsultaPaciente(paciente.getCpf());
+    }
+
     public void carregarHorarios(Date data) {
         horarios = new ArrayList<>(Arrays.asList(horariosArray));
-        consultas = consultaService.listarConsultasMedicos(clinica.getCpfmedico());
-        for (ConsultaDTO consulta : consultas) {
+        consultasMedico = consultaService.listarConsultasMedicos(clinica.getCpfmedico());
+        for (ConsultaDTO consulta : consultasMedico) {
             if (consulta.getData().equals(data)) {
                 horarios.remove(consulta.getHorario());
             }
@@ -80,9 +93,11 @@ public class PacienteBean {
     public void cadastrarConsulta() throws ClassNotFoundException, SQLException {
         consulta.setCpfpaciente(paciente.getCpf());
         consulta.setCpfmedico(clinica.getCpfmedico());
-        consulta.setEspecialdiade(clinica.getEspecialidade());
-
+        consulta.setEspecialidade(clinica.getEspecialidade());
         consultaService.inserirConsultaPaciente(consulta);
+        consulta.setNomemedico(clinica.getNomemedico());
+        emailService.agendamento(paciente, consulta);
+        carregarConsultas();
 
         addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Consulta agendada");
     }
@@ -129,7 +144,7 @@ public class PacienteBean {
     }
     public String inserirPaciente() {
         pacienteService.cadastrarPaciente(paciente);
-        //emailService.confimarCadastro(paciente.getEmail(),paciente.getNome());
+        emailService.confimarCadastro(paciente.getEmail(),paciente.getNome());
         paciente = new PacienteDTO();
         return "/loginPaciente.xhtml?faces-redirect=true";
     }
@@ -144,6 +159,7 @@ public class PacienteBean {
             HttpSession session = (HttpSession)FacesContext.getCurrentInstance( ).getExternalContext().getSession(false);
             session.setAttribute("usuario", paciente);
             documentos = documentoService.listar(paciente.getCpf());
+            carregarConsultas();
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             context.redirect(context.getRequestContextPath() + "/faces/inicioPaciente.xhtml?faces-redirect=true");
         }
@@ -275,5 +291,13 @@ public class PacienteBean {
 
     public void setDataSelecionada(Date dataSelecionada) {
         this.dataSelecionada = dataSelecionada;
+    }
+
+    public List<ConsultaDTO> getConsultasMedico() {
+        return consultasMedico;
+    }
+
+    public void setConsultasMedico(List<ConsultaDTO> consultasMedico) {
+        this.consultasMedico = consultasMedico;
     }
 }

@@ -5,16 +5,26 @@ import java.util.Date;
 public class ConsultaDTO {
 
     private int id;
-    private String cpfpaciente, cpfmedico, especialdiade, convenio, horario;
+    private String cpfpaciente, cpfmedico, especialidade, convenio, horario, nomemedico;
     private Date data;
    
     public ConsultaDTO() {
     }
 
-    public ConsultaDTO(int id,String cpfpaciente, String cpfmedico, String especialdiade, String convenio, Date data, String horario) {
+    public ConsultaDTO(String cpfpaciente, String cpfmedico, String especialidade, String convenio, Date data, String horario, String nomemedico) {
         this.cpfpaciente = cpfpaciente;
         this.cpfmedico = cpfmedico;
-        this.especialdiade = especialdiade;
+        this.especialidade = especialidade;
+        this.convenio = convenio;
+        this.data = data;
+        this.horario = horario;
+        this.nomemedico = nomemedico;
+    }
+
+    public ConsultaDTO(int id,String cpfpaciente, String cpfmedico, String especialidade, String convenio, Date data, String horario) {
+        this.cpfpaciente = cpfpaciente;
+        this.cpfmedico = cpfmedico;
+        this.especialidade = especialidade;
         this.convenio = convenio;
         this.data = data;
         this.horario = horario;
@@ -44,12 +54,12 @@ public class ConsultaDTO {
         this.cpfmedico = cpfmedico;
     }
 
-    public String getEspecialdiade() {
-        return especialdiade;
+    public String getEspecialidade() {
+        return especialidade;
     }
 
-    public void setEspecialdiade(String especialdiade) {
-        this.especialdiade = especialdiade;
+    public void setEspecialidade(String especialidade) {
+        this.especialidade = especialidade;
     }
 
     public String getConvenio() {
@@ -76,5 +86,12 @@ public class ConsultaDTO {
         this.horario = horario;
     }
 
+    public String getNomemedico() {
+        return nomemedico;
+    }
+
+    public void setNomemedico(String nomemedico) {
+        this.nomemedico = nomemedico;
+    }
     
 }

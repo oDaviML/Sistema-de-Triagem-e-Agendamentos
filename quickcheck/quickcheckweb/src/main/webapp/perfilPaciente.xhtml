@@ -48,11 +48,15 @@
         header {
             background-color: white;
         }
+        .card {
+            padding: 2rem;
+        }
     </style>
 </h:head>
 
 <h:body>
-    <h:form>
+    <h:form id="form1">
+        <p:remoteCommand name="carregarConsultas" actionListener="#{pacienteBean.carregarConsultas()}" process="@this" autoRun="true" />
         <header class="header">
 
             <div class="logoInicio">
@@ -68,13 +72,16 @@
             </div>
 
             <div class="linksHeader">
-                <h4><a href="perfilPaciente.xhtml">Perfil</a></h4>
+                <h4><a href="">Perfil</a></h4>
             </div>
             <p:commandButton value="Sair" action="#{pacienteBean.logout()}" styleClass="ui-button-secondary ui-button-flat" />
         </header>
         <div class="tituloAba">
             <h2>Perfil</h2>
         </div>
+    </h:form>
+    <h:form id="form2">
+        <p:growl id="growl" showDetail="true"/>
         <div class="container">
             <h1>Dados do Usuário</h1>
             <table>
@@ -114,6 +121,32 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="card">
+            <p:dataTable id="consultas"  var="consulta" value="#{pacienteBean.consultas}"
+            style="margin-bottom:20px">
+                <p:column headerText="Médico">
+                    <h:outputText value="#{consulta.nomemedico}"/>
+                </p:column>
+
+                <p:column headerText="Especialidade">
+                    <h:outputText value="#{consulta.especialidade}"/>
+                </p:column>
+
+                <p:column headerText="Data">
+                    <h:outputText value="#{consulta.data}"/>
+                </p:column>
+
+                <p:column headerText="Horário">
+                    <h:outputText value="#{consulta.horario}"/>
+                </p:column>
+
+                <p:column style="width:6rem">
+                    <p:commandButton styleClass="rounded-button ui-button-secondary ui-button-flat" process="@this" actionListener="#{pacienteBean.removerConsulta(consulta)}" update="form2:consultas form2:growl" icon="pi pi-trash">
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </div> 
     </h:form>
 </h:body>
 
