@@ -14,22 +14,20 @@
 <h:body>
     <h:form>
         <header class="header">
-
             <div class="logoInicio">
                 <img src="resources/images/logoPrinc.png" id="imgLogoPrinc" alt="" />
             </div>
 
             <div class="linksHeader">
-                <h4><a href="inicioPaciente.xhtml">Início</a></h4>
+                <h4 id="btnInicio"><a href="inicioPaciente.xhtml">Início</a></h4>
             </div>
 
             <div class="linksHeader">
-
-                <h4><a href="">Pré-Diagnóstico</a></h4>
+                <h4 id="btnDiagnostico"><a href="">Pré-Diagnóstico</a></h4>
             </div>
 
             <div class="linksHeader">
-                <h4><a href="perfilPaciente.xhtml">Perfil</a></h4>
+                <h4 id="btnPerfil"><a href="perfilPaciente.xhtml">Perfil</a></h4>
             </div>
             <p:commandButton value="Sair" action="#{pacienteBean.logout()}" styleClass="ui-button-secondary ui-button-flat" />
         </header>
@@ -40,7 +38,7 @@
 
         <div class="conteudo">
 
-            <p:commandLink styleClass="func" action="#{pacienteBean.carregarClinicas()}" style="text-decoration: none; color: black;">
+            <p:commandLink styleClass="func" id="botaoAgendar" action="#{pacienteBean.carregarClinicas()}" style="text-decoration: none; color: black;">
                 <div class="position">
                     <img src="resources/images/imgAgendar.png" class="imgCont" alt="" />
                     <div class="legendaAbove">
@@ -53,7 +51,7 @@
                         MÉDICO QUALIFICADO</h1>
                 </div>
             </p:commandLink>
-            <a class="func" href="envioPaciente.xhtml">
+            <a class="func" id="botaoDocumentos" href="envioPaciente.xhtml">
                 <div>
                     <div class="position">
                         <img src="resources/images/imgEnviar.png" class="imgCont" alt="" />

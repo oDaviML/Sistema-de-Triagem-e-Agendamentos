@@ -75,7 +75,7 @@
             <p:growl id="growl" showDetail="true" />
             <div class="form-group was-validated">
 
-                <label for="cpf">CPF:</label>
+                <label for="cpf">CPF</label>
                 <p:inputMask mask="999.999.999-99" validateMask="true" id="cpf" value="#{medicoBean.medico.cpf}" required="true"  />
 
                 <div class="invalid-feedback">
@@ -97,7 +97,7 @@
             <p:commandButton value="Entrar" action="#{medicoBean.login()}" class="btn btn-success w-100" update="growl" validateClient="true"/>
             <a href="./index.xhtml" class="btn btn-success w-100" style="margin-top: 5px;">Inicio</a>
 
-            <p class="criar">Não tem cadastro? <b><a href="faces/cadastroFunc.xhtml">Crie um</a></b></p>
+            <p class="criar">Não tem cadastro? <b><a id="cadastro" href="faces/cadastroFunc.xhtml">Crie um</a></b></p>
         </h:form>
         </div>
     </h:body>

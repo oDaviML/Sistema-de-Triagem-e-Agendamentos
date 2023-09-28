@@ -81,7 +81,7 @@ public class PacienteBean {
             if (consulta.getData().equals(data)) {
                 horarios.remove(consulta.getHorario());
             }
-}
+        }
     }
 
     public void carregarConvenios() {

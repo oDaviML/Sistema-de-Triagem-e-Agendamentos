@@ -63,15 +63,15 @@
             </div>
 
             <div class="linksHeader">
-                <h4><a href="inicioPaciente.xhtml">Início</a></h4>
+                <h4 id="btnInicio"><a href="inicioPaciente.xhtml">Início</a></h4>
             </div>
 
             <div class="linksHeader">
-                <h4><a href="">Pré-Diagnóstico</a></h4>
+                <h4 id="btnDiagnostico"><a href="">Pré-Diagnóstico</a></h4>
             </div>
 
             <div class="linksHeader">
-                <h4><a href="">Perfil</a></h4>
+                <h4 id="btnPerfil"><a href="">Perfil</a></h4>
             </div>
             <p:commandButton value="Sair" action="#{pacienteBean.logout()}" styleClass="ui-button-secondary ui-button-flat" />
         </header>
@@ -125,19 +125,19 @@
             <p:dataTable id="consultas"  var="consulta" value="#{pacienteBean.consultas}"
             style="margin-bottom:20px">
                 <p:column headerText="Médico">
-                    <h:outputText value="#{consulta.nome}"/>
+                    <h:outputText id="nomeMedico" value="#{consulta.nome}"/>
                 </p:column>
 
                 <p:column headerText="Especialidade">
-                    <h:outputText value="#{consulta.especialidade}"/>
+                    <h:outputText id="especialidade" value="#{consulta.especialidade}"/>
                 </p:column>
 
                 <p:column headerText="Data">
-                    <h:outputText value="#{consulta.data}"/>
+                    <h:outputText id="data" value="#{consulta.data}"/>
                 </p:column>
 
                 <p:column headerText="Horário">
-                    <h:outputText value="#{consulta.horario}"/>
+                    <h:outputText id="horario" value="#{consulta.horario}"/>
                 </p:column>
 
                 <p:column style="width:6rem">

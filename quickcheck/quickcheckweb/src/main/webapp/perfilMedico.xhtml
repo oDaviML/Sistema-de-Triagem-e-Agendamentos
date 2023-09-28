@@ -54,23 +54,23 @@
 <h:body>
     <h:form>
         <header class="header">
-
             <div class="logoInicio">
                 <img src="resources/images/logoPrinc.png" id="imgLogoPrinc" alt="" />
             </div>
 
             <div class="linksHeader">
-                <h4><a href="inicioMedico.xhtml">Início</a></h4>
+                <h4 id="btnInicio"><a href="inicioMedico.xhtml">Início</a></h4>
             </div>
 
             <div class="linksHeader">
-                <h4><a href="clinica.xhtml">Clinica</a></h4>
+                <h4 id="btnClinica"><a href="clinica.xhtml">Clinica</a></h4>
             </div>
 
             <div class="linksHeader">
-                <h4><a href="perfilMedico.xhtml">Perfil</a></h4>
+                <h4 id="btnPerfil"><a href="perfilMedico.xhtml">Perfil</a></h4>
             </div>
-            <p:commandButton value="Sair" action="#{medicoBean.logout()}" styleClass="ui-button-secondary ui-button-flat" />
+            <p:commandButton value="Sair" action="#{medicoBean.logout()}"
+                             styleClass="ui-button-secondary ui-button-flat" />
         </header>
         <div class="tituloAba">
             <h2>Perfil</h2>

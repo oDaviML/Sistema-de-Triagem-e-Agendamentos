@@ -120,19 +120,18 @@
                 </div>
 
                 <div class="linksHeader">
-                    <h4><a href="inicioMedico.xhtml">Início</a></h4>
+                    <h4 id="btnInicio"><a href="inicioMedico.xhtml">Início</a></h4>
                 </div>
 
                 <div class="linksHeader">
-
-                    <h4><a href="clinica.xhtml">Clinica</a></h4>
+                    <h4 id="btnClinica"><a href="clinica.xhtml">Clinica</a></h4>
                 </div>
 
                 <div class="linksHeader">
-                    <h4><a href="perfilMedico.xhtml">Perfil</a></h4>
+                    <h4 id="btnPerfil"><a href="perfilMedico.xhtml">Perfil</a></h4>
                 </div>
                 <p:commandButton value="Sair" action="#{medicoBean.logout()}"
-                    styleClass="ui-button-secondary ui-button-flat" />
+                                 styleClass="ui-button-secondary ui-button-flat" />
             </header>
             <div class="tituloAba">
                 <h2>Documentos</h2>
@@ -148,16 +147,16 @@
                                 <p:commandLink action="#{medicoBean.carregarDocumentos(paciente.cpf)}" update="form2">
                                     <p:card styleClass="card">
                                         <f:facet name="title">
-                                            <h:outputText value="#{paciente.nome}" />
+                                            <h:outputText id="nomePaciente" value="#{paciente.nome}" />
                                         </f:facet>
                                         <p>Data Nascimento: 
                                             <strong>
-                                                <h:outputText value="#{paciente.datanascimento}" />
+                                                <h:outputText id="nascimentoPaciente" value="#{paciente.datanascimento}" />
                                             </strong>
                                         </p>
                                         <p>Convenio: 
                                             <strong>
-                                                <h:outputText value="#{paciente.convenio}" />
+                                                <h:outputText id="convenioPaciente" value="#{paciente.convenio}" />
                                             </strong>
                                         </p>
                                     </p:card>
@@ -168,16 +167,16 @@
                     <div class="content">
                         <p:dataTable id="tabela" var="documento" value="#{medicoBean.documentos}" scrollable="true" styleClass="table">
                             <p:column headerText="Tipo" >
-                                <h:outputText value="#{documento.tipo}"/>
+                                <h:outputText id="tipoDocumento" value="#{documento.tipo}"/>
                             </p:column>
                             <p:column headerText="Nome">
-                                <h:outputText value="#{documento.nome}"/>
+                                <h:outputText id="nomeDocumento" value="#{documento.nome}"/>
                             </p:column>
                             <p:column headerText="Link">
-                                <a href="#{documento.link}" target="_blank"><h:outputText value="#{documento.link}"/></a>
+                                <a id="linkDocumento" href="#{documento.link}" target="_blank"><h:outputText value="#{documento.link}"/></a>
                             </p:column>
                             <p:column headerText="Envio">
-                               <h:outputText value="#{documento.data}"/>
+                               <h:outputText id="dataDocumento" value="#{documento.data}"/>
                             </p:column>
                         </p:dataTable>
                     </div>

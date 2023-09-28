@@ -48,9 +48,9 @@ public class MedicoBean {
 
     public void removerConsulta(ConsultaDTO consulta) {
         consultaService.removerConsultaMedico(consulta);
-        carregarConsultas();
         emailService.cancelarConsultaMedico(consulta, medico.getNome());
-        addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Consulta agendada");
+        carregarConsultas();
+        addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Consulta desmarcada");
     }
 
     public void consultasMedico() throws IOException {
@@ -69,6 +69,7 @@ public class MedicoBean {
             clinica.setNomemedico(medico.getNome());
             clinica = clinicaService.inserirOuAtualizarClinica(clinica);
             carregarMapa(clinica);
+            addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Clinica atualizada");
         } catch (Exception e) {
             e.printStackTrace();
         }

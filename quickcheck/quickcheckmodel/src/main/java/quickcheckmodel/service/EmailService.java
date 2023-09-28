@@ -138,7 +138,7 @@ public class EmailService {
                 + "<h2>Cancelamento de Consulta</h2>"
                 + "<h2>Olá, " + consultaDTO.getNome() + "!</h2>"
                 + "<p>Infelizmente, precisamos informar que sua consulta agendada para o dia " + formattedDate + " às " + consultaDTO.getHorario() + " com " + nomeMedico + " na especialidade de " + consultaDTO.getEspecialidade() + " teve que ser cancelada pelo médico.</p>"
-                + "<p>Para obter mais informações, entre acesse novamente o nosso site.</p>"
+                + "<p>Para obter mais informações, entre e acesse novamente o nosso site.</p>"
                 + "<p>Atenciosamente,</p>"
                 + "<p>A equipe QuickCheck</p>"
                 + "</div>"

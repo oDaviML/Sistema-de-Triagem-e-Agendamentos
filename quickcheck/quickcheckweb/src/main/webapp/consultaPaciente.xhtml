@@ -53,15 +53,15 @@
             </div>
 
             <div class="linksHeader">
-                <h4><a href="inicioPaciente.xhtml">Início</a></h4>
+                <h4 id="btnInicio"><a href="inicioPaciente.xhtml">Início</a></h4>
             </div>
 
             <div class="linksHeader">
-                <h4><a href="">Pré-Diagnóstico</a></h4>
+                <h4 id="btnDiagnostico"><a href="">Pré-Diagnóstico</a></h4>
             </div>
 
             <div class="linksHeader">
-                <h4><a href="perfilPaciente.xhtml">Perfil</a></h4>
+                <h4 id="btnPerfil"><a href="perfilPaciente.xhtml">Perfil</a></h4>
             </div>
             <p:commandButton value="Sair" action="#{pacienteBean.logout()}" styleClass="ui-button-secondary ui-button-flat" />
         </header>
@@ -151,7 +151,7 @@
             </div>
             <p:commandButton value="Agendar Consulta" validateClient="true" action="#{pacienteBean.cadastrarConsulta()}" update="form2 growl" />
         </div>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0QG_G0LdTKu_AIzR9awlnzqIMOU0g3pI" type="text/javascript"></script>   
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0QG_G0LdTKu_AIzR9awlnzqIMOU0g3pI" type="text/javascript"></script>
     </h:form>
 </h:body>
 </html>

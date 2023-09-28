@@ -42,26 +42,26 @@
                          filteredValue="#{medicoBean.consultasFiltradas}">
 
                 <p:column headerText="Paciente">
-                    <h:outputText value="#{consulta.nome}" />
+                    <h:outputText id="nomePaciente" value="#{consulta.nome}" />
                 </p:column>
 
                 <p:column headerText="Convênio" >
-                    <h:outputText value="#{consulta.convenio}" />
+                    <h:outputText id="nomeConvenio" value="#{consulta.convenio}" />
                 </p:column>
 
 
                 <p:column field="data" headerText="Data" filterMatchMode="exact">
                     <f:facet name="filter">
-                        <p:datePicker onchange="PF('consultaTable').filter()" />
+                        <p:datePicker id="dataConsulta" onchange="PF('consultaTable').filter()" />
                     </f:facet>
                 </p:column>
 
                 <p:column headerText="Horário" >
-                    <h:outputText value="#{consulta.horario}" />
+                    <h:outputText id="horarioConsulta" value="#{consulta.horario}" />
                 </p:column>
                 
                 <p:column style="width:6rem">
-                    <p:commandButton styleClass="rounded-button ui-button-secondary ui-button-flat" process="@this" actionListener="#{medicoBean.removerConsulta(consulta)}" update="form2:consultas form2:growl" icon="pi pi-trash">
+                    <p:commandButton styleClass="rounded-button ui-button-secondary ui-button-flat" process="@this" actionListener="#{medicoBean.removerConsulta(consulta)}" update="form2" icon="pi pi-trash">
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
