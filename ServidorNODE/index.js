@@ -26,7 +26,7 @@ app.post('/enviaremail', (req, res) =>{
         subject: subject,
         html: html
     }).then(() => {
-        res.send('enviado');
+        res.status(200).send(req.body);
         console.log('enviado');
     }).catch((err) => {
         console.log(err);
