@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quickcheck</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .checkbox-group-1 {
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 10px;
+            grid-column-gap: 50px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            justify-content: center;
+        }
+
+        .checkbox-group > div {
+            width: 100%;
+        }
+
+        .form-group {
+            flex: 1;
+            margin: 10px;
+            text-align: center;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        .checkbox {
+            margin-bottom: 10px;
+        }
+
+        .checkbox-2 {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        .next-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .submit-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container" id="group1">
+        <h2>Grupo 1: Sintomas Específicos</h2>
+        <div class="checkbox-group-1">
+            <div>
+                <h3>Cabeça e Pescoço</h3>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Dor de cabeça">Dor de cabeça</p>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Garganta doendo">Garganta doendo</p>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Olhos vermelhos">Olhos vermelhos</p>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Coceira nos olhos">Coceira nos olhos</p>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Dor nos olhos">Dor nos olhos</p>
+            </div>
+            <div>
+                <h3>Sistema respiratório:</h3>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Febre">Febre</p>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Tosse seca persistente">Tosse seca persistente</p>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Congestão nasal">Congestão nasal</p>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Dificuldade para respirar">Dificuldade para respirar</p>
+            </div>
+            <div>
+                <h3>Abdômen/Gastrointestinal</h3>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Diarreia">Diarreia</p>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Vômitos frequentes">Vômitos frequentes</p>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Náuseas intensas">Náuseas intensas</p>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Dor abdominal">Dor abdominal</p>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Perda de apetite">Perda de apetite</p>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Alterações no hábito intestinal (constipação ou diarreia)">Alterações no hábito intestinal</p>
+            </div>
+            <div>
+                <h3>Pelve</h3>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Urina com sangue">Urina com sangue</p>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Sensação de queimação ao urinar">Sensação de queimação ao urinar</p>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Dificuldade para iniciar o fluxo urinário">Dificuldade para iniciar o fluxo urinário</p>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Sangramento menstrual excessivo">Sangramento menstrual excessivo</p>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Irregularidades menstruais">Irregularidades menstruais</p>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Sangramento intermenstrual">Sangramento intermenstrual</p>
+            </div>
+            <div>
+                <h3>Pele e Músculos</h3>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Coceira intensa na pele">Coceira intensa na pele</p>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Manchas vermelhas na pele">Manchas vermelhas na pele</p>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Suores noturnos">Suores noturnos</p>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Tremores ou espasmos musculares">Tremores ou espasmos musculares</p>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Inchaço nas articulações">Inchaço nas articulações</p>
+            </div>
+            <div>
+                <h3>Sistema Visual</h3>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Perda de visão">Perda de visão</p>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Sensibilidade à luz">Sensibilidade à luz</p>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Olhos lacrimejando">Olhos lacrimejando</p>
+                <p class="checkbox"><input type="checkbox" name="sintomas" value="Visão embaçada">Visão embaçada</p>
+            </div>
+        </div>
+        <div class="button-container">
+            <button class="next-button" onclick="showGroup('group2')">Próximo</button>
+        </div>
+    </div>
+
+    <div class="container" id="group2" style="display: none;">
+        <h2>Grupo 2: Histórico e Comportamento</h2>
+        <div class="checkbox-group">
+            <div class="form-group upper-group">
+                <div class="form-group">
+                    <label for="tempo-inicio">Tempo de Início dos Sintomas:</label>
+                    <input type="text" id="tempo-inicio" name="tempo-inicio" class="form-control">
+                </div>
+        
+                <div class="form-group">
+                    <label for="historico-viagem">Histórico de Viagem Recentes:</label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="historico-viagem-switch">
+                    </label>
+                    <input type="text" id="historico-viagem" name="historico-viagem" class="form-control" disabled>
+                </div>
+        
+                <div class="form-group">
+                    <label for="contato-infectados">Teve contato com Pessoas Infectadas?</label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="contato-infectados-switch">
+                    </label>
+                    <input type="text" id="contato-infectados" name="contato-infectados" class="form-control" disabled>
+                </div>
+            </div>
+    
+            <div class="form-group lower-group">
+                <div class="form-group">
+                    <label for="atividade-fisica">Realizou alguma atividade física intensa nas últimas semanas?</label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="atividade-fisica-switch">
+                    </label>
+                    <input type="text" id="atividade-fisica" name="atividade-fisica" class="form-control" disabled>
+                </div>
+        
+                <div class="form-group">
+                    <label for="mudanca-dieta">Fez alguma mudança significativa em sua dieta recentemente?</label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="mudanca-dieta-switch">
+                    </label>
+                    <input type="text" id="mudanca-dieta" name="mudanca-dieta" class="form-control" disabled>
+                </div>
+        
+                <div class="form-group">
+                    <label for="mudanca-vida">Condições Pré-Existentes</label>
+                    <div class="checkbox-2">
+                        <input type="checkbox" name="sintomas" value="Diabetes" id="sintoma-diabetes">
+                        <label for="sintoma-diabetes">Diabetes</label>
+                    </div>
+                    <div class="checkbox-2">
+                        <input type="checkbox" name="sintomas" value="Asma" id="sintoma-asma">
+                        <label for="sintoma-asma">Asma</label>
+                    </div>
+                    <div class="checkbox-2">
+                        <input type="checkbox" name="sintomas" value="Olhos-lacrimejando" id="sintoma-olhos">
+                        <label for="sintoma-hipertensão">Hipertensão</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="button-container">
+            <button class="next-button" onclick="showGroup('group3')">Próximo</button>
+        </div>
+    </div>
+
+    <div class="container" id="group3" style="display: none;">
+        <h2>Grupo 3: Fatores de Risco e Estilo de Vida</h2>
+        <div class="checkbox-group">
+            <div class="form-group">
+                <label for="historico-alergias">Tem histórico de alergias conhecidas?</label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="historico-alergias-switch">
+                </label>
+                <input type="text" id="historico-alergias" name="historico-alergias" class="form-control" disabled>
+            </div>
+    
+            <div class="form-group">
+                <label for="historico-doencas-cardiacas">Tem histórico de doenças cardíacas na família?</label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="historico-doencas-cardiacas-switch">
+                </label>
+                <input type="text" id="historico-doencas-cardiacas" name="historico-doencas-cardiacas" class="form-control" disabled>
+            </div>
+    
+            <div class="form-group">
+                <label for="historico-cancer">Tem histórico de câncer na família?</label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="historico-cancer-switch">
+                </label>
+                <input type="text" id="historico-cancer" name="historico-cancer" class="form-control" disabled>
+            </div>
+    
+            <div class="form-group">
+                <label for="historico-doencas-renais">Tem histórico de doenças renais?</label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="historico-doencas-renais-switch">
+                </label>
+                <input type="text" id="historico-doencas-renais" name="historico-doencas-renais" class="form-control" disabled>
+            </div>
+    
+            <div class="form-group">
+                <label for="historico-tabagismo-alcool">Tem histórico de tabagismo ou consumo de álcool?</label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="historico-tabagismo-alcool-switch">
+                </label>
+                <input type="text" id="historico-tabagismo-alcool" name="historico-tabagismo-alcool" class="form-control" disabled>
+            </div>
+    
+            <div class="form-group">
+                <label for="historico-transtornos-psiquiatricos">Tem histórico de transtornos psiquiátricos, como depressão ou ansiedade?</label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="historico-transtornos-psiquiatricos-switch">
+                </label>
+                <input type="text" id="historico-transtornos-psiquiatricos" name="historico-transtornos-psiquiatricos" class="form-control" disabled>
+            </div>
+    
+            <div class="form-group">
+                <label for="exercicios-fisicos">Pratica exercícios físicos regularmente?</label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="exercicios-fisicos-switch">
+                </label>
+                <input type="text" id="exercicios-fisicos" name="exercicios-fisicos" class="form-control" disabled>
+            </div>
+
+            <div class="form-group">
+                <label for="metodo-contraceptivo-hormonio">Utiliza algum método contraceptivo ou hormônios?</label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="metodo-contraceptivo-hormonio-switch">
+                </label>
+                <input type="text" id="metodo-contraceptivo-hormonio" name="metodo-contraceptivo-hormonio" class="form-control" disabled>
+            </div>
+
+            <div class="form-group">
+                <label for="cirurgia-procedimento-medico">Teve alguma cirurgia ou procedimento médico anteriormente?</label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="cirurgia-procedimento-medico-switch">
+                </label>
+                <input type="text" id="cirurgia-procedimento-medico" name="cirurgia-procedimento-medico" class="form-control" disabled>
+            </div>
+
+        <div class="button-container">
+            <button class="submit-button">Enviar</button>
+        </div>
+    </div>
+
+    <script>
+        function showGroup(groupId) {
+            var groups = document.querySelectorAll('.container');
+            for (var i = 0; i < groups.length; i++) {
+                groups[i].style.display = 'none';
+            }
+            
+            document.getElementById(groupId).style.display = 'block';
+        }
+
+        const historicoViagemSwitch = document.getElementById('historico-viagem-switch');
+        const historicoViagemInput = document.getElementById('historico-viagem');
+        const contatoInfectadosSwitch = document.getElementById('contato-infectados-switch');
+        const contatoInfectadosInput = document.getElementById('contato-infectados');
+        const atividadeFisicaSwitch = document.getElementById('atividade-fisica-switch');
+        const atividadeFisicaInput = document.getElementById('atividade-fisica');
+        const mudancaDietaSwitch = document.getElementById('mudanca-dieta-switch');
+        const mudancaDietaInput = document.getElementById('mudanca-dieta');
+        const historicoAlergiasSwitch = document.getElementById('historico-alergias-switch');
+        const historicoAlergiasInput = document.getElementById('historico-alergias');
+        const historicoDoencasCardiacasSwitch = document.getElementById('historico-doencas-cardiacas-switch');
+        const historicoDoencasCardiacasInput = document.getElementById('historico-doencas-cardiacas');
+        const historicoCancerSwitch = document.getElementById('historico-cancer-switch');
+        const historicoCancerInput = document.getElementById('historico-cancer');
+        const historicoDoencasRenaisSwitch = document.getElementById('historico-doencas-renais-switch');
+        const historicoDoencasRenaisInput = document.getElementById('historico-doencas-renais');
+        const historicoTabagismoAlcoolSwitch = document.getElementById('historico-tabagismo-alcool-switch');
+        const historicoTabagismoAlcoolInput = document.getElementById('historico-tabagismo-alcool');
+        const historicoTranstornosPsiquiatricosSwitch = document.getElementById('historico-transtornos-psiquiatricos-switch');
+        const historicoTranstornosPsiquiatricosInput = document.getElementById('historico-transtornos-psiquiatricos');
+        const exerciciosFisicosSwitch = document.getElementById('exercicios-fisicos-switch');
+        const exerciciosFisicosInput = document.getElementById('exercicios-fisicos');
+        const metodoContraceptivoHormonioSwitch = document.getElementById('metodo-contraceptivo-hormonio-switch');
+        const metodoContraceptivoHormonioInput = document.getElementById('metodo-contraceptivo-hormonio');
+        const cirurgiaProcedimentoMedicoSwitch = document.getElementById('cirurgia-procedimento-medico-switch');
+        const cirurgiaProcedimentoMedicoInput = document.getElementById('cirurgia-procedimento-medico');
+
+
+        historicoViagemSwitch.addEventListener('change', function() {
+            historicoViagemInput.disabled = !historicoViagemSwitch.checked;
+        });
+
+        contatoInfectadosSwitch.addEventListener('change', function() {
+            contatoInfectadosInput.disabled = !contatoInfectadosSwitch.checked;
+        });
+
+        atividadeFisicaSwitch.addEventListener('change', function() {
+            atividadeFisicaInput.disabled = !atividadeFisicaSwitch.checked;
+        });
+
+        mudancaDietaSwitch.addEventListener('change', function() {
+            mudancaDietaInput.disabled = !mudancaDietaSwitch.checked;
+        });
+
+        historicoAlergiasSwitch.addEventListener('change', function() {
+            historicoAlergiasInput.disabled = !historicoAlergiasSwitch.checked;
+        });
+
+        historicoDoencasCardiacasSwitch.addEventListener('change', function() {
+            historicoDoencasCardiacasInput.disabled = !historicoDoencasCardiacasSwitch.checked;
+        });
+
+        historicoCancerSwitch.addEventListener('change', function() {
+            historicoCancerInput.disabled = !historicoCancerSwitch.checked;
+        });
+
+        historicoDoencasRenaisSwitch.addEventListener('change', function() {
+            historicoDoencasRenaisInput.disabled = !historicoDoencasRenaisSwitch.checked;
+        });
+
+        historicoTabagismoAlcoolSwitch.addEventListener('change', function() {
+            historicoTabagismoAlcoolInput.disabled = !historicoTabagismoAlcoolSwitch.checked;
+        });
+
+        historicoTranstornosPsiquiatricosSwitch.addEventListener('change', function() {
+            historicoTranstornosPsiquiatricosInput.disabled = !historicoTranstornosPsiquiatricosSwitch.checked;
+        });
+
+        exerciciosFisicosSwitch.addEventListener('change', function() {
+            exerciciosFisicosInput.disabled = !exerciciosFisicosSwitch.checked;
+        });
+        
+        metodoContraceptivoHormonioSwitch.addEventListener('change', function() {
+            metodoContraceptivoHormonioInput.disabled = !metodoContraceptivoHormonioSwitch.checked;
+        });
+
+        cirurgiaProcedimentoMedicoSwitch.addEventListener('change', function() {
+            cirurgiaProcedimentoMedicoInput.disabled = !cirurgiaProcedimentoMedicoSwitch.checked;
+        });
+    </script>
+</body>
+</html>
