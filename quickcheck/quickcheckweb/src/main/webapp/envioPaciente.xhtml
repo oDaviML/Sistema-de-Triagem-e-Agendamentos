@@ -1,124 +1,134 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:jsf="http://xmlns.jcp.org/jsf"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 
-<h:head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="resources/css/style.css" />
+    <h:head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="resources/css/style.css" />
 
-    <title>QuickCheck</title>
-    <style>
-        .card {
-            padding: 2rem;
-        }
-    </style>
-</h:head>
+        <title>QuickCheck</title>
+        <style>
+            .card {
+                padding: 2rem;
+            }
+        </style>
+    </h:head>
 
-<h:body>
-    <h:form id="form1">
-        <header class="header">
-            <div class="logoInicio">
-                <img src="resources/images/logoPrinc.png" id="imgLogoPrinc" alt="" />
+    <h:body>
+        <div vw="" class="enabled">
+            <div vw-access-button="" class="active"></div>
+            <div vw-plugin-wrapper="">
+                <div class="vw-plugin-top-wrapper"></div>
             </div>
-
-            <div class="linksHeader">
-                <h4 id="btnInicio"><a href="inicioPaciente.xhtml">Início</a></h4>
-            </div>
-
-            <div class="linksHeader">
-                <h4 id="btnDiagnostico"><a href="">Pré-Diagnóstico</a></h4>
-            </div>
-
-            <div class="linksHeader">
-                <h4 id="btnPerfil"><a href="perfilPaciente.xhtml">Perfil</a></h4>
-            </div>
-            <p:commandButton value="Sair" action="#{pacienteBean.logout()}" styleClass="ui-button-secondary ui-button-flat" />
-        </header>
-        <div class="tituloAba">
-            <h2>Documentos</h2>
         </div>
-    </h:form>
-    <h:form id="form2">
-        <div class="card">
-            <div class="input-group">
-                <div class="input-box">
-                    <label for="tipo">Tipo: </label>
-                    <p:selectOneMenu id="tipo" value="#{pacienteBean.documento.tipo}" required="true">
-                        <f:selectItem itemLabel="PDF" itemValue="PDF"/>
-                        <f:selectItem itemLabel="PNG" itemValue="PNG"/>
-                        <f:selectItem itemLabel="JPG" itemValue="JPG"/>
-                    </p:selectOneMenu>
-                    
-                    <label for="nome">Nome: </label>
-                    <p:inputText id="nome" value="#{pacienteBean.documento.nome}" type="text" required="true" label="Nome" />
-                    
-                    <label for="link">Link: </label>
-                    <p:inputText id="link" value="#{pacienteBean.documento.link}" type="text" required="true" label="Link" />
-                    
-                    <p:commandButton value="Adicionar" icon="pi pi-upload" validateClient="true" style="margin-left: 1rem;" update="form2" action="#{pacienteBean.inserirDocumento()}" styleClass="mr-2 ui-button-outlined"/>
+        <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+        <script>
+            new window.VLibras.Widget('https://vlibras.gov.br/app');
+        </script>
+        <h:form id="form1">
+            <header class="header">
+                <div class="logoInicio">
+                    <img src="resources/images/logoPrinc.png" id="imgLogoPrinc" alt="" />
+                </div>
+
+                <div class="linksHeader">
+                    <h4 id="btnInicio"><a href="inicioPaciente.xhtml">Início</a></h4>
+                </div>
+
+                <div class="linksHeader">
+                    <h4 id="btnDiagnostico"><a href="">Pré-Diagnóstico</a></h4>
+                </div>
+
+                <div class="linksHeader">
+                    <h4 id="btnPerfil"><a href="perfilPaciente.xhtml">Perfil</a></h4>
+                </div>
+                <p:commandButton value="Sair" action="#{pacienteBean.logout()}" styleClass="ui-button-secondary ui-button-flat" />
+            </header>
+            <div class="tituloAba">
+                <h2>Documentos</h2>
+            </div>
+        </h:form>
+        <h:form id="form2">
+            <div class="card">
+                <div class="input-group">
+                    <div class="input-box">
+                        <label for="tipo">Tipo: </label>
+                        <p:selectOneMenu id="tipo" value="#{pacienteBean.documento.tipo}" required="true">
+                            <f:selectItem itemLabel="PDF" itemValue="PDF"/>
+                            <f:selectItem itemLabel="PNG" itemValue="PNG"/>
+                            <f:selectItem itemLabel="JPG" itemValue="JPG"/>
+                        </p:selectOneMenu>
+
+                        <label for="nome">Nome: </label>
+                        <p:inputText id="nome" value="#{pacienteBean.documento.nome}" type="text" required="true" label="Nome" />
+
+                        <label for="link">Link: </label>
+                        <p:inputText id="link" value="#{pacienteBean.documento.link}" type="text" required="true" label="Link" />
+
+                        <p:commandButton value="Adicionar" icon="pi pi-upload" validateClient="true" style="margin-left: 1rem;" update="form2" action="#{pacienteBean.inserirDocumento()}" styleClass="mr-2 ui-button-outlined"/>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <p:growl id="msgs" showDetail="true"/>
-        <div class="card">
-            <p:dataTable id="documentos" var="documento" value="#{pacienteBean.documentos}" editable="true"
-            style="margin-bottom:20px">
+            <p:growl id="msgs" showDetail="true"/>
+            <div class="card">
+                <p:dataTable id="documentos" var="documento" value="#{pacienteBean.documentos}" editable="true"
+                             style="margin-bottom:20px">
 
-                <p:ajax event="rowEdit" listener="#{pacienteBean.atualizarDocumento}" update="form2:documentos form2:msgs" immediate="true"/>
+                    <p:ajax event="rowEdit" listener="#{pacienteBean.atualizarDocumento}" update="form2:documentos form2:msgs" immediate="true"/>
 
-                <p:column headerText="Tipo">
-                    <p:cellEditor>
-                        <f:facet name="output">
-                            <h:outputText id="outputTipo" value="#{documento.tipo}"/>
-                        </f:facet>
-                        <f:facet name="input">
-                            <p:selectOneMenu  value="#{documento.tipo}" style="width:100%" >
-                                <f:selectItem itemLabel="PDF" itemValue="PDF"/>
-                                <f:selectItem itemLabel="PNG" itemValue="PNG"/>
-                                <f:selectItem itemLabel="JPG" itemValue="JPG"/>
-                            </p:selectOneMenu>
-                        </f:facet>
-                    </p:cellEditor>
-                </p:column>
+                    <p:column headerText="Tipo">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText id="outputTipo" value="#{documento.tipo}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu  value="#{documento.tipo}" style="width:100%" >
+                                    <f:selectItem itemLabel="PDF" itemValue="PDF"/>
+                                    <f:selectItem itemLabel="PNG" itemValue="PNG"/>
+                                    <f:selectItem itemLabel="JPG" itemValue="JPG"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
 
-                <p:column headerText="Nome">
-                    <p:cellEditor>
-                        <f:facet name="output">
-                            <h:outputText id="outputNome" value="#{documento.nome}"/>
-                        </f:facet>
-                        <f:facet name="input">
-                            <p:inputText id="inputNome" value="#{documento.nome}" style="width:100%" label="Name"/>
-                        </f:facet>
-                    </p:cellEditor>
-                </p:column>
+                    <p:column headerText="Nome">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText id="outputNome" value="#{documento.nome}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText id="inputNome" value="#{documento.nome}" style="width:100%" label="Name"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
 
-                <p:column headerText="Link">
-                    <p:cellEditor>
-                        <f:facet name="output">
-                            <a id="outputLink" href="#{documento.link}" target="_blank"><h:outputText value="#{documento.link}"/></a>
-                        </f:facet>
-                        <f:facet name="input">
-                            <p:inputText id="inputLink" value="#{documento.link}" style="width:100%" label="Name"/>
-                        </f:facet>
-                    </p:cellEditor>
-                </p:column>
+                    <p:column headerText="Link">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <a id="outputLink" href="#{documento.link}" target="_blank"><h:outputText value="#{documento.link}"/></a>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText id="inputLink" value="#{documento.link}" style="width:100%" label="Name"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
 
-                <p:column headerText="Data Envio">
-                    <h:outputText value="#{documento.data}"/>
-                </p:column>
+                    <p:column headerText="Data Envio">
+                        <h:outputText value="#{documento.data}"/>
+                    </p:column>
 
-                <p:column style="width:6rem">
-                    <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
-                    <p:commandButton styleClass="rounded-button ui-button-secondary ui-button-flat" process="@this" actionListener="#{pacienteBean.removerDocumento(documento)}" update="form2:documentos form2:msgs" icon="pi pi-trash">
-                    </p:commandButton>
-                </p:column>
+                    <p:column style="width:6rem">
+                        <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
+                        <p:commandButton styleClass="rounded-button ui-button-secondary ui-button-flat" process="@this" actionListener="#{pacienteBean.removerDocumento(documento)}" update="form2:documentos form2:msgs" icon="pi pi-trash">
+                        </p:commandButton>
+                    </p:column>
 
-            </p:dataTable>
-        </div> 
-    </h:form>
-</h:body>
+                </p:dataTable>
+            </div> 
+        </h:form>
+    </h:body>
 
 </html>

@@ -1,152 +1,162 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:jsf="http://xmlns.jcp.org/jsf"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 
-<h:head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="resources/css/style.css" />
-    <title>QuickCheck</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-        }
+    <h:head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="resources/css/style.css" />
+        <title>QuickCheck</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f5f5f5;
+            }
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
+            .container {
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #fff;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
 
-        h1 {
-            text-align: center;
-            color: #333;
-        }
+            h1 {
+                text-align: center;
+                color: #333;
+            }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
 
-        th,
-        td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
+            th,
+            td {
+                padding: 10px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
 
-        th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-        }
-        header {
-            background-color: white;
-        }
-        .card {
-            padding: 2rem;
-        }
-    </style>
-</h:head>
+            th {
+                background-color: #f2f2f2;
+                font-weight: bold;
+            }
+            header {
+                background-color: white;
+            }
+            .card {
+                padding: 2rem;
+            }
+        </style>
+    </h:head>
 
-<h:body>
-    <h:form id="form1">
-        <header class="header">
-
-            <div class="logoInicio">
-                <img src="resources/images/logoPrinc.png" id="imgLogoPrinc" alt="" />
+    <h:body>
+        <div vw="" class="enabled">
+            <div vw-access-button="" class="active"></div>
+            <div vw-plugin-wrapper="">
+                <div class="vw-plugin-top-wrapper"></div>
             </div>
-
-            <div class="linksHeader">
-                <h4 id="btnInicio"><a href="inicioPaciente.xhtml">Início</a></h4>
-            </div>
-
-            <div class="linksHeader">
-                <h4 id="btnDiagnostico"><a href="">Pré-Diagnóstico</a></h4>
-            </div>
-
-            <div class="linksHeader">
-                <h4 id="btnPerfil"><a href="">Perfil</a></h4>
-            </div>
-            <p:commandButton value="Sair" action="#{pacienteBean.logout()}" styleClass="ui-button-secondary ui-button-flat" />
-        </header>
-        <div class="tituloAba">
-            <h2>Perfil</h2>
         </div>
-    </h:form>
-    <h:form id="form2">
-        <p:growl id="growl" showDetail="true"/>
-        <div class="container">
-            <h1>Dados do Usuário</h1>
-            <table>
-                <tbody>
-                    <tr>
-                        <th>Nome:</th>
-                        <td id="nome">#{pacienteBean.paciente.nome}</td>
-                    </tr>
+        <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+        <script>
+            new window.VLibras.Widget('https://vlibras.gov.br/app');
+        </script>
+        <h:form id="form1">
+            <header class="header">
 
-                    <tr>
-                        <th>CPF:</th>
-                        <td id="cpf">#{pacienteBean.paciente.cpf}</td>
-                    </tr>
+                <div class="logoInicio">
+                    <img src="resources/images/logoPrinc.png" id="imgLogoPrinc" alt="" />
+                </div>
 
-                    <tr>
-                        <th>Endereço:</th>
-                        <td id="endereco">#{pacienteBean.paciente.endereco}</td>
-                    </tr>
+                <div class="linksHeader">
+                    <h4 id="btnInicio"><a href="inicioPaciente.xhtml">Início</a></h4>
+                </div>
 
-                    <tr>
-                        <th>Email:</th>
-                        <td id="email">#{pacienteBean.paciente.email}</td>
-                    </tr>
+                <div class="linksHeader">
+                    <h4 id="btnDiagnostico"><a href="">Pré-Diagnóstico</a></h4>
+                </div>
 
-                    <tr>
-                        <th>Convênio:</th>
-                        <td id="convenio">#{pacienteBean.paciente.convenio}</td>
-                    </tr>
-                    <tr>
-                        <th>Telefone:</th>
-                        <td id="telefone">#{pacienteBean.paciente.telefone}</td>
-                    </tr>
-                    <tr>
-                        <th>Data de Nascimento:</th>
-                        <td id="data-nascimento">#{pacienteBean.paciente.datanascimento}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                <div class="linksHeader">
+                    <h4 id="btnPerfil"><a href="">Perfil</a></h4>
+                </div>
+                <p:commandButton value="Sair" action="#{pacienteBean.logout()}" styleClass="ui-button-secondary ui-button-flat" />
+            </header>
+            <div class="tituloAba">
+                <h2>Perfil</h2>
+            </div>
+        </h:form>
+        <h:form id="form2">
+            <p:growl id="growl" showDetail="true"/>
+            <div class="container">
+                <h1>Dados do Usuário</h1>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Nome:</th>
+                            <td id="nome">#{pacienteBean.paciente.nome}</td>
+                        </tr>
 
-        <div class="card">
-            <p:dataTable id="consultas"  var="consulta" value="#{pacienteBean.consultas}"
-            style="margin-bottom:20px">
-                <p:column headerText="Médico">
-                    <h:outputText id="nomeMedico" value="#{consulta.nome}"/>
-                </p:column>
+                        <tr>
+                            <th>CPF:</th>
+                            <td id="cpf">#{pacienteBean.paciente.cpf}</td>
+                        </tr>
 
-                <p:column headerText="Especialidade">
-                    <h:outputText id="especialidade" value="#{consulta.especialidade}"/>
-                </p:column>
+                        <tr>
+                            <th>Endereço:</th>
+                            <td id="endereco">#{pacienteBean.paciente.endereco}</td>
+                        </tr>
 
-                <p:column headerText="Data">
-                    <h:outputText id="data" value="#{consulta.data}"/>
-                </p:column>
+                        <tr>
+                            <th>Email:</th>
+                            <td id="email">#{pacienteBean.paciente.email}</td>
+                        </tr>
 
-                <p:column headerText="Horário">
-                    <h:outputText id="horario" value="#{consulta.horario}"/>
-                </p:column>
+                        <tr>
+                            <th>Convênio:</th>
+                            <td id="convenio">#{pacienteBean.paciente.convenio}</td>
+                        </tr>
+                        <tr>
+                            <th>Telefone:</th>
+                            <td id="telefone">#{pacienteBean.paciente.telefone}</td>
+                        </tr>
+                        <tr>
+                            <th>Data de Nascimento:</th>
+                            <td id="data-nascimento">#{pacienteBean.paciente.datanascimento}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-                <p:column style="width:6rem">
-                    <p:commandButton styleClass="rounded-button ui-button-secondary ui-button-flat" process="@this" actionListener="#{pacienteBean.removerConsulta(consulta)}" update="form2:consultas form2:growl" icon="pi pi-trash">
-                    </p:commandButton>
-                </p:column>
-            </p:dataTable>
-        </div> 
-    </h:form>
-</h:body>
+            <div class="card">
+                <p:dataTable id="consultas"  var="consulta" value="#{pacienteBean.consultas}"
+                             style="margin-bottom:20px">
+                    <p:column headerText="Médico">
+                        <h:outputText id="nomeMedico" value="#{consulta.nome}"/>
+                    </p:column>
+
+                    <p:column headerText="Especialidade">
+                        <h:outputText id="especialidade" value="#{consulta.especialidade}"/>
+                    </p:column>
+
+                    <p:column headerText="Data">
+                        <h:outputText id="data" value="#{consulta.data}"/>
+                    </p:column>
+
+                    <p:column headerText="Horário">
+                        <h:outputText id="horario" value="#{consulta.horario}"/>
+                    </p:column>
+
+                    <p:column style="width:6rem">
+                        <p:commandButton styleClass="rounded-button ui-button-secondary ui-button-flat" process="@this" actionListener="#{pacienteBean.removerConsulta(consulta)}" update="form2:consultas form2:growl" icon="pi pi-trash">
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </div> 
+        </h:form>
+    </h:body>
 
 </html>
