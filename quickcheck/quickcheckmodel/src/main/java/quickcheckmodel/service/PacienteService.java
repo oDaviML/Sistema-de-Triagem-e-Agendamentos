@@ -19,4 +19,8 @@ public class PacienteService {
     public PacienteDTO login(String cpf, String senha) {
         return pacienteDAO.login(cpf, senha);
     }
+
+    public String obterCoordenada(String endereco) {
+        return pacienteDAO.obterCoordenada(endereco);
+    }
 }

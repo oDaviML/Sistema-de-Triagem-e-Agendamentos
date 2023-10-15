@@ -6,6 +6,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.maps.GeoApiContext;
+import com.google.maps.GeocodingApi;
+import com.google.maps.model.GeocodingResult;
+import com.google.maps.model.LatLng;
+
 import quickcheckmodel.dto.PacienteDTO;
 import quickcheckmodel.service.SenhaService;
 
@@ -93,6 +98,21 @@ public class PacienteDAO extends BaseDAO<PacienteDTO> {
             pacienteDTO.setTelefone(resultSet.getString("telefone"));
             pacienteDTO.setDatanascimento(resultSet.getDate("nascimento"));
             return pacienteDTO;
+        }
+        return null;
+    }
+
+    public static String obterCoordenada(String endereco) {
+        try {
+            GeoApiContext context = new GeoApiContext.Builder().apiKey("AIzaSyC0QG_G0LdTKu_AIzR9awlnzqIMOU0g3pI").build();
+            GeocodingResult[] results;
+            System.out.println(endereco);
+            results = GeocodingApi.geocode(context, endereco).await();
+            context.shutdown();
+            LatLng coordenadas = new LatLng(results[0].geometry.location.lat, results[0].geometry.location.lng);
+            return coordenadas.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }

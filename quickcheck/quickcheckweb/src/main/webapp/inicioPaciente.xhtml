@@ -6,7 +6,7 @@
 
 <h:head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="resources/css/style.css" />
+    <link rel="stylesheet" href="faces/resources/css/style.css" />
 
     <title>QuickCheck</title>
 </h:head>
@@ -14,21 +14,20 @@
 <h:body>
     <h:form>
         <header class="header">
-
             <div class="logoInicio">
                 <img src="resources/images/logoPrinc.png" id="imgLogoPrinc" alt="" />
             </div>
 
             <div class="linksHeader">
-                <h4><a href="inicioPaciente.xhtml">INÍCIO</a></h4>
+                <h4 id="btnInicio"><a href="inicioPaciente.xhtml">Início</a></h4>
             </div>
 
             <div class="linksHeader">
-                <h4><a href="">PRÉ-DIAGNÓSTICO</a></h4>
+                <h4 id="btnDiagnostico"><a href="">Pré-Diagnóstico</a></h4>
             </div>
 
             <div class="linksHeader">
-                <h4><a href="perfilPaciente.xhtml">Perfil</a></h4>
+                <h4 id="btnPerfil"><a href="perfilPaciente.xhtml">Perfil</a></h4>
             </div>
             <p:commandButton value="Sair" action="#{pacienteBean.logout()}" styleClass="ui-button-secondary ui-button-flat" />
         </header>
@@ -39,7 +38,7 @@
 
         <div class="conteudo">
 
-            <a class="func" href="envioPaciente.xhtml">
+            <p:commandLink styleClass="func" id="botaoAgendar" action="#{pacienteBean.carregarClinicas()}" style="text-decoration: none; color: black;">
                 <div class="position">
                     <img src="resources/images/imgAgendar.png" class="imgCont" alt="" />
                     <div class="legendaAbove">
@@ -47,20 +46,24 @@
                     </div>
                 </div>
                 <div class="legendaBelow">
-                    <h1>AQUI VOCÊ PODE MARCAR SUA CONSULTA COM UM MÉDICO QUALIFICADO</h1>
+                    <h1>AQUI VOCÊ PODE MARCAR
+                        SUA CONSULTA COM UM
+                        MÉDICO QUALIFICADO</h1>
                 </div>
-            </a>
-            <a class="func" href="envioPaciente.xhtml">
-                <div class="position">
-                    <img src="resources/images/imgEnviar.png" class="imgCont" alt="" />
-                    <div class="legendaAbove">
-                        <h1>Enviar</h1>
+            </p:commandLink>
+            <a class="func" id="botaoDocumentos" href="envioPaciente.xhtml">
+                <div>
+                    <div class="position">
+                        <img src="resources/images/imgEnviar.png" class="imgCont" alt="" />
+                        <div class="legendaAbove">
+                            <h1>Enviar</h1>
+                        </div>
                     </div>
-                </div>
 
-                <div class="legendaBelow">
+                    <div class="legendaBelow">
 
-                    <h1>AQUI VOCÊ PODE FAZER UPLOAD DE SEUS DOCUMENTOS</h1>
+                        <h1>AQUI VOCÊ PODE FAZER UPLOAD DE SEUS DOCUMENTOS</h1>
+                    </div>
                 </div>
             </a>
             

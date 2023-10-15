@@ -5,7 +5,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.primefaces.event.SelectEvent;
 import org.primefaces.event.map.OverlaySelectEvent;
+import org.primefaces.model.DefaultScheduleEvent;
+import org.primefaces.model.ScheduleEvent;
+import org.primefaces.model.ScheduleModel;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
@@ -17,37 +21,43 @@ import jakarta.faces.bean.SessionScoped;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.servlet.http.HttpSession;
-import quickcheckmodel.dto.ClinicaDTO;
-import quickcheckmodel.dto.DocumentoDTO;
-import quickcheckmodel.dto.MedicoDTO;
-import quickcheckmodel.dto.PacienteDTO;
-import quickcheckmodel.service.ClinicaService;
-import quickcheckmodel.service.DocumentoService;
-import quickcheckmodel.service.EmailService;
-import quickcheckmodel.service.MedicoService;
-import quickcheckmodel.service.PacienteService;
+import quickcheckmodel.dto.*;
+import quickcheckmodel.service.*;
+
 @SessionScoped
 @ManagedBean
 public class MedicoBean {
     private MedicoDTO medico = new MedicoDTO();
     private MedicoService medicoService = new MedicoService();
-
     private ClinicaDTO clinica = new ClinicaDTO();
     private ClinicaService clinicaService = new ClinicaService();
-
-  
+    private ConsultaDTO consulta = new ConsultaDTO();
+    private ConsultaService consultaService = new ConsultaService();
     private DocumentoService documentoService = new DocumentoService();
-
     private EmailService emailService = new EmailService();
     private PacienteService pacienteService = new PacienteService();
-    private String senha;
 
     private List<MedicoDTO> medicos = new ArrayList<>();
     private List<PacienteDTO> pacientes = new ArrayList<>();
     private List<DocumentoDTO> documentos = new ArrayList<>();
+    private List<ConsultaDTO> consultas = new ArrayList<>();
 
     private MapModel model;
     private Marker<String> marker;
+    private List<ConsultaDTO> consultasFiltradas;
+
+    public void removerConsulta(ConsultaDTO consulta) {
+        consultaService.removerConsultaMedico(consulta);
+        emailService.cancelarConsultaMedico(consulta, medico.getNome());
+        carregarConsultas();
+        addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Consulta desmarcada");
+    }
+
+    public void consultasMedico() throws IOException {
+        carregarConsultas();
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+        context.redirect(context.getRequestContextPath() + "/faces/consultaMedico.xhtml?faces-redirect=true");
+    }
 
     public void carregarDocumentos(String cpf) {
         documentos = documentoService.listar(cpf);
@@ -56,11 +66,17 @@ public class MedicoBean {
     public void inserirOuAtualizarClinica() throws ClassNotFoundException {
         try {
             clinica.setCpfmedico(medico.getCpf());
+            clinica.setNomemedico(medico.getNome());
             clinica = clinicaService.inserirOuAtualizarClinica(clinica);
             carregarMapa(clinica);
+            addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Clinica atualizada");
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void carregarConsultas() {
+        consultas = consultaService.listarConsultasMedicos(medico.getCpf());
     }
 
     public void carregarMapa(ClinicaDTO clinica) {
@@ -81,7 +97,7 @@ public class MedicoBean {
         medicos = medicoService.listar();
     }
     
-    public void login() throws IOException, ClassNotFoundException {
+    public void login() throws IOException, ClassNotFoundException, SQLException {
         medico = medicoService.login(medico.getCpf(), medico.getSenha());
         if (medico != null) {
             HttpSession session = (HttpSession)FacesContext.getCurrentInstance( ).getExternalContext().getSession(false);
@@ -89,10 +105,10 @@ public class MedicoBean {
             if (clinicaService.obterClinicaPorCPF(medico.getCpf()) != null) {
                 clinica = clinicaService.obterClinicaPorCPF(medico.getCpf());
                 carregarMapa(clinica);
-                pacientes = pacienteService.listar();
+                pacientes = documentoService.listarPacientes(medico.getCpf());
             }
             else {
-                clinica = new ClinicaDTO("", "", "", new String[0], "", "", "");
+                clinica = new ClinicaDTO("", "", "", new String[0], "", "", "", "");
             }
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             context.redirect(context.getRequestContextPath() + "/faces/inicioMedico.xhtml?faces-redirect=true");
@@ -166,5 +182,21 @@ public class MedicoBean {
 
     public void setDocumentos(List<DocumentoDTO> documentos) {
         this.documentos = documentos;
+    }
+
+    public List<ConsultaDTO> getConsultas() {
+        return consultas;
+    }
+
+    public void setConsultas(List<ConsultaDTO> consultas) {
+        this.consultas = consultas;
+    }
+
+    public List<ConsultaDTO> getConsultasFiltradas() {
+        return consultasFiltradas;
+    }
+
+    public void setConsultasFiltradas(List<ConsultaDTO> consultasFiltradas) {
+        this.consultasFiltradas = consultasFiltradas;
     }
 }

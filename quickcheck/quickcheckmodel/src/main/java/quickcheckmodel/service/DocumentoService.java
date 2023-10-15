@@ -1,9 +1,11 @@
 package quickcheckmodel.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import quickcheckmodel.dao.DocumentoDAO;
 import quickcheckmodel.dto.DocumentoDTO;
+import quickcheckmodel.dto.PacienteDTO;
 
 public class DocumentoService {
     public void inserirDocumento(DocumentoDTO documento) {
@@ -21,4 +23,9 @@ public class DocumentoService {
     public List<DocumentoDTO> listar(String cpf) {
         return DocumentoDAO.listar(cpf);
     }
+
+    public List<PacienteDTO> listarPacientes(String cpf) throws ClassNotFoundException, SQLException {
+        return DocumentoDAO.listarPacientes(cpf);
+    }
+
 }

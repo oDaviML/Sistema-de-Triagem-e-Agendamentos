@@ -19,28 +19,25 @@
             </div>
 
             <div class="linksHeader">
-                <h4><a href="inicioMedico.xhtml">Início</a></h4>
+                <h4 id="btnInicio"><a href="inicioMedico.xhtml">Início</a></h4>
             </div>
 
             <div class="linksHeader">
-
-                <h4><a href="clinica.xhtml">Clinica</a></h4>
+                <h4 id="btnClinica"><a href="clinica.xhtml">Clinica</a></h4>
             </div>
 
             <div class="linksHeader">
-                <h4><a href="perfilMedico.xhtml">Perfil</a></h4>
+                <h4 id="btnPerfil"><a href="perfilMedico.xhtml">Perfil</a></h4>
             </div>
             <p:commandButton value="Sair" action="#{medicoBean.logout()}"
                 styleClass="ui-button-secondary ui-button-flat" />
         </header>
         <div class="tituloAba">
-
             <h2>CONSULTAS(Área Médica)</h2>
         </div>
 
         <div class="conteudo">
-
-            <a class="func" href="documentosPaciente.xhtml">
+            <a id="documentos" class="func" href="documentosPaciente.xhtml">
                 <div class="position">
                     <img src="resources/images/imgVisualizar.png" class="imgCont" alt="" />
                     <div class="legendaAbove">
@@ -52,23 +49,18 @@
                     <h1>ACOMPANHE O HISTÓRICO DE SEUS PACIENTES</h1>
                 </div>
             </a>
-
-            <div class="func" onclick="location.href='https://www.minecraft.net/pt-br/download';">
-
-                <div class="position">
-                    <img src="resources/images/imgChecar.png" class="imgCont" alt="" />
-
-                    <div class="legendaAbove">
-
-                        <h1>Checar</h1>
+            <p:commandLink id="consultas" styleClass="func" action="#{medicoBean.consultasMedico()}" style="text-decoration: none; color: black;">
+                    <div class="position">
+                        <img src="resources/images/imgChecar.png" class="imgCont" alt="" />
+                        <div class="legendaAbove">
+                            <h1>Checar</h1>
+                        </div>
                     </div>
-                </div>
 
-                <div class="legendaBelow">
-
-                    <h1>ACOMPANHE SUAS CONSULTAS AGENDADAS</h1>
-                </div>
-            </div>
+                    <div class="legendaBelow">
+                        <h1>ACOMPANHE SUAS CONSULTAS AGENDADAS</h1>
+                    </div>
+            </p:commandLink>
         </div>
     </h:form>
 </h:body>
