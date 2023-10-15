@@ -9,6 +9,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import jakarta.faces.event.AjaxBehaviorEvent;
+import lombok.Getter;
+import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.map.OverlaySelectEvent;
@@ -35,6 +39,7 @@ import quickcheckmodel.service.PacienteService;
 
 @SessionScoped
 @ManagedBean
+@Getter@Setter
 public class PacienteBean {
     private PacienteDTO paciente = new PacienteDTO();
     private DocumentoDTO documento = new DocumentoDTO();
@@ -61,7 +66,7 @@ public class PacienteBean {
     private MapModel model;
     private Marker<ClinicaDTO> marker;
     private Date dataSelecionada;
-    private Date dataAtual;
+    private Date dataAtual = new Date();
 
     public void removerConsulta(ConsultaDTO event) throws SQLException {
         consultaService.removerConsultaPaciente(event);
@@ -72,6 +77,52 @@ public class PacienteBean {
 
     public void carregarConsultas() {
         consultas = consultaService.listarConsultaPaciente(paciente.getCpf());
+    }
+
+    public void onMarkerSelect(@NotNull OverlaySelectEvent event) {
+        this.marker = (Marker) event.getOverlay();
+        this.clinica = (ClinicaDTO) marker.getData();
+        convenios = Arrays.asList(conveniosArray);
+        carregarConvenios();
+    }
+
+    public void onFiltroSelect(@NotNull AjaxBehaviorEvent event) {
+        String especialidade = (String) event.getComponent().findComponent("especialidade").getAttributes().get("value");
+        String convenio = (String) event.getComponent().findComponent("convenio").getAttributes().get("value");
+
+        if (especialidade == null) {
+            especialidade = "Todos";
+        }
+        if (convenio == null) {
+            convenio = "Todos";
+        }
+
+        model = new DefaultMapModel<>();
+        if (convenio.equals("Todos") && especialidade.equals("Todos")) {
+            for (ClinicaDTO clinicaDTO : clinicas) {
+                String[] coordenadas = clinicaDTO.getCoordenada().split(",");
+                LatLng coord = new LatLng(Double.parseDouble(coordenadas[0]), Double.parseDouble(coordenadas[1]));
+                Marker<ClinicaDTO> marker = new Marker<>(coord, clinicaDTO.getNome());
+                marker.setData(clinicaDTO);
+                model.addOverlay(marker);
+            }
+        } else {
+            for (ClinicaDTO clinicaDTO : clinicas) {
+                List<String> conveniosCopy = Arrays.asList(clinicaDTO.getConvenios());
+                if ((convenio.equals("Todos") || conveniosCopy.contains(convenio)) &&
+                        (especialidade.equals("Todos") || clinicaDTO.getEspecialidade().equals(especialidade))) {
+                    String[] coordenadas = clinicaDTO.getCoordenada().split(",");
+                    LatLng coord = new LatLng(Double.parseDouble(coordenadas[0]), Double.parseDouble(coordenadas[1]));
+                    Marker<ClinicaDTO> marker = new Marker<>(coord, clinicaDTO.getNome());
+                    marker.setData(clinicaDTO);
+                    model.addOverlay(marker);
+                }
+            }
+        }
+    }
+
+    public void onDateSelect(@NotNull SelectEvent<Date> event) {
+        carregarHorarios(event.getObject());
     }
 
     public void carregarHorarios(Date data) {
@@ -189,124 +240,7 @@ public class PacienteBean {
         }
     }
 
-    public PacienteDTO getPaciente() {
-        return paciente;
-    }
-
-    public void setPaciente(PacienteDTO paciente) {
-        this.paciente = paciente;
-    }
-
-    public DocumentoDTO getDocumento() {
-        return documento;
-    }
-    public void setDocumento(DocumentoDTO documento) {
-        this.documento = documento;
-    }
-    public List<PacienteDTO> getPacientes() {
-        return pacientes;
-    }
-
-    public void setPacientes(List<PacienteDTO> pacientes) {
-        this.pacientes = pacientes;
-    }
-
-    public List<DocumentoDTO> getDocumentos() {
-        return documentos;
-    }
-
-    public void setDocumentos(List<DocumentoDTO> documentos) {
-        this.documentos = documentos;
-    }
-
     public String getCoordenadaEndereco() {
         return pacienteService.obterCoordenada(paciente.getEndereco());
-    }
-
-    public void setCoordenadaEndereco(String coordenadaEndereco) {
-        this.coordenadaEndereco = coordenadaEndereco;
-    }
-
-    public MapModel getModel() { 
-        return model; 
-    }
-    public Marker<ClinicaDTO> getMarker() { 
-        return marker; 
-    }
-
-    public void onMarkerSelect(OverlaySelectEvent event) {
-        this.marker = (Marker) event.getOverlay();
-        this.clinica = (ClinicaDTO) marker.getData();
-        convenios = Arrays.asList(conveniosArray);
-        carregarConvenios();
-    }
-
-    public void onDateSelect(SelectEvent<Date> event) {
-        dataSelecionada = event.getObject();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-        String formattedDate = dateFormat.format(dataSelecionada);
-        Date formatada = new Date(formattedDate);
-        carregarHorarios(formatada);
-    }
-
-    public ConsultaDTO getConsulta() {
-        return consulta;
-    }
-
-    public void setConsulta(ConsultaDTO consulta) {
-        this.consulta = consulta;
-    }
-
-    public ClinicaDTO getClinica() {
-        return clinica;
-    }
-
-    public void setClinica(ClinicaDTO clinica) {
-        this.clinica = clinica;
-    }
-
-    public List<ConsultaDTO> getConsultas() {
-        return consultas;
-    }
-
-    public void setConsultas(List<ConsultaDTO> consultas) {
-        this.consultas = consultas;
-    }
-
-    public List<String> getHorarios() {
-        return horarios;
-    }
-
-    public void setHorarios(List<String> horarios) {
-        this.horarios = horarios;
-    }
-
-    public List<String> getConvenios() {
-        return convenios;
-    }
-
-    public void setConvenios(List<String> convenios) {
-        this.convenios = convenios;
-    }
-
-    public Date getDataSelecionada() {
-        return dataSelecionada;
-    }
-
-    public Date getDataAtual() {
-        return dataAtual = new Date();
-    }
-
-    public void setDataSelecionada(Date dataSelecionada) {
-        this.dataSelecionada = dataSelecionada;
-    }
-
-    public List<ConsultaDTO> getConsultasMedico() {
-        return consultasMedico;
-    }
-
-    public void setConsultasMedico(List<ConsultaDTO> consultasMedico) {
-        this.consultasMedico = consultasMedico;
     }
 }

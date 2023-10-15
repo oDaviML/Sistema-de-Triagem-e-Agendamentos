@@ -106,7 +106,6 @@ public class PacienteDAO extends BaseDAO<PacienteDTO> {
         try {
             GeoApiContext context = new GeoApiContext.Builder().apiKey("AIzaSyC0QG_G0LdTKu_AIzR9awlnzqIMOU0g3pI").build();
             GeocodingResult[] results;
-            System.out.println(endereco);
             results = GeocodingApi.geocode(context, endereco).await();
             context.shutdown();
             LatLng coordenadas = new LatLng(results[0].geometry.location.lat, results[0].geometry.location.lng);

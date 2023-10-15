@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
@@ -26,6 +28,7 @@ import quickcheckmodel.service.*;
 
 @SessionScoped
 @ManagedBean
+@Getter@Setter
 public class MedicoBean {
     private MedicoDTO medico = new MedicoDTO();
     private MedicoService medicoService = new MedicoService();
@@ -93,10 +96,6 @@ public class MedicoBean {
         return "/loginFunc.xhtml?faces-redirect=true";
     }
 
-    public void listar() {
-        medicos = medicoService.listar();
-    }
-    
     public void login() throws IOException, ClassNotFoundException, SQLException {
         medico = medicoService.login(medico.getCpf(), medico.getSenha());
         if (medico != null) {
@@ -134,69 +133,7 @@ public class MedicoBean {
         }
     }
 
-    public MedicoDTO getMedico() {
-        return medico;
-    }
-
-    public void setMedico(MedicoDTO medico) {
-        this.medico = medico;
-    }
-
-    public List<MedicoDTO> getMedicos() {
-        return medicos;
-    }
-
-    public void setMedicos(List<MedicoDTO> medicos) {
-        this.medicos = medicos;
-    }
-
-    public ClinicaDTO getClinica(){
-        return clinica;
-    }
-
-    public void setClinica(ClinicaDTO clinica){
-        this.clinica = clinica;
-    }
-
-    public MapModel getModel() { 
-        return model; 
-    }
-    public Marker getMarker() { 
-        return marker; 
-    }
     public void onMarkerSelect(OverlaySelectEvent event) {
         this.marker = (Marker) event.getOverlay();
-    }
-
-    public List<PacienteDTO> getPacientes() {
-        return pacientes;
-    }
-
-    public void setPacientes(List<PacienteDTO> pacientes) {
-        this.pacientes = pacientes;
-    }
-
-    public List<DocumentoDTO> getDocumentos() {
-        return documentos;
-    }
-
-    public void setDocumentos(List<DocumentoDTO> documentos) {
-        this.documentos = documentos;
-    }
-
-    public List<ConsultaDTO> getConsultas() {
-        return consultas;
-    }
-
-    public void setConsultas(List<ConsultaDTO> consultas) {
-        this.consultas = consultas;
-    }
-
-    public List<ConsultaDTO> getConsultasFiltradas() {
-        return consultasFiltradas;
-    }
-
-    public void setConsultasFiltradas(List<ConsultaDTO> consultasFiltradas) {
-        this.consultasFiltradas = consultasFiltradas;
     }
 }

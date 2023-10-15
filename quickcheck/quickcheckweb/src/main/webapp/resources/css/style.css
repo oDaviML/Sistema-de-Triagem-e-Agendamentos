@@ -46,6 +46,7 @@ a:hover {
 }
 
 .conteudo {
+    padding-top: 1rem;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
@@ -54,7 +55,12 @@ a:hover {
 }
 
 .func {
-    padding: 0 30px;
+    padding: 1rem;
+}
+
+.func:hover {
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
 }
 
 .position {
@@ -79,9 +85,5 @@ a:hover {
 .legendaBelow {
     margin-top: 15px;
     text-align: center;
-    font-size: 60%;
-}
-
-.func:hover {
-    opacity: 0.7;
+    font-size: 2rem;
 }

@@ -1,0 +1,168 @@
+.btns-acessibilidade {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    border-radius: 8px 0px 0px 8px;
+    background-color: #ffffff;
+    padding-bottom: 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+}
+
+#btn-verde {
+    margin: 10px;
+}
+
+#btn-azul {
+    padding-top: 2rem;
+}
+/*
+#btn-verde:hover + #popup {
+    display: block;
+}
+*/
+.popup {
+    animation: slideInFromLeft 0.5s ease-out;
+    display: none;
+    position: absolute;
+    text-align: center;
+    line-height: 40px;
+    text-align: center;
+    color: white;
+    background-color: #198754;
+    border-radius: 0.2rem;
+    height: 40px;
+    width: 200px;
+    left: -200px;
+    top: 0.6rem;
+    z-index: -1;
+}
+
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(60px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+
+#review-popup {
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 400px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    animation: slide-in-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@keyframes slide-in-right {
+    0% {
+        transform: translateX(1000px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+
+.hidden {
+    display: none;
+}
+
+.header-acessibilidade {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #198754;
+    color: #fff;
+    border-radius: 0px 0px 0.3rem 0.3rem;
+}
+
+#review-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    padding-bottom: 0.5rem;
+}
+
+.header-acessibilidade h2 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2.5rem;
+    border-radius: 0.4rem;
+    background-color: #fff;
+    color: #000;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin: 1rem;
+}
+
+.cardAtivo {
+    transition: all 0.2s ease-in-out;
+    border: 3px solid #198754;
+    box-shadow: 0 0 10px rgba(68, 255, 0, 0.585);
+}
+
+.card.cardAtivo {
+    border: 3px solid #198754;
+}
+
+.card svg {
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 0.2rem;
+}
+
+.card h2 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.card:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    background-color: #198754;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+#cursor {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: red;
+    pointer-events: none;
+    z-index: 9999;
+    display: none;
+}
+
+#barraInformacoes {
+    font-size: 1.5rem;
+    position: absolute;
+    background: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    pointer-events: none;
+    display: none;
+    word-break: break-word;
+    max-width: 350px;
+    overflow-wrap: break-word;
+}
