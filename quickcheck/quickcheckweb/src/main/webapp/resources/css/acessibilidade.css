@@ -166,3 +166,234 @@
     max-width: 350px;
     overflow-wrap: break-word;
 }
+
+/* Estilos dos comandos de voz */
+
+.balao-comando {
+  position: fixed;
+  right: 1em;
+  bottom: 100em;
+  max-width: 50%;
+  font-size: 75%;
+  background-color: rgba(255,255,255,.7);
+  color: rgba(0,0,0,.8);
+  padding: 0.5em;
+  border: 1px solid currentColor;
+  border-radius: 1em 1em 0 1em;
+  line-height: 1em;
+  animation: surgindo-de-baixo 3s ease-in-out 0s 1 forwards;
+}
+
+.balao-comando .desconhecido {
+  color: rgba(255,0,0,.8);
+  text-decoration: line-through;
+}
+
+@keyframes surgindo-de-baixo {
+  from {
+    transform: translateY(25%);
+    opacity: 0;
+  }
+  10%, 90% {
+    opacity: 1;
+  }
+  10% {
+    transform: translateY(0);
+  }
+  90% {
+    transform: translateY(-25%);
+  }
+  to {
+    transform: translateY(-50%);
+    opacity: 0;
+  }
+}
+
+
+/* Estilos do botão de microfone (https://gist.github.com/apdarshan/7c42c97723ab02792bf9) */
+
+.google-microphone,
+.google-microphone:active {
+  font-size: 18px;
+  justify-content:center;
+  align-items:center;
+  position: fixed;
+  bottom: -65%;
+  right: -25%;
+  margin: 10px;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+  font-smoothing: subpixel-antialiased;
+  z-index: 100;
+}
+
+.google-microphone:active .gn {
+  left: 2px;
+  top: 2px;
+}
+
+.google-microphone:focus {
+  outline: none;
+}
+
+.google-microphone:focus .gn {
+  box-shadow: 0 0 0 2px white;
+}
+
+.shadow {
+  position:relative;
+  margin: 5% auto;
+  border-radius:50%;
+  width:3.5em; height:3.5em;
+  background: white;
+  top:20%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  transform: scale3d(.75, .75, .75);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+  font-smoothing: subpixel-antialiased;
+}
+
+@keyframes move_eye {
+  from {
+    transform: scale3d(.75, .75, .75);
+  } to {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.listening {
+  animation: move_eye 0.4s cubic-bezier(0.25,0.1,0.25,1) 0s infinite alternate;
+}
+
+.gn {
+  position:relative;
+  margin: 5% auto;
+  background-color: #1565c0;
+  border-radius:50%;
+  width:3.5em; height:3.5em;
+  transition: box-shadow 150ms ease-out;
+}
+
+.gn:hover {
+  box-shadow: .3em .3em .3em rgba(90,90,90,.3);
+}
+
+.mc:before, .mc:after,
+.gn:before, .gn:after {
+  content:'';
+  position:absolute;
+  background-color:#fff;
+}
+
+.gn:after {
+  top:30%; left:43%;
+  height:15%; width:14%;
+  border-top-left-radius:50%;
+  border-top-right-radius:50%;
+}
+
+.gn:before {
+  top:40%; left:43%;
+  height:15%; width:14%;
+  border-bottom-left-radius:50%;
+  border-bottom-right-radius:50%;
+}
+
+.mc {
+  position:absolute;
+  top:50%; left:37%;
+  height:24%;
+  width:26.5%;
+  overflow:hidden;
+}
+
+.mc:before {
+  bottom:50%;
+  width:100%; height:100%;
+  left: 0;
+  box-sizing:border-box;
+  border-radius:50%;
+  border:0.1em solid #fff;
+  background:none;
+}
+
+.mc:after {
+  top:50%; left:40%;
+  width:20%; height:25%;
+}
+
+
+/* Estilos das instruções próximas ao microfone */
+
+#instrucoes {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.instrucao {
+  position: fixed;
+  right: 2.25em;
+  bottom: 35%;
+  margin-bottom: -0.75em;
+  display: inline-block;
+  opacity: 0;
+  z-index: 1;
+  color: #1565c0;
+  background-color: rgba(255,255,255,.7);
+  border-radius: 0.25em;
+  padding: .25em;
+  transform-origin: right;
+  transition: all 250ms ease-out;
+}
+
+.instrucao:nth-child(1) { transform: rotate(75deg); }
+.instrucao:nth-child(2) { transform: rotate(45deg); }
+.instrucao:nth-child(3) { transform: rotate(90deg); }
+.instrucao:nth-child(4) { transform: rotate(120deg); }
+.instrucao:nth-child(5) { transform: rotate(0deg); }
+.instrucao:nth-child(6) { transform: rotate(-75deg); }
+
+.ativa .instrucao {
+  opacity: 1;
+}
+
+.ativa .instrucao:nth-child(1) {
+  transform: rotate(15deg) translateX(-3em);
+  transition-delay: 0ms;
+}
+
+.ativa .instrucao:nth-child(2) {
+  transform: rotate(-15deg) translateX(-3em);
+  transition-delay: 80ms;
+}
+
+.ativa .instrucao:nth-child(3) {
+  transform: rotate(-150deg) translateX(-3em);
+  transition-delay: 120ms;
+}
+
+.ativa .instrucao:nth-child(4) {
+  transform: rotate(280deg) translateX(-3em);
+  transition-delay: 180ms;
+}
+
+.ativa .instrucao:nth-child(5) {
+  transform: rotate(120deg) translateX(-3em);
+  transition-delay: 160ms;
+}
+
+.ativa .instrucao:nth-child(6) {
+  transform: rotate(-75deg) translateX(-3em);
+  transition-delay: 200ms;
+}

@@ -3,195 +3,206 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
-<h:head>
+    <h:head>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <title>QuickCheck</title>
-    <link rel="stylesheet" href="resources/css/bootstrap.css"/>
-    <link rel="stylesheet" href="resources/css/style.css"/>
-    <link rel="stylesheet" href="resources/css/acessibilidade.css"/>
+        <title>QuickCheck</title>
+        <link rel="stylesheet" href="resources/css/bootstrap.css"/>
+        <link rel="stylesheet" href="resources/css/style.css"/>
+        <link rel="stylesheet" href="resources/css/acessibilidade.css"/>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
 
-        body {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-image: url(resources/images/FundoFuncionario.png);
-            background-size: cover;
-            background-repeat: no-repeat;
-        }
+            body {
+                height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-image: url(resources/images/FundoFuncionario.png);
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
 
-        .login {
-            width: 410px;
-            height: min-content;
-            padding: 20px;
-            border-radius: 12px;
-            background: #67ff9c;
-            position: absolute;
-            opacity: 88%;
-            box-shadow: #23503a 3px 3px 3px;
-        }
+            .login {
+                width: 410px;
+                height: min-content;
+                padding: 20px;
+                border-radius: 12px;
+                background: #67ff9c;
+                position: absolute;
+                opacity: 88%;
+                box-shadow: #23503a 3px 3px 3px;
+            }
 
-        .login h1 {
-            font-size: 36px;
-            margin-bottom: 25px;
-        }
+            .login h1 {
+                font-size: 36px;
+                margin-bottom: 25px;
+            }
 
-        .login form {
-            font-size: 20px;
-        }
+            .login form {
+                font-size: 20px;
+            }
 
-        .login form .form-group {
-            margin-bottom: 12px;
-        }
+            .login form .form-group {
+                margin-bottom: 12px;
+            }
 
-        .login form input[type="submit"] {
-            font-size: 20px;
-            margin-top: 15px;
-        }
+            .login form input[type="submit"] {
+                font-size: 20px;
+                margin-top: 15px;
+            }
 
-        .login .btn {
-            background: #1ab48b;
-        }
+            .login .btn {
+                background: #1ab48b;
+            }
 
-        .criar {
-            text-align: center;
-            margin-top: 10px;
-        }
+            .criar {
+                text-align: center;
+                margin-top: 10px;
+            }
 
-        .senha {
-            text-align: right;
-            font-size: 15px;
-        }
+            .senha {
+                text-align: right;
+                font-size: 15px;
+            }
 
-        label {
-            margin-right: 1rem;
-        }
-    </style>
-</h:head>
-<h:body>
-    <div class="login">
-        <h1 class="text-center">Seja bem-vindo(a)!</h1>
-        <h:form>
-            <p:growl id="growl" showDetail="true"/>
-            <div class="form-group was-validated">
+            label {
+                margin-right: 1rem;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <div class="login">
+            <h1 class="text-center">Seja bem-vindo(a)!</h1>
+            <h:form>
+                <p:growl id="growl" showDetail="true"/>
+                <div class="form-group was-validated">
 
-                <label for="cpf">CPF</label>
-                <p:inputMask mask="999.999.999-99" validateMask="true" id="cpf" value="#{medicoBean.medico.cpf}"
-                             required="true"/>
+                    <label for="cpf">CPF</label>
+                    <p:inputMask mask="999.999.999-99" validateMask="true" id="cpf" value="#{medicoBean.medico.cpf}"
+                                 required="true"/>
 
-                <div class="invalid-feedback">
-                    Favor inserir seu CPF.
-                </div>
-            </div>
-
-            <div class="form-group was-validated">
-                <label for="password">Senha</label>
-                <p:inputText id="password" value="#{medicoBean.medico.senha}" type="password"
-                             placeholder="Digite sua senha" required="true"/>
-
-                <div class="invalid-feedback">
-                    Favor inserir sua senha.
+                    <div class="invalid-feedback">
+                        Favor inserir seu CPF.
+                    </div>
                 </div>
 
-                <p class="senha"><u>Esqueci minha senha</u></p>
-            </div>
+                <div class="form-group was-validated">
+                    <label for="password">Senha</label>
+                    <p:inputText id="password" value="#{medicoBean.medico.senha}" type="password"
+                                 placeholder="Digite sua senha" required="true"/>
 
-            <p:commandButton value="Entrar" action="#{medicoBean.login()}" class="btn btn-success w-100" update="growl"
-                             validateClient="true"/>
-            <a href="./index.xhtml" class="btn btn-success w-100" style="margin-top: 5px;">Inicio</a>
+                    <div class="invalid-feedback">
+                        Favor inserir sua senha.
+                    </div>
 
-            <p class="criar">Não tem cadastro? <b><a id="cadastro" href="faces/cadastroFunc.xhtml">Crie um</a></b></p>
-        </h:form>
-    </div>
-    <div class="acessbilidade">
-        <div class="btns-acessibilidade">
-            <div vw="" id="btn-azul" class="enabled">
-                <div vw-access-button="" class="active"></div>
-                <div vw-plugin-wrapper="">
-                    <div class="vw-plugin-top-wrapper"></div>
+                    <p class="senha"><u>Esqueci minha senha</u></p>
                 </div>
-            </div>
-            <button id="btn-verde" type="button" class="btn btn-success">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                </svg>
-            </button>
-            <div id="popup" class="popup">Menu Acessibilidade</div>
+
+                <p:commandButton value="Entrar" action="#{medicoBean.login()}" class="btn btn-success w-100" update="growl"
+                                 validateClient="true"/>
+                
+                <p:remoteCommand name="loginMedico" action="#{medicoBean.login()}" />
+                
+                <a href="./index.xhtml" class="btn btn-success w-100" style="margin-top: 5px;">Inicio</a>
+
+                <p class="criar">Não tem cadastro? <b><a id="cadastro" href="faces/cadastroFunc.xhtml">Crie um</a></b></p>
+            </h:form>
         </div>
-
-        <div id="review-popup" class="hidden">
-            <div class="header-acessibilidade">
-                <h2>Menu Acessibilidade</h2>
-                <button id="fecharMenu" type="button" class="btn btn-danger">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+        <div class="acessbilidade">
+            <div class="btns-acessibilidade">
+                <div vw="" id="btn-azul" class="enabled">
+                    <div vw-access-button="" class="active"></div>
+                    <div vw-plugin-wrapper="">
+                        <div class="vw-plugin-top-wrapper"></div>
+                    </div>
+                </div>
+                <button id="btn-verde" type="button" class="btn btn-success">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                     </svg>
                 </button>
+                <button id="mic" class="google-microphone">
+                    <div class="shadow">
+                        <div class="gn">
+                            <div class="mc"></div>
+                        </div>
+                    </div>
+                </button>
+                <div id="popup" class="popup">Menu Acessibilidade</div>
             </div>
-            <div id="review-content">
-                <div class="card" id="textoMaiorBtn" >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-alphabet-uppercase" viewBox="0 0 16 16">
-                        <path d="M1.226 10.88H0l2.056-6.26h1.42l2.047 6.26h-1.29l-.48-1.61H1.707l-.48 1.61ZM2.76 5.818h-.054l-.75 2.532H3.51l-.75-2.532Zm3.217 5.062V4.62h2.56c1.09 0 1.808.582 1.808 1.54 0 .762-.444 1.22-1.05 1.372v.055c.736.074 1.365.587 1.365 1.528 0 1.119-.89 1.766-2.133 1.766h-2.55ZM7.18 5.55v1.675h.8c.812 0 1.171-.308 1.171-.853 0-.51-.328-.822-.898-.822H7.18Zm0 2.537V9.95h.903c.951 0 1.342-.312 1.342-.909 0-.591-.382-.954-1.095-.954H7.18Zm5.089-.711v.775c0 1.156.49 1.803 1.347 1.803.705 0 1.163-.454 1.212-1.096H16v.12C15.942 10.173 14.95 11 13.607 11c-1.648 0-2.573-1.073-2.573-2.849v-.78c0-1.775.934-2.871 2.573-2.871 1.347 0 2.34.849 2.393 2.087v.115h-1.172c-.05-.665-.516-1.156-1.212-1.156-.849 0-1.347.67-1.347 1.83Z"/>
-                    </svg>
-                    <h2>Texto Maior</h2>
-                </div>
 
-                <div class="card" id="cursorMaiorBtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cursor" viewBox="0 0 16 16">
-                        <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103zM2.25 8.184l3.897 1.67a.5.5 0 0 1 .262.263l1.67 3.897L12.743 3.52 2.25 8.184z"/>
-                    </svg>
-                    <h2>Destacar Cursor</h2>
+            <div id="review-popup" class="hidden">
+                <div class="header-acessibilidade">
+                    <h2>Menu Acessibilidade</h2>
+                    <button id="fecharMenu" type="button" class="btn btn-danger">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                        </svg>
+                    </button>
                 </div>
+                <div id="review-content">
+                    <div class="card" id="textoMaiorBtn" >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-alphabet-uppercase" viewBox="0 0 16 16">
+                            <path d="M1.226 10.88H0l2.056-6.26h1.42l2.047 6.26h-1.29l-.48-1.61H1.707l-.48 1.61ZM2.76 5.818h-.054l-.75 2.532H3.51l-.75-2.532Zm3.217 5.062V4.62h2.56c1.09 0 1.808.582 1.808 1.54 0 .762-.444 1.22-1.05 1.372v.055c.736.074 1.365.587 1.365 1.528 0 1.119-.89 1.766-2.133 1.766h-2.55ZM7.18 5.55v1.675h.8c.812 0 1.171-.308 1.171-.853 0-.51-.328-.822-.898-.822H7.18Zm0 2.537V9.95h.903c.951 0 1.342-.312 1.342-.909 0-.591-.382-.954-1.095-.954H7.18Zm5.089-.711v.775c0 1.156.49 1.803 1.347 1.803.705 0 1.163-.454 1.212-1.096H16v.12C15.942 10.173 14.95 11 13.607 11c-1.648 0-2.573-1.073-2.573-2.849v-.78c0-1.775.934-2.871 2.573-2.871 1.347 0 2.34.849 2.393 2.087v.115h-1.172c-.05-.665-.516-1.156-1.212-1.156-.849 0-1.347.67-1.347 1.83Z"/>
+                        </svg>
+                        <h2>Texto Maior</h2>
+                    </div>
 
-                <div class="card" id="contrasteBtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
-                    </svg>
-                    <h2>Contraste</h2>
-                </div>
+                    <div class="card" id="cursorMaiorBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cursor" viewBox="0 0 16 16">
+                            <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103zM2.25 8.184l3.897 1.67a.5.5 0 0 1 .262.263l1.67 3.897L12.743 3.52 2.25 8.184z"/>
+                        </svg>
+                        <h2>Destacar Cursor</h2>
+                    </div>
 
-                <div class="card" id="saturacaoBtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-droplet-half" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M7.21.8C7.69.295 8 0 8 0c.109.363.234.708.371 1.038.812 1.946 2.073 3.35 3.197 4.6C12.878 7.096 14 8.345 14 10a6 6 0 0 1-12 0C2 6.668 5.58 2.517 7.21.8zm.413 1.021A31.25 31.25 0 0 0 5.794 3.99c-.726.95-1.436 2.008-1.96 3.07C3.304 8.133 3 9.138 3 10c0 0 2.5 1.5 5 .5s5-.5 5-.5c0-1.201-.796-2.157-2.181-3.7l-.03-.032C9.75 5.11 8.5 3.72 7.623 1.82z"/>
-                        <path fill-rule="evenodd" d="M4.553 7.776c.82-1.641 1.717-2.753 2.093-3.13l.708.708c-.29.29-1.128 1.311-1.907 2.87l-.894-.448z"/>
-                    </svg>
-                    <h2>Saturação</h2>
-                </div>
+                    <div class="card" id="contrasteBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+                        </svg>
+                        <h2>Contraste</h2>
+                    </div>
 
-                <div class="card" id="infoBtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16">
-                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-                    </svg>
-                    <h2>Barra de Informações</h2>
-                </div>
+                    <div class="card" id="saturacaoBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-droplet-half" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M7.21.8C7.69.295 8 0 8 0c.109.363.234.708.371 1.038.812 1.946 2.073 3.35 3.197 4.6C12.878 7.096 14 8.345 14 10a6 6 0 0 1-12 0C2 6.668 5.58 2.517 7.21.8zm.413 1.021A31.25 31.25 0 0 0 5.794 3.99c-.726.95-1.436 2.008-1.96 3.07C3.304 8.133 3 9.138 3 10c0 0 2.5 1.5 5 .5s5-.5 5-.5c0-1.201-.796-2.157-2.181-3.7l-.03-.032C9.75 5.11 8.5 3.72 7.623 1.82z"/>
+                            <path fill-rule="evenodd" d="M4.553 7.776c.82-1.641 1.717-2.753 2.093-3.13l.708.708c-.29.29-1.128 1.311-1.907 2.87l-.894-.448z"/>
+                        </svg>
+                        <h2>Saturação</h2>
+                    </div>
 
-                <div class="card" id="voiceBtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-volume-up" viewBox="0 0 16 16">
-                        <path d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z"/>
-                        <path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.89l.706.706z"/>
-                        <path d="M10.025 8a4.486 4.486 0 0 1-1.318 3.182L8 10.475A3.489 3.489 0 0 0 9.025 8c0-.966-.392-1.841-1.025-2.475l.707-.707A4.486 4.486 0 0 1 10.025 8zM7 4a.5.5 0 0 0-.812-.39L3.825 5.5H1.5A.5.5 0 0 0 1 6v4a.5.5 0 0 0 .5.5h2.325l2.363 1.89A.5.5 0 0 0 7 12V4zM4.312 6.39 6 5.04v5.92L4.312 9.61A.5.5 0 0 0 4 9.5H2v-3h2a.5.5 0 0 0 .312-.11z"/>
-                    </svg>
-                    <h2>Texto/Voz</h2>
+                    <div class="card" id="infoBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16">
+                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                        </svg>
+                        <h2>Barra de Informações</h2>
+                    </div>
+
+                    <div class="card" id="voiceBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-volume-up" viewBox="0 0 16 16">
+                            <path d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z"/>
+                            <path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.89l.706.706z"/>
+                            <path d="M10.025 8a4.486 4.486 0 0 1-1.318 3.182L8 10.475A3.489 3.489 0 0 0 9.025 8c0-.966-.392-1.841-1.025-2.475l.707-.707A4.486 4.486 0 0 1 10.025 8zM7 4a.5.5 0 0 0-.812-.39L3.825 5.5H1.5A.5.5 0 0 0 1 6v4a.5.5 0 0 0 .5.5h2.325l2.363 1.89A.5.5 0 0 0 7 12V4zM4.312 6.39 6 5.04v5.92L4.312 9.61A.5.5 0 0 0 4 9.5H2v-3h2a.5.5 0 0 0 .312-.11z"/>
+                        </svg>
+                        <h2>Texto/Voz</h2>
+                    </div>
                 </div>
             </div>
+            <div id="barraInformacoes"></div>
+            <div id="cursor"></div>
         </div>
-        <div id="barraInformacoes"></div>
-        <div id="cursor"></div>
-    </div>
 
-    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous" ></script>
-    <script src="resources/js/acessibilidade.js"></script>
-</h:body>
+        <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous" ></script>
+        <script src="resources/js/acessibilidade.js"></script>
+        <script src="resources/js/funcoesMicrofone/microfoneLoginFunc.js"></script>
+    </h:body>
 </html>
