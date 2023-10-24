@@ -27,10 +27,7 @@ import jakarta.faces.bean.SessionScoped;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.servlet.http.HttpSession;
-import quickcheckmodel.dto.ClinicaDTO;
-import quickcheckmodel.dto.ConsultaDTO;
-import quickcheckmodel.dto.DocumentoDTO;
-import quickcheckmodel.dto.PacienteDTO;
+import quickcheckmodel.dto.*;
 import quickcheckmodel.service.ClinicaService;
 import quickcheckmodel.service.ConsultaService;
 import quickcheckmodel.service.DocumentoService;
@@ -45,6 +42,7 @@ public class PacienteBean {
     private DocumentoDTO documento = new DocumentoDTO();
     private ConsultaDTO consulta = new ConsultaDTO();
     private ClinicaDTO clinica = new ClinicaDTO();
+    private TriagemDTO triagem = new TriagemDTO();
 
     private PacienteService pacienteService = new PacienteService();
     private DocumentoService documentoService = new DocumentoService();
@@ -67,6 +65,12 @@ public class PacienteBean {
     private Marker<ClinicaDTO> marker;
     private Date dataSelecionada;
     private Date dataAtual = new Date();
+
+
+    public String resultadoTriagem () {
+        System.out.println(triagem.toString());
+        return "/loginPaciente.xhtml?faces-redirect=true";
+    }
 
     public void removerConsulta(ConsultaDTO event) throws SQLException {
         consultaService.removerConsultaPaciente(event);
@@ -139,10 +143,6 @@ public class PacienteBean {
         List<String> conveniosCopy = new ArrayList<>(convenios);
         conveniosCopy.retainAll(Arrays.asList(clinica.getConvenios()));
         convenios = conveniosCopy; 
-    }
-
-    public void filtrarClinicas() {
-
     }
 
     public void cadastrarConsulta() throws ClassNotFoundException, SQLException {

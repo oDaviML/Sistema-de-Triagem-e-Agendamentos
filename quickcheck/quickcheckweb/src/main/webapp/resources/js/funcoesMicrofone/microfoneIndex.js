@@ -153,11 +153,11 @@ class Bando {
     }
 
     paciente() {
-        window.location.href = "loginPaciente.xhtml";
+        window.location.href = "faces/loginPaciente.xhtml";
     }
     
     medico() {
-        window.location.href = "loginFunc.xhtml";
+        window.location.href = "faces/loginFunc.xhtml";
     }
 
 }
