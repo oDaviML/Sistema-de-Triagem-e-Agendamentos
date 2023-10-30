@@ -58,6 +58,9 @@
                         <f:facet name="filter">
                             <p:datePicker id="dataConsulta" onchange="PF('consultaTable').filter()" />
                         </f:facet>
+                        <h:outputText id="data" value="#{consulta.data}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+                        </h:outputText>
                     </p:column>
 
                     <p:column headerText="Horário" >

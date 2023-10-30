@@ -2,16 +2,13 @@ package sistemadiagnostico.quickcheck.web;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import jakarta.faces.event.AjaxBehaviorEvent;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.jetbrains.annotations.NotNull;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
@@ -28,11 +25,9 @@ import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.servlet.http.HttpSession;
 import quickcheckmodel.dto.*;
-import quickcheckmodel.service.ClinicaService;
-import quickcheckmodel.service.ConsultaService;
-import quickcheckmodel.service.DocumentoService;
-import quickcheckmodel.service.EmailService;
-import quickcheckmodel.service.PacienteService;
+import quickcheckmodel.service.*;
+
+import javax.management.loading.MLet;
 
 @SessionScoped
 @ManagedBean
@@ -49,15 +44,16 @@ public class PacienteBean {
     private EmailService emailService = new EmailService();
     private ClinicaService clinicaService = new ClinicaService();
     private ConsultaService consultaService = new ConsultaService();
+    private TriagemService triagemService = new TriagemService();
 
     private List<PacienteDTO> pacientes = new ArrayList<>();
     private List<DocumentoDTO> documentos = new ArrayList<>();
     private List<ClinicaDTO> clinicas = new ArrayList<>();
     private List<ConsultaDTO> consultasMedico = new ArrayList<>();
     private List<ConsultaDTO> consultas = new ArrayList<>();
-    private String[] horariosArray = {"8:00", "8:30","9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00"};
+    private final String[] horariosArray = {"8:00", "8:30","9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00"};
     private List<String> horarios = new ArrayList<>();
-    private String[] conveniosArray = {"Unimed", "Amil", "NotreDame", "Ipsemg", "Medsênior", "Particular"};
+    private final String[] conveniosArray = {"Unimed", "Amil", "NotreDame", "Ipsemg", "Medsênior", "Particular"};
     private List<String> convenios = new ArrayList<>();
 
     private String coordenadaEndereco;
@@ -68,7 +64,8 @@ public class PacienteBean {
 
 
     public String resultadoTriagem () {
-        System.out.println(triagem.toString());
+        String resultadoTriagem = triagemService.resultadoTriagem(triagem, paciente);
+        System.out.println(resultadoTriagem);
         return "/loginPaciente.xhtml?faces-redirect=true";
     }
 

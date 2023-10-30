@@ -118,7 +118,11 @@
                         </tr>
                         <tr>
                             <th>Data de Nascimento:</th>
-                            <td id="data-nascimento">#{pacienteBean.paciente.datanascimento}</td>
+                            <td id="data-nascimento">
+                                <h:outputText value="#{pacienteBean.paciente.datanascimento}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" type="date"/>
+                                </h:outputText>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -136,11 +140,13 @@
                     </p:column>
 
                     <p:column headerText="Data">
-                        <h:outputText id="data" value="#{consulta.data}"/>
+                        <h:outputText id="data" value="#{consulta.data}" >
+                            <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+                        </h:outputText>
                     </p:column>
 
                     <p:column headerText="Horário">
-                        <h:outputText id="horario" value="#{consulta.horario}"/>
+                        <h:outputText id="horario" value="#{consulta.horario}" />
                     </p:column>
 
                     <p:column style="width:6rem">

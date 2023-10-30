@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Getter@Setter
@@ -33,5 +34,4 @@ public class ConsultaDTO {
         this.data = data;
         this.horario = horario;
     }
-
 }

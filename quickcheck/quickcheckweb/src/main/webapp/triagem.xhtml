@@ -198,7 +198,7 @@
                 <div class="checkbox-group-1">
                     <div>
                         <h3>Cabeça e Pescoço</h3>
-                        <p:selectManyCheckbox id="cabeca" value="#{pacienteBean.triagem.sintomas}" layout="responsive" columns="1">
+                        <p:selectManyCheckbox id="cabeca" value="#{pacienteBean.triagem.cabeca}" layout="responsive" columns="1">
                             <f:selectItem type="checkbox" name="sintomas" itemLabel="Dor de cabeça" itemValue="Dor de cabeça"/>
                             <f:selectItem itemValue="Garganta doendo" itemLabel="Garganta doendo" />
                             <f:selectItem itemValue="Olhos vermelhos" itemLabel="Olhos vermelhos" />
@@ -209,7 +209,7 @@
 
                     <div>
                         <h3>Sistema respiratório:</h3>
-                        <p:selectManyCheckbox id="respiratorio" value="#{pacienteBean.triagem.sintomas}" layout="responsive" columns="1">
+                        <p:selectManyCheckbox id="respiratorio" value="#{pacienteBean.triagem.respiratorio}" layout="responsive" columns="1">
                             <f:selectItem itemValue="Febre" itemLabel="Febre" />
                             <f:selectItem itemValue="Tosse seca persistente" itemLabel="Tosse seca persistente" />
                             <f:selectItem itemValue="Congestão nasal" itemLabel="Congestão nasal" />
@@ -219,7 +219,7 @@
 
                     <div>
                         <h3>Sistema gastrointestinal:</h3>
-                        <p:selectManyCheckbox id="gastrointestinal" value="#{pacienteBean.triagem.sintomas}" layout="responsive" columns="1">
+                        <p:selectManyCheckbox id="gastrointestinal" value="#{pacienteBean.triagem.gastrointestinal}" layout="responsive" columns="1">
                             <f:selectItem itemValue="Diarreia" itemLabel="Diarreia" />
                             <f:selectItem itemValue="Vômitos frequentes" itemLabel="Vômitos frequentes" />
                             <f:selectItem itemValue="Náuseas intensas" itemLabel="Náuseas intensas" />
@@ -231,7 +231,7 @@
 
                     <div>
                         <h3>Sistema urinário e reprodutor:</h3>
-                        <p:selectManyCheckbox id="pelve" value="#{pacienteBean.triagem.sintomas}" layout="responsive" columns="1">
+                        <p:selectManyCheckbox id="pelve" value="#{pacienteBean.triagem.pelve}" layout="responsive" columns="1">
                             <f:selectItem itemValue="Urina com sangue" itemLabel="Urina com sangue" />
                             <f:selectItem itemValue="Sensação de queimação ao urinar" itemLabel="Sensação de queimação ao urinar" />
                             <f:selectItem itemValue="Dificuldade para urinar" itemLabel="Dificuldade para urinar" />
@@ -243,7 +243,7 @@
 
                     <div>
                         <h3>Sistema tegumentar e muscular:</h3>
-                        <p:selectManyCheckbox id="pele-musculos" value="#{pacienteBean.triagem.sintomas}" layout="responsive" columns="1">
+                        <p:selectManyCheckbox id="pele-musculos" value="#{pacienteBean.triagem.muscular}" layout="responsive" columns="1">
                             <f:selectItem itemValue="Coceira intensa na pele" itemLabel="Coceira intensa na pele" />
                             <f:selectItem itemValue="Manchas vermelhas na pele" itemLabel="Manchas vermelhas na pele" />
                             <f:selectItem itemValue="Suores noturnos" itemLabel="Suores noturnos" />
@@ -254,7 +254,7 @@
 
                     <div>
                         <h3>Sistema visual:</h3>
-                        <p:selectManyCheckbox id="visual" value="#{pacienteBean.triagem.sintomas}" layout="responsive" columns="1">
+                        <p:selectManyCheckbox id="visual" value="#{pacienteBean.triagem.visual}" layout="responsive" columns="1">
                             <f:selectItem itemValue="Perda de visão" itemLabel="Perda de visão" />
                             <f:selectItem itemValue="Sensibilidade à luz" itemLabel="Sensibilidade à luz" />
                             <f:selectItem itemValue="Olhos lacrimejando" itemLabel="Olhos lacrimejando" />
@@ -383,7 +383,8 @@
 
                 <div class="button-container">
                     <p:commandButton styleClass="ui-button-secondary previous-button" style="margin-right: 1rem" type="button" value="Voltar" onclick="showGroup('group2')" />
-                    <p:commandButton type="submit" styleClass="submit-button" value="Enviar" action="#{pacienteBean.resultadoTriagem()}" />
+
+                    <p:commandButton name="realizarTriagem" styleClass="submit-button" value="Enviar" action="#{pacienteBean.resultadoTriagem()}" />
                 </div>
             </div>
         </section>

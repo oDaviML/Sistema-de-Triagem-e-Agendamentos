@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import quickcheckmodel.dto.MedicoDTO;
@@ -65,7 +66,8 @@ public class MedicoDAO extends BaseDAO<MedicoDTO> {
            medicoDTO.setEmail(resultSet.getString("email"));
            medicoDTO.setCrm(resultSet.getString("crm"));
            medicoDTO.setTelefone(resultSet.getString("telefone"));
-           medicoDTO.setDataNascimento(resultSet.getDate("nascimento"));
+           Date data = new Date(resultSet.getDate("nascimento").getTime());
+           medicoDTO.setDataNascimento(data);
            return medicoDTO;
        }
        return null;

@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.google.maps.GeoApiContext;
@@ -96,7 +97,8 @@ public class PacienteDAO extends BaseDAO<PacienteDTO> {
             pacienteDTO.setEmail(resultSet.getString("email"));
             pacienteDTO.setConvenio(resultSet.getString("convenio"));
             pacienteDTO.setTelefone(resultSet.getString("telefone"));
-            pacienteDTO.setDatanascimento(resultSet.getDate("nascimento"));
+            Date data = new Date(resultSet.getDate("nascimento").getTime());
+            pacienteDTO.setDatanascimento(data);
             return pacienteDTO;
         }
         return null;

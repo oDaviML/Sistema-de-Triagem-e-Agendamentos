@@ -113,7 +113,11 @@
                         </tr>
                         <tr>
                             <th>Data de Nascimento:</th>
-                            <td id="data-nascimento">#{medicoBean.medico.dataNascimento}</td>
+                            <td id="data-nascimento">
+                                <h:outputText value="#{medicoBean.medico.dataNascimento}" >
+                                    <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

@@ -97,7 +97,7 @@
     </h:head>
 
     <h:body>
-        <h:form>
+        <h:form id="form1">
             <p:growl id="growl" showDetail="true" />
             <header class="header">
                 <div class="logoInicio">
@@ -152,8 +152,8 @@
                     </div>
 
                     <div class="input-box">
-                        <label for="address">Endereço</label>
-                        <p:inputText id="address" value="#{medicoBean.clinica.endereco}" type="text" required="true" label="Endereço" />
+                        <label for="endereco">Endereço</label>
+                        <p:inputText id="endereco" value="#{medicoBean.clinica.endereco}" type="text" required="true" label="Endereço" />
                     </div>
 
                     <label for="Convenios">Convenios</label>
@@ -276,6 +276,8 @@
                 integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous" ></script>
         <script src="resources/js/acessibilidade.js"></script> 
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0QG_G0LdTKu_AIzR9awlnzqIMOU0g3pI" type="text/javascript"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0QG_G0LdTKu_AIzR9awlnzqIMOU0g3pI&amp;libraries=places"></script>
         <script src="resources/js/funcoesMicrofone/microfoneClinica.js"></script>
+        <script src="resources/js/endereco.js" ></script>
     </h:body>
 </html>
