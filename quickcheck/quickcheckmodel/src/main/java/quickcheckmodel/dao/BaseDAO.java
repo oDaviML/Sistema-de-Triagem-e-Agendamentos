@@ -50,6 +50,23 @@ public abstract class BaseDAO<T> {
 
     protected abstract void setInsertSenhaParameters(PreparedStatement preparedStatement, T dto) throws SQLException;
 
+    // Recuperar senha
+
+    public void alterarSenha(T dto) {
+        try (Connection connection = DBConnector.getConexao()) {
+            String sql = getAlterarSenhaQuery();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            setAlterarSenhaQuery(preparedStatement, dto);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected abstract String getAlterarSenhaQuery();
+
+    protected abstract void setAlterarSenhaQuery(PreparedStatement preparedStatement, T dto) throws SQLException;
+
     // Login
 
     public <T> T login(String cpf, String senha) {

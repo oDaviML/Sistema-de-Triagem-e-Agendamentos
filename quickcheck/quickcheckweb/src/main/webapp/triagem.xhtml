@@ -100,7 +100,14 @@
             background-color: rgb(0, 126, 105);
         }
 
-        @media only screen and (max-width: 600px) {
+        @media only screen and (max-width: 1000px) {
+            .checkbox-group-1,
+            .checkbox-group-3 {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media only screen and (max-width: 790px) {
             .checkbox-group-1,
             .checkbox-group-3 {
                 grid-template-columns: 1fr;
@@ -161,7 +168,7 @@
     <h:form id="form1">
         <header class="header">
             <div class="logoInicio">
-                <img src="resources/images/logoPrinc.png" id="imgLogoPrinc" alt=""/>
+                <img src="resources/images/logo.png" id="imgLogoPrinc" alt=""/>
             </div>
 
             <div class="linksHeader">
@@ -186,7 +193,7 @@
         </div>
     </h:form>
     <h:form id="form2">
-        <section>
+        <section id="perguntasTriagem">
             <div class="tab">
                 <div class="grupo grupoAtivo">Grupo 1</div>
                 <div class="grupo">Grupo 2</div>
@@ -201,16 +208,18 @@
                         <p:selectManyCheckbox id="cabeca" value="#{pacienteBean.triagem.cabeca}" layout="responsive" columns="1">
                             <f:selectItem type="checkbox" name="sintomas" itemLabel="Dor de cabeça" itemValue="Dor de cabeça"/>
                             <f:selectItem itemValue="Garganta doendo" itemLabel="Garganta doendo" />
-                            <f:selectItem itemValue="Olhos vermelhos" itemLabel="Olhos vermelhos" />
-                            <f:selectItem itemValue="Coceira nos olhos" itemLabel="Coceira nos olhos" />
-                            <f:selectItem itemValue="Dor nos olhos" itemLabel="Dor nos olhos" />
+                            <f:selectItem itemValue="Garganta inflamada" itemLabel="Garganta inflamada" />
+                            <f:selectItem itemValue="Febre" itemLabel="Febre" />
+                            <f:selectItem itemValue="Tontura" itemLabel="Tontura" />
+                            <f:selectItem itemValue="Inchaço no pescoço" itemLabel="Inchaço no pescoço" />
+                            <f:selectItem itemValue="Dor no ouvido" itemLabel="Dor no ouvido" />
                         </p:selectManyCheckbox>
                     </div>
 
                     <div>
                         <h3>Sistema respiratório:</h3>
                         <p:selectManyCheckbox id="respiratorio" value="#{pacienteBean.triagem.respiratorio}" layout="responsive" columns="1">
-                            <f:selectItem itemValue="Febre" itemLabel="Febre" />
+                            <f:selectItem itemValue="Coriza" itemLabel="Coriza" />
                             <f:selectItem itemValue="Tosse seca persistente" itemLabel="Tosse seca persistente" />
                             <f:selectItem itemValue="Congestão nasal" itemLabel="Congestão nasal" />
                             <f:selectItem itemValue="Dificuldade para respirar" itemLabel="Dificuldade para respirar" />
@@ -257,6 +266,9 @@
                         <p:selectManyCheckbox id="visual" value="#{pacienteBean.triagem.visual}" layout="responsive" columns="1">
                             <f:selectItem itemValue="Perda de visão" itemLabel="Perda de visão" />
                             <f:selectItem itemValue="Sensibilidade à luz" itemLabel="Sensibilidade à luz" />
+                            <f:selectItem itemValue="Olhos vermelhos" itemLabel="Olhos vermelhos" />
+                            <f:selectItem itemValue="Coceira nos olhos" itemLabel="Coceira nos olhos" />
+                            <f:selectItem itemValue="Dor nos olhos" itemLabel="Dor nos olhos" />
                             <f:selectItem itemValue="Olhos lacrimejando" itemLabel="Olhos lacrimejando" />
                             <f:selectItem itemValue="Visão embaçada" itemLabel="Visão embaçada" />
                         </p:selectManyCheckbox>
@@ -384,10 +396,24 @@
                 <div class="button-container">
                     <p:commandButton styleClass="ui-button-secondary previous-button" style="margin-right: 1rem" type="button" value="Voltar" onclick="showGroup('group2')" />
 
-                    <p:commandButton name="realizarTriagem" styleClass="submit-button" value="Enviar" action="#{pacienteBean.resultadoTriagem()}" />
+                    <p:commandButton name="realizarTriagem" styleClass="submit-button" value="Enviar" actionListener="#{pacienteBean.resultadoTriagem()}"
+                                     onclick="PF('resultadoTriagem').show();PF('pbAjax').start();PF('voltarInicio').disable()" />
                 </div>
             </div>
         </section>
+
+        <p:dialog draggable="false" header="Resultado" closable="false" widgetVar="resultadoTriagem" minHeight="400" width="600" showEffect="fade" modal="true">
+            <h:outputText id="resultado" style="font-size: 1.5rem;display: flex;justify-content: center;" value="#{pacienteBean.resultadoTriagemstr}" />
+
+            <p:progressBar widgetVar="pbAjax" ajax="true" value="#{pacienteBean.progresso}"
+                           labelTemplate="{value}%" styleClass="mt-3" global="false">
+                <p:ajax event="complete" update="resultado"
+                        oncomplete="PF('voltarInicio').enable()" />
+            </p:progressBar>
+
+            <p:commandButton value="Início" styleClass="ui-button-outlined" widgetVar="voltarInicio" style="margin-top: 1rem" action="inicioPaciente?faces-redirect=true" />
+        </p:dialog>
+
     </h:form>
     <script>
         function showGroup(groupId) {

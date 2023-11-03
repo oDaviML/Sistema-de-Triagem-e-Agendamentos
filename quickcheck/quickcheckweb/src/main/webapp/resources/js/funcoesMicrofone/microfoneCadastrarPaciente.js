@@ -157,7 +157,7 @@ class Bando {
     }
     
     inicio() {
-        window.location.href = "loginPaciente.xhtml";
+        window.location.href = "lgnPaciente.xhtml";
     }
 }
 

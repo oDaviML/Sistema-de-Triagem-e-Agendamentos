@@ -157,7 +157,7 @@ class Bando {
     }
     
     inicio() {
-        window.location.href = "loginFunc.xhtml";
+        window.location.href = "lgnMedico.xhtml";
     }
 }
 

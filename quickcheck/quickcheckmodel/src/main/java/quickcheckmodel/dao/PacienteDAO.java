@@ -48,6 +48,18 @@ public class PacienteDAO extends BaseDAO<PacienteDTO> {
         preparedStatement.setString(2, senha);
     }
 
+    @Override
+    protected String getAlterarSenhaQuery() {
+        return "UPDATE senhaspacientes SET senha = ? WHERE cpf = ?";
+    }
+
+    @Override
+    protected void setAlterarSenhaQuery(PreparedStatement preparedStatement, PacienteDTO dto) throws SQLException {
+        String senha = new SenhaService().criptografar(dto.getSenha());
+        preparedStatement.setString(1, senha);
+        preparedStatement.setString(2, dto.getCpf());
+    }
+
     //listar
 
      @Override
@@ -103,6 +115,8 @@ public class PacienteDAO extends BaseDAO<PacienteDTO> {
         }
         return null;
     }
+
+
 
     public static String obterCoordenada(String endereco) {
         try {

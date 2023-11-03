@@ -160,7 +160,7 @@ class Bando {
     }
     
     cadastro() {
-        window.location.href = "cadastroFunc.xhtml";
+        window.location.href = "cdsMedico.xhtml";
     }
     
     inicio() {

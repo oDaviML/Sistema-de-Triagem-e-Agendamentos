@@ -1,34 +1,30 @@
 package sistemadiagnostico.quickcheck.web;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import lombok.Getter;
-import lombok.Setter;
-import org.primefaces.event.SelectEvent;
-import org.primefaces.event.map.OverlaySelectEvent;
-import org.primefaces.model.DefaultScheduleEvent;
-import org.primefaces.model.ScheduleEvent;
-import org.primefaces.model.ScheduleModel;
-import org.primefaces.model.map.DefaultMapModel;
-import org.primefaces.model.map.LatLng;
-import org.primefaces.model.map.MapModel;
-import org.primefaces.model.map.Marker;
-
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.servlet.http.HttpSession;
+import lombok.Getter;
+import lombok.Setter;
+import org.primefaces.event.map.OverlaySelectEvent;
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
 import quickcheckmodel.dto.*;
 import quickcheckmodel.service.*;
 
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 @SessionScoped
 @ManagedBean
-@Getter@Setter
+@Getter
+@Setter
 public class MedicoBean {
     private MedicoDTO medico = new MedicoDTO();
     private MedicoService medicoService = new MedicoService();
@@ -90,44 +86,48 @@ public class MedicoBean {
     }
 
     public String inserirMedico() throws ClassNotFoundException, SQLException {
-        medicoService.cadastrarMedico(medico);
-        emailService.confimarCadastro(medico.getEmail(), medico.getNome());
-        medico = new MedicoDTO();
-        return "/loginFunc.xhtml?faces-redirect=true";
+        try {
+            medicoService.cadastrarMedico(medico);
+            emailService.confimarCadastro(medico.getEmail(), medico.getNome());
+            medico = new MedicoDTO();
+            return "/lgnMedico.xhtml?faces-redirect=true";
+        } catch (Exception e) {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Usuário já existe");
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void login() throws IOException, ClassNotFoundException, SQLException {
         medico = medicoService.login(medico.getCpf(), medico.getSenha());
         if (medico != null) {
-            HttpSession session = (HttpSession)FacesContext.getCurrentInstance( ).getExternalContext().getSession(false);
+            HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
             session.setAttribute("usuario", medico);
             if (clinicaService.obterClinicaPorCPF(medico.getCpf()) != null) {
                 clinica = clinicaService.obterClinicaPorCPF(medico.getCpf());
                 carregarMapa(clinica);
                 pacientes = documentoService.listarPacientes(medico.getCpf());
-            }
-            else {
+            } else {
                 clinica = new ClinicaDTO("", "", "", new String[0], "", "", "", "");
             }
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             context.redirect(context.getRequestContextPath() + "/faces/inicioMedico.xhtml?faces-redirect=true");
-        }
-        else {
+        } else {
             medico = new MedicoDTO();
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Usuário ou senha incorretos");
-            FacesContext.getCurrentInstance().addMessage(null,message);
+            FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
-    
+
     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, detail));
     }
-    
+
     public void logout() {
         try {
             FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-            context.redirect(context.getRequestContextPath() + "/faces/loginFunc.xhtml?faces-redirect=true");
+            context.redirect(context.getRequestContextPath() + "/faces/lgnMedico.xhtml?faces-redirect=true");
         } catch (IOException e) {
             e.printStackTrace();
         }

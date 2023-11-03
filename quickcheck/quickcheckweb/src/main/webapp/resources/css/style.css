@@ -26,10 +26,11 @@ a:hover {
 .logoInicio {
     margin-left: 3%;
     margin-right: 2%;
+    padding: 1rem;
 }
 
 #imgLogoPrinc {
-    height: 100px;
+    height: 50px;
 }
 
 .linksHeader {
@@ -52,6 +53,7 @@ a:hover {
     gap: 30px;
     width: 80%;
     margin: 0 auto;
+    margin-bottom: 1rem;
 }
 
 .func {
@@ -86,4 +88,8 @@ a:hover {
     margin-top: 15px;
     text-align: center;
     font-size: 2rem;
+}
+
+.tabela {
+    grid-column-start: span 2;
 }

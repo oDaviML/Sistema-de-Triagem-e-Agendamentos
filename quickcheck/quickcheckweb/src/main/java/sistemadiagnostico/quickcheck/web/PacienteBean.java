@@ -1,14 +1,14 @@
 package sistemadiagnostico.quickcheck.web;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.bean.ManagedBean;
+import jakarta.faces.bean.SessionScoped;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.AjaxBehaviorEvent;
-import lombok.*;
+import jakarta.servlet.http.HttpSession;
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
@@ -17,21 +17,20 @@ import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
-
-import jakarta.faces.application.FacesMessage;
-import jakarta.faces.bean.ManagedBean;
-import jakarta.faces.bean.SessionScoped;
-import jakarta.faces.context.ExternalContext;
-import jakarta.faces.context.FacesContext;
-import jakarta.servlet.http.HttpSession;
 import quickcheckmodel.dto.*;
 import quickcheckmodel.service.*;
 
-import javax.management.loading.MLet;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 @SessionScoped
 @ManagedBean
-@Getter@Setter
+@Getter
+@Setter
 public class PacienteBean {
     private PacienteDTO paciente = new PacienteDTO();
     private DocumentoDTO documento = new DocumentoDTO();
@@ -51,22 +50,24 @@ public class PacienteBean {
     private List<ClinicaDTO> clinicas = new ArrayList<>();
     private List<ConsultaDTO> consultasMedico = new ArrayList<>();
     private List<ConsultaDTO> consultas = new ArrayList<>();
-    private final String[] horariosArray = {"8:00", "8:30","9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00"};
+    private final String[] horariosArray = {"8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00"};
     private List<String> horarios = new ArrayList<>();
     private final String[] conveniosArray = {"Unimed", "Amil", "NotreDame", "Ipsemg", "Medsênior", "Particular"};
     private List<String> convenios = new ArrayList<>();
+    private String resultadoTriagemstr;
 
     private String coordenadaEndereco;
     private MapModel model;
     private Marker<ClinicaDTO> marker;
     private Date dataSelecionada;
     private Date dataAtual = new Date();
+    private int progresso = 0;
 
-
-    public String resultadoTriagem () {
-        String resultadoTriagem = triagemService.resultadoTriagem(triagem, paciente);
-        System.out.println(resultadoTriagem);
-        return "/loginPaciente.xhtml?faces-redirect=true";
+    public void resultadoTriagem() {
+        resultadoTriagemstr = "";
+        progresso = 0;
+        resultadoTriagemstr = triagemService.resultadoTriagem(triagem, paciente);
+        progresso = 100;
     }
 
     public void removerConsulta(ConsultaDTO event) throws SQLException {
@@ -139,7 +140,7 @@ public class PacienteBean {
     public void carregarConvenios() {
         List<String> conveniosCopy = new ArrayList<>(convenios);
         conveniosCopy.retainAll(Arrays.asList(clinica.getConvenios()));
-        convenios = conveniosCopy; 
+        convenios = conveniosCopy;
     }
 
     public void cadastrarConsulta() throws ClassNotFoundException, SQLException {
@@ -171,7 +172,7 @@ public class PacienteBean {
 
     public void inserirDocumento() {
         documento.setCpf(paciente.getCpf());
- 
+
         documentoService.inserirDocumento(documento);
         documento = new DocumentoDTO();
         documentos = documentoService.listar(paciente.getCpf());
@@ -195,34 +196,40 @@ public class PacienteBean {
         documentos = documentoService.listar(paciente.getCpf());
         addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Documento removido");
     }
+
     public String inserirPaciente() {
-        pacienteService.cadastrarPaciente(paciente);
-        emailService.confimarCadastro(paciente.getEmail(),paciente.getNome());
-        paciente = new PacienteDTO();
-        return "/loginPaciente.xhtml?faces-redirect=true";
+        try {
+            pacienteService.cadastrarPaciente(paciente);
+            emailService.confimarCadastro(paciente.getEmail(), paciente.getNome());
+            paciente = new PacienteDTO();
+            return "/lgnPaciente.xhtml?faces-redirect=true";
+        } catch (Exception e) {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Usuario ja existe");
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void listar() {
         pacientes = pacienteService.listar();
     }
-    
+
     public void login() throws IOException {
         paciente = pacienteService.login(paciente.getCpf(), paciente.getSenha());
         if (paciente != null) {
-            HttpSession session = (HttpSession)FacesContext.getCurrentInstance( ).getExternalContext().getSession(false);
+            HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
             session.setAttribute("usuario", paciente);
             documentos = documentoService.listar(paciente.getCpf());
             carregarConsultas();
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             context.redirect(context.getRequestContextPath() + "/faces/inicioPaciente.xhtml?faces-redirect=true");
-        }
-        else {
+        } else {
             paciente = new PacienteDTO();
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Usuário ou senha incorretos");
-            FacesContext.getCurrentInstance().addMessage(null,message);
+            FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
-    
+
     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, detail));
     }
@@ -231,7 +238,7 @@ public class PacienteBean {
         try {
             FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-            context.redirect(context.getRequestContextPath() + "/faces/loginPaciente.xhtml?faces-redirect=true");
+            context.redirect(context.getRequestContextPath() + "/faces/lgnPaciente.xhtml?faces-redirect=true");
         } catch (IOException e) {
             e.printStackTrace();
         }

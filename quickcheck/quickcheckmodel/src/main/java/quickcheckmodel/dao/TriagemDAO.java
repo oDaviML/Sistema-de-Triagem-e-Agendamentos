@@ -10,18 +10,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Date;
 
 public class TriagemDAO {
 
-    private static final String api = "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";
+    private static final String api = "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";
     public String resultadoTriagem(TriagemDTO triagem, PacienteDTO paciente) {
 
-        Integer idade = LocalDate.now().getYear() - paciente.getDatanascimento().getYear();
-        System.out.println(paciente.getDatanascimento().getYear());
-        System.out.println(LocalDate.now().getYear());
-        System.out.println(idade);
+        LocalDate dataFormatada =paciente.getDatanascimento().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        int idade = LocalDate.now().getYear() - dataFormatada.getYear();
 
         String prompt = "Atue como um sistema de triagem e com base no banco de dados de doenças a seguir:" +
                 "Gripe (Influenza), " +
@@ -76,18 +75,24 @@ public class TriagemDAO {
                 "Estou ciente que um diagnóstico preciso só pode ser feito por um profissional de saúde após uma avaliação clínica adequada. Lembrando retorne apenas o nome da doença com base nesse banco de dados que lhe foi informado" +
                 "Idade:"+ idade + "\n" +
                 triagem.toString();
+        String resposta = "";
+       try {
+            OpenAiService openAiService = new OpenAiService(api);
+            CompletionRequest request = CompletionRequest.builder()
+                    .model("text-davinci-003")
+                    .prompt(prompt)
+                    .maxTokens(100)
+                    .temperature(0.5)
+                    .build();
+            resposta = openAiService.createCompletion(request).getChoices().get(0).getText();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        resposta = resposta.trim();
+        //salvarTriagem(resposta, paciente);
+        System.out.println(resposta);
+        return resposta;
 
-/*        OpenAiService openAiService = new OpenAiService(api);
-        CompletionRequest request = CompletionRequest.builder()
-                .model("text-davinci-003")
-                .prompt(prompt)
-                .maxTokens(100)
-                .temperature(0.5)
-                .build();
-        String resposta = openAiService.createCompletion(request).getChoices().get(0).getText();
-        salvarTriagem(resposta, paciente);
-        return resposta;*/
-        return null;
     }
 
     public void salvarTriagem(String resultado, PacienteDTO paciente) {

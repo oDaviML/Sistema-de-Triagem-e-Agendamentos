@@ -43,6 +43,18 @@ public class MedicoDAO extends BaseDAO<MedicoDTO> {
         preparedStatement.setString(2, senha);
     }
 
+    @Override
+    protected String getAlterarSenhaQuery() {
+        return "UPDATE senhasmedico SET senha = ? WHERE cpf = ?";
+    }
+
+    @Override
+    protected void setAlterarSenhaQuery(PreparedStatement preparedStatement, MedicoDTO dto) throws SQLException {
+        String senha = new SenhaService().criptografar(dto.getSenha());
+        preparedStatement.setString(1, senha);
+        preparedStatement.setString(2, dto.getCpf());
+    }
+
     // Login
     @Override
     protected String getLoginQuery() {
