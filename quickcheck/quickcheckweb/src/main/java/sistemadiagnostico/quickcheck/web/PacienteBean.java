@@ -63,9 +63,13 @@ public class PacienteBean {
     private Date dataAtual = new Date();
     private int progresso = 0;
 
-    public void resultadoTriagem() {
+    public void resetarTriagem() {
         resultadoTriagemstr = "";
         progresso = 0;
+    }
+
+    public void resultadoTriagem() {
+        System.out.println("asdas");
         resultadoTriagemstr = triagemService.resultadoTriagem(triagem, paciente);
         progresso = 100;
     }

@@ -62,7 +62,7 @@ public class MedicoBean {
         documentos = documentoService.listar(cpf);
     }
 
-    public void inserirOuAtualizarClinica() throws ClassNotFoundException {
+    public void inserirOuAtualizarClinica() {
         try {
             clinica.setCpfmedico(medico.getCpf());
             clinica.setNomemedico(medico.getNome());
@@ -70,7 +70,7 @@ public class MedicoBean {
             carregarMapa(clinica);
             addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Clinica atualizada");
         } catch (Exception e) {
-            e.printStackTrace();
+            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao atualizar clinica");
         }
     }
 

@@ -16,7 +16,7 @@ import java.util.Date;
 
 public class TriagemDAO {
 
-    private static final String api = "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";
+    private static final String api = "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";
     public String resultadoTriagem(TriagemDTO triagem, PacienteDTO paciente) {
 
         LocalDate dataFormatada =paciente.getDatanascimento().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -46,7 +46,6 @@ public class TriagemDAO {
                 "Hipertensão arterial, " +
                 "Diabetes tipo 2, " +
                 "Infecção por fungos nas unhas (onicomicose), " +
-                "Rosácea, " +
                 "Hipertireoidismo, " +
                 "Hipotireoidismo, " +
                 "Artrite reumatoide, " +

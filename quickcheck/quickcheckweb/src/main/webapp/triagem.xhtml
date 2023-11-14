@@ -289,8 +289,8 @@
                     <div class="form-group upper-group">
 
                         <div class="form-group">
-                            <label for="tempo-inicio">Tempo de Início dos Sintomas:</label>
-                            <p:inputNumber styleClass="form-control" id="tempo-inicio" value="#{pacienteBean.triagem.inicioSintomas}" minValue="1" decimalPlaces="0"/>
+                            <label for="tempo-inicio">Tempo de Início dos Sintomas (dias):</label>
+                            <p:inputNumber styleClass="form-control" required="true" id="tempo-inicio" value="#{pacienteBean.triagem.inicioSintomas}" minValue="1" decimalPlaces="0"/>
                         </div>
 
                         <div class="form-group">
@@ -396,7 +396,7 @@
                 <div class="button-container">
                     <p:commandButton styleClass="ui-button-secondary previous-button" style="margin-right: 1rem" type="button" value="Voltar" onclick="showGroup('group2')" />
 
-                    <p:commandButton name="realizarTriagem" styleClass="submit-button" value="Enviar" actionListener="#{pacienteBean.resultadoTriagem()}"
+                    <p:commandButton name="realizarTriagem" validateClient="true" styleClass="submit-button" value="Enviar" actionListener="#{pacienteBean.resultadoTriagem()}"
                                      onclick="PF('resultadoTriagem').show();PF('pbAjax').start();PF('voltarInicio').disable()" />
                 </div>
             </div>

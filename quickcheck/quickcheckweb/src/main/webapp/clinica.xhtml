@@ -98,7 +98,6 @@
 
     <h:body>
         <h:form id="form1">
-            <p:growl id="growl" showDetail="true" />
             <header class="header">
                 <div class="logoInicio">
                     <img src="resources/images/logo.png" id="imgLogoPrinc" alt="" />
@@ -117,8 +116,10 @@
                 </div>
                 <p:commandButton value="Sair" action="#{medicoBean.logout()}"
                                  styleClass="ui-button-secondary ui-button-flat" />
-                <p:remoteCommand name="carregarSair" action="#{medicoBean.logout()}" />
             </header>
+        </h:form>
+        <h:form id="form2">
+            <p:growl id="growl" showDetail="true" />
             <div class="tituloAba">
                 <h2>Clínica</h2>
             </div>
