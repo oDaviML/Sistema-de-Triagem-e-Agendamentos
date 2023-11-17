@@ -23,4 +23,8 @@ public class PacienteService {
     public String obterCoordenada(String endereco) {
         return pacienteDAO.obterCoordenada(endereco);
     }
+
+    public List<PacienteDTO> listarPacientes(String cpf){
+        return pacienteDAO.listarPacientes(cpf);
+    }
 }

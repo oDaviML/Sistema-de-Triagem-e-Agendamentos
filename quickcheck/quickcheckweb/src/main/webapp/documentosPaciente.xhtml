@@ -168,20 +168,24 @@
                     </p:scrollPanel>
                 </div>
                 <div class="content">
-                    <p:dataTable id="tabela" var="documento" value="#{medicoBean.documentos}" scrollable="true"
-                                 styleClass="table">
-                        <p:column headerText="Tipo">
-                            <h:outputText id="tipoDocumento" value="#{documento.tipo}"/>
-                        </p:column>
+                    <p:dataTable id="tabela" var="arquivo" value="#{medicoBean.documentos}">
                         <p:column headerText="Nome">
-                            <h:outputText id="nomeDocumento" value="#{documento.nome}"/>
+                            <h:outputText value="#{arquivo.nome}" />
                         </p:column>
-                        <p:column headerText="Link">
-                            <a id="linkDocumento" href="#{documento.link}" target="_blank"><h:outputText
-                                    value="#{documento.link}"/></a>
+
+                        <p:column headerText="Tamanho">
+                            <h:outputText value="#{arquivo.tamanhoFormatado}" />
                         </p:column>
-                        <p:column headerText="Envio">
-                            <h:outputText id="dataDocumento" value="#{documento.data}"/>
+
+                        <p:column headerText="Tipo">
+                            <h:outputText value="#{arquivo.tipo}" />
+                        </p:column>
+
+                        <p:column >
+                            <p:commandButton value="Download" onclick="PrimeFaces.monitorDownload(start, stop);"
+                                             icon="pi pi-arrow-down" styleClass="rounded-button ui-button-primary ui-button-flat">
+                                <p:fileDownload value="#{medicoBean.baixarArquivo(arquivo)}"/>
+                            </p:commandButton>
                         </p:column>
                     </p:dataTable>
                 </div>

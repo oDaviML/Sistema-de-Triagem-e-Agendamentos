@@ -1,5 +1,6 @@
 package quickcheckmodel.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +13,7 @@ import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
 
+import quickcheckmodel.db.DBConnector;
 import quickcheckmodel.dto.PacienteDTO;
 import quickcheckmodel.service.SenhaService;
 
@@ -131,6 +133,28 @@ public class PacienteDAO extends BaseDAO<PacienteDTO> {
         }
         return null;
     }
-    
-    
+
+    public static List<PacienteDTO> listarPacientes(String cpf) {
+        try (Connection connection = DBConnector.getConexao()) {
+            String sql = "SELECT DISTINCT p.* FROM paciente p JOIN consulta c ON p.cpf = c.cpfpaciente WHERE c.cpfmedico = '"+cpf+"';";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<PacienteDTO> pacientes = new ArrayList<>();
+            while (resultSet.next()) {
+                PacienteDTO paciente = new PacienteDTO();
+                paciente.setCpf(resultSet.getString("cpf"));
+                paciente.setNome(resultSet.getString("nome"));
+                paciente.setEndereco(resultSet.getString("endereco"));
+                paciente.setEmail(resultSet.getString("email"));
+                paciente.setConvenio(resultSet.getString("convenio"));
+                paciente.setTelefone(resultSet.getString("telefone"));
+                paciente.setDatanascimento(resultSet.getDate("nascimento"));
+                pacientes.add(paciente);
+            }
+            return pacientes;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

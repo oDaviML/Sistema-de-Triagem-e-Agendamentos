@@ -8,11 +8,8 @@ import quickcheckmodel.dto.TriagemDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Arrays;
-import java.util.Date;
 
 public class TriagemDAO {
 
@@ -88,7 +85,7 @@ public class TriagemDAO {
             e.printStackTrace();
         }
         resposta = resposta.trim();
-        //salvarTriagem(resposta, paciente);
+        salvarTriagem(resposta, paciente);
         System.out.println(resposta);
         return resposta;
 
@@ -106,4 +103,5 @@ public class TriagemDAO {
             e.printStackTrace();
         }
     }
+
 }

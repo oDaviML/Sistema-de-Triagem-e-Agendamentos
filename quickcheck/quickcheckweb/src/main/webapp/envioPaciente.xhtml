@@ -44,81 +44,50 @@
                 <h2>Documentos</h2>
             </div>
         </h:form>
-        <h:form id="form2">
+        <h:form id="form2" enctype="multipart/form-data">
+            <p:growl id="msgs" showDetail="true"/>
             <div class="cardDocumento">
                 <div class="input-group">
                     <div class="input-box">
-                        <label for="tipo">Tipo: </label>
-                        <p:selectOneMenu id="tipo" value="#{pacienteBean.documento.tipo}" required="true">
-                            <f:selectItem itemLabel="PDF" itemValue="PDF"/>
-                            <f:selectItem itemLabel="PNG" itemValue="PNG"/>
-                            <f:selectItem itemLabel="JPG" itemValue="JPG"/>
-                        </p:selectOneMenu>
-
-                        <label for="nome">Nome: </label>
+                        <label for="nome" style="margin-right: 0.2rem">Nome: </label>
                         <p:inputText id="nome" value="#{pacienteBean.documento.nome}" type="text" required="true" label="Nome" />
 
-                        <label for="link">Link: </label>
-                        <p:inputText id="link" value="#{pacienteBean.documento.link}" type="text" required="true" label="Link" />
+                        <p:fileUpload label="Escolha um arquivo" style="margin-left: 1rem" value="#{pacienteBean.file}" mode="simple" skinSimple="true" sizeLimit="7000000" allowTypes="/(\.|\/)(jpe?g|png|pdf)$/"
+                                      validateContentType="true" accept=".pdf,.jpg,.jpeg,.png"/>
 
-                        <p:commandButton value="Adicionar" icon="pi pi-upload" validateClient="true" style="margin-left: 1rem;" update="form2" action="#{pacienteBean.inserirDocumento()}" styleClass="mr-2 ui-button-outlined"/>
-                        <p:remoteCommand name="inserirDocumento" action="#{pacienteBean.inserirDocumento()}" />
+                        <p:commandButton value="Adicionar documento" action="#{pacienteBean.inserirDocumento()}" styleClass="mt-3 ui-button-outlined block" update="formtabela:tabela form2"/>
                     </div>
                 </div>
             </div>
-
-            <p:growl id="msgs" showDetail="true"/>
+    </h:form>
+    <h:form id="formtabela" >
             <div class="cardDocumento">
-                <p:dataTable id="documentos" var="documento" value="#{pacienteBean.documentos}" editable="true"
-                             style="margin-bottom:20px">
-
-                    <p:ajax event="rowEdit" listener="#{pacienteBean.atualizarDocumento}" update="form2:documentos form2:msgs" immediate="true"/>
-                    <p:remoteCommand name="editarDocumento" action="#{pacienteBean.atualizarDocumento}" />
-                    <p:column headerText="Tipo">
-                        <p:cellEditor>
-                            <f:facet name="output">
-                                <h:outputText id="outputTipo" value="#{documento.tipo}"/>
-                            </f:facet>
-                            <f:facet name="input">
-                                <p:selectOneMenu  value="#{documento.tipo}" style="width:100%" >
-                                    <f:selectItem itemLabel="PDF" itemValue="PDF"/>
-                                    <f:selectItem itemLabel="PNG" itemValue="PNG"/>
-                                    <f:selectItem itemLabel="JPG" itemValue="JPG"/>
-                                </p:selectOneMenu>
-                            </f:facet>
-                        </p:cellEditor>
-                    </p:column>
-
+                <p:dataTable id="tabela" var="arquivo" value="#{pacienteBean.documentos}">
                     <p:column headerText="Nome">
-                        <p:cellEditor>
-                            <f:facet name="output">
-                                <h:outputText id="outputNome" value="#{documento.nome}"/>
-                            </f:facet>
-                            <f:facet name="input">
-                                <p:inputText id="inputNome" value="#{documento.nome}" style="width:100%" label="Name"/>
-                            </f:facet>
-                        </p:cellEditor>
+                        <h:outputText value="#{arquivo.nome}" />
                     </p:column>
 
-                    <p:column headerText="Link">
-                        <p:cellEditor>
-                            <f:facet name="output">
-                                <a id="outputLink" href="#{documento.link}" target="_blank"><h:outputText value="#{documento.link}"/></a>
-                            </f:facet>
-                            <f:facet name="input">
-                                <p:inputText id="inputLink" value="#{documento.link}" style="width:100%" label="Name"/>
-                            </f:facet>
-                        </p:cellEditor>
+                    <p:column headerText="Tamanho">
+                        <h:outputText value="#{arquivo.tamanhoFormatado}" />
                     </p:column>
 
-                    <p:column headerText="Data Envio">
-                        <h:outputText value="#{documento.data}"/>
+                    <p:column headerText="Tipo">
+                        <h:outputText value="#{arquivo.tipo}" />
                     </p:column>
 
-                    <p:column style="width:6rem">
-                        <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
-                        <p:commandButton styleClass="rounded-button ui-button-secondary ui-button-flat" process="@this"
-                                         actionListener="#{pacienteBean.removerDocumento(documento)}" update="form2:documentos form2:msgs" icon="pi pi-trash">
+                    <p:column headerText="Data de envio">
+                        <h:outputText value="#{arquivo.data}" >
+                            <f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm" />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column >
+                        <p:commandButton value="Download" onclick="PrimeFaces.monitorDownload(start, stop);"
+                                         icon="pi pi-arrow-down" styleClass="rounded-button ui-button-primary ui-button-flat">
+                            <p:fileDownload value="#{pacienteBean.baixarArquivo(arquivo)}"/>
+                        </p:commandButton>
+
+                        <p:commandButton styleClass="rounded-button ui-button-secondary ui-button-flat" action="#{pacienteBean.removerDocumento(arquivo)}" update="tabela form2:msgs" icon="pi pi-trash">
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>

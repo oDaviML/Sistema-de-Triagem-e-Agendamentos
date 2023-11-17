@@ -1,5 +1,6 @@
 package sistemadiagnostico.quickcheck.web;
 
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
@@ -13,6 +14,9 @@ import org.jetbrains.annotations.NotNull;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.map.OverlaySelectEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.file.UploadedFile;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
@@ -20,7 +24,7 @@ import org.primefaces.model.map.Marker;
 import quickcheckmodel.dto.*;
 import quickcheckmodel.service.*;
 
-import java.io.IOException;
+import java.io.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,6 +48,7 @@ public class PacienteBean {
     private ClinicaService clinicaService = new ClinicaService();
     private ConsultaService consultaService = new ConsultaService();
     private TriagemService triagemService = new TriagemService();
+    private ResultadoTriagemService resultadoTriagemService = new ResultadoTriagemService();
 
     private List<PacienteDTO> pacientes = new ArrayList<>();
     private List<DocumentoDTO> documentos = new ArrayList<>();
@@ -54,7 +59,8 @@ public class PacienteBean {
     private List<String> horarios = new ArrayList<>();
     private final String[] conveniosArray = {"Unimed", "Amil", "NotreDame", "Ipsemg", "Medsênior", "Particular"};
     private List<String> convenios = new ArrayList<>();
-    private String resultadoTriagemstr;
+    private List<ResultadoTriagemDTO> resultadosTriagem = new ArrayList<>();
+
 
     private String coordenadaEndereco;
     private MapModel model;
@@ -62,6 +68,8 @@ public class PacienteBean {
     private Date dataSelecionada;
     private Date dataAtual = new Date();
     private int progresso = 0;
+    private UploadedFile file;
+    private String resultadoTriagemstr;
 
     public void resetarTriagem() {
         resultadoTriagemstr = "";
@@ -69,7 +77,6 @@ public class PacienteBean {
     }
 
     public void resultadoTriagem() {
-        System.out.println("asdas");
         resultadoTriagemstr = triagemService.resultadoTriagem(triagem, paciente);
         progresso = 100;
     }
@@ -175,31 +182,44 @@ public class PacienteBean {
     }
 
     public void inserirDocumento() {
-        documento.setCpf(paciente.getCpf());
+        try {
+            if (file != null) {
+                documento.setNome(file.getFileName());
+                documento.setCpf(paciente.getCpf());
+                documento.setTamanho(file.getSize());
+                InputStream inputStream = file.getInputStream();
 
-        documentoService.inserirDocumento(documento);
-        documento = new DocumentoDTO();
-        documentos = documentoService.listar(paciente.getCpf());
-        addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Documento inserido");
+                ObjectMetadata metadata = new ObjectMetadata();
+                metadata.setContentType(file.getContentType());
+                metadata.setContentLength(file.getSize());
+                metadata.setHeader("filename", file.getFileName());
+
+                documentoService.inserirDocumento(documento, inputStream, metadata, paciente);
+                documentos = documentoService.listar(paciente.getCpf());
+                addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Documento inserido");
+            }
+            else {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Selecione um arquivo");
+            e.printStackTrace();
+        }
     }
 
-    public void atualizarDocumento(RowEditEvent<DocumentoDTO> event) {
-        DocumentoDTO documento = event.getObject();
-        documentoService.atualizarDocumento(documento);
-        documento = new DocumentoDTO();
-        documentos = documentoService.listar(paciente.getCpf());
-        addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Documento atualizado");
-    }
-
-    public void removerDocumento(DocumentoDTO event) {
-        DocumentoDTO documento = event;
-
-        documento.setCpf(paciente.getCpf());
+    public void removerDocumento(DocumentoDTO documento) {
         documentoService.removerDocumento(documento);
-        documento = new DocumentoDTO();
         documentos = documentoService.listar(paciente.getCpf());
         addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Documento removido");
     }
+
+    public StreamedContent baixarArquivo(DocumentoDTO documento) throws FileNotFoundException {
+        File file = documentoService.baixarArquivo(documento.getNomeArquivo());
+        InputStream inputStream = new FileInputStream(file);
+        String fileName = file.getName();
+        return DefaultStreamedContent.builder().name(fileName).stream(() -> inputStream).build();
+    }
+
 
     public String inserirPaciente() {
         try {
@@ -224,6 +244,7 @@ public class PacienteBean {
             HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
             session.setAttribute("usuario", paciente);
             documentos = documentoService.listar(paciente.getCpf());
+            resultadosTriagem = resultadoTriagemService.listar(paciente);
             carregarConsultas();
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             context.redirect(context.getRequestContextPath() + "/faces/inicioPaciente.xhtml?faces-redirect=true");

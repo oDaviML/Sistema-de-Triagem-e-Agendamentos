@@ -30,26 +30,6 @@
                 color: #333;
             }
 
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-top: 20px;
-            }
-
-            th,
-            td {
-                padding: 10px;
-                text-align: left;
-                border-bottom: 1px solid #ddd;
-            }
-
-            th {
-                background-color: #f2f2f2;
-                font-weight: bold;
-            }
-            header {
-                background-color: white;
-            }
             .tabela {
                 padding: 2rem;
             }
@@ -128,6 +108,24 @@
                 </table>
             </div>
 
+            <div class="tabela">
+                <h2>Triagens</h2>
+                <p:dataTable id="triagens" scrollable="true" scrollHeight="250" var="triagem" value="#{pacienteBean.resultadosTriagem}"
+                             style="margin-bottom:20px">
+                    <p:column headerText="Resultado">
+                        <h:outputText id="especialidade" value="#{triagem.resultado}"/>
+                    </p:column>
+
+                    <p:column headerText="Data">
+                        <h:outputText id="nomeMedico" value="#{triagem.data}" >
+                            <f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm" />
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+                <p:commandButton value="Imprimir" type="button" icon="pi pi-print" styleClass="shadow-1 mb-3 mr-2">
+                    <p:printer target="triagens"/>
+                </p:commandButton>
+            </div>
 
         </h:form>
         <div class="acessbilidade">

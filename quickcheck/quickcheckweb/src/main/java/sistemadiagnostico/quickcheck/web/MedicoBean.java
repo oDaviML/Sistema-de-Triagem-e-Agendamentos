@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpSession;
 import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.event.map.OverlaySelectEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
@@ -16,7 +18,7 @@ import org.primefaces.model.map.Marker;
 import quickcheckmodel.dto.*;
 import quickcheckmodel.service.*;
 
-import java.io.IOException;
+import java.io.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +62,13 @@ public class MedicoBean {
 
     public void carregarDocumentos(String cpf) {
         documentos = documentoService.listar(cpf);
+    }
+
+    public StreamedContent baixarArquivo(DocumentoDTO documento) throws FileNotFoundException {
+        File file = documentoService.baixarArquivo(documento.getNomeArquivo());
+        InputStream inputStream = new FileInputStream(file);
+        String fileName = file.getName();
+        return DefaultStreamedContent.builder().name(fileName).stream(() -> inputStream).build();
     }
 
     public void inserirOuAtualizarClinica() {
@@ -106,7 +115,7 @@ public class MedicoBean {
             if (clinicaService.obterClinicaPorCPF(medico.getCpf()) != null) {
                 clinica = clinicaService.obterClinicaPorCPF(medico.getCpf());
                 carregarMapa(clinica);
-                pacientes = documentoService.listarPacientes(medico.getCpf());
+                pacientes = pacienteService.listarPacientes(medico.getCpf());
             } else {
                 clinica = new ClinicaDTO("", "", "", new String[0], "", "", "", "");
             }
