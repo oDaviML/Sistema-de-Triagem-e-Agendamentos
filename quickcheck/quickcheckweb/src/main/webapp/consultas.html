@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quickcheck</title>
+    <link rel="stylesheet" href="resources/css/bootstrap.css" />
+    <link rel="stylesheet" href="resources/css/style.css" />
+
+    <style>
+        .Sign-In_Bubble {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                border-radius: 0 0 1rem 1rem;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                background: #ffffff;
+                opacity: 88%;
+                width: 100%;
+                padding: 3rem;
+            }
+
+        #sidebar {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 0 0 1rem 1rem;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        h4 {
+            margin-bottom: 10px;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logoInicio">
+            <img src="resources/images/logoPrinc.png" id="imgLogoPrinc" alt="" />
+        </div>
+
+        <div class="linksHeader">
+            <h4 id="btnInicio"><a href="inicioPaciente.xhtml">Início</a></h4>
+        </div>
+
+        <div class="linksHeader">
+            <h4 id="btnDiagnostico"><a href="">Pré-Diagnóstico</a></h4>
+        </div>
+
+        <div class="linksHeader">
+            <h4 id="btnPerfil"><a href="perfilPaciente.xhtml">Perfil</a></h4>
+        </div>
+
+        <button onclick="location.href='#{pacienteBean.logout()}'"
+            class="ui-button-secondary ui-button-flat">Sair</button>
+    </header>
+
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="Sign-In_Bubble">
+                                <h2 style="margin-bottom: 1rem;">Pesquisar Clínicas</h2>
+                                <div class="input-box">
+                                    <label for="especialidade">Especialidade: </label>
+                                    <select id="especialidade">
+                                        <option value="Todos">Todos</option>
+                                        <option value="Clinico Geral">Clinico Geral</option>
+                                        <option value="Pediatra">Pediatra</option>
+                                        <option value="Cardiologista">Cardiologista</option>
+                                        <option value="Psiquiatra">Psiquiatra</option>
+                                        <option value="Oftalmologista">Oftalmologista</option>
+                                        <option value="Otorrinolaringologista">Otorrinolaringologista</option>
+                                        <option value="Oncologista">Oncologista</option>
+                                        <option value="Urologista">Urologista</option>
+                                        <option value="Dermatologista">Dermatologista</option>
+                                        <option value="Ginecologista">Ginecologista</option>
+                                    </select>
+                            
+                                    <label for="convenio" style="margin-left: 1rem;">Convênio: </label>
+                                    <select id="convenio">
+                                        <option value="Todos">Todos</option>
+                                        <option value="Unimed">Unimed</option>
+                                        <option value="Amil">Amil</option>
+                                        <option value="NotreDame">NotreDame</option>
+                                        <option value="Ipsemg">Ipsemg</option>
+                                        <option value="Medsênior">Medsênior</option>
+                                        <option value="Particular">Particular</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                        <hr>
+                        <!--tabela de medicos-->
+                        <table class="table table-striped">
+                            <!-- Conteúdo da tabela -->
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div id="sidebar">
+                                <h2 style="padding-bottom: 1rem;">Agendar Horário</h2>
+                                <h4>Clinica: <span id="clinicName">Nome da Clínica</span></h3>
+                                <h4>Médico: <span id="doctorName">Nome do Médico</span></h3>
+                                <div>
+                                    <label for="agenda">Data: </label>
+                                    <input type="date" id="agenda" min="2023-11-15">
+                                </div>
+                        
+                                <div>
+                                    <label for="horarios">Horário: </label>
+                                    <select id="horarios"></select>
+                                </div>
+                        
+                                <div>
+                                    <label for="convenios">Convênio: </label>
+                                    <select id="convenios"></select>
+                                </div>
+                                <button>Agendar Consulta</button>
+                            </div>
+                        </form>
+                        <hr>
+                        <!-- Mapa  -->
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="map"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0QG_G0LdTKu_AIzR9awlnzqIMOU0g3pI&callback=initMap"></script>
+    <script>
+       let map;
+
+        async function initMap() {
+        //@ts-ignore
+        const { Map } = await google.maps.importLibrary("maps");
+
+        map = new Map(document.getElementById("map"), {
+            center: { lat: -34.397, lng: 150.644 },
+            zoom: 8,
+        });
+        }
+
+        initMap();
+
+    </script>
+</body>
+
+</html>
