@@ -53,6 +53,7 @@ public class PacienteBean {
     private List<PacienteDTO> pacientes = new ArrayList<>();
     private List<DocumentoDTO> documentos = new ArrayList<>();
     private List<ClinicaDTO> clinicas = new ArrayList<>();
+    private List<ClinicaDTO> clinicasFiltradas = new ArrayList<>();
     private List<ConsultaDTO> consultasMedico = new ArrayList<>();
     private List<ConsultaDTO> consultas = new ArrayList<>();
     private final String[] horariosArray = {"8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00"};
@@ -63,8 +64,7 @@ public class PacienteBean {
 
 
     private String coordenadaEndereco;
-    private MapModel model;
-    private Marker<ClinicaDTO> marker;
+    private MapModel<Long> model;
     private Date dataSelecionada;
     private Date dataAtual = new Date();
     private int progresso = 0;
@@ -92,11 +92,23 @@ public class PacienteBean {
         consultas = consultaService.listarConsultaPaciente(paciente.getCpf());
     }
 
-    public void onMarkerSelect(@NotNull OverlaySelectEvent event) {
-        this.marker = (Marker) event.getOverlay();
-        this.clinica = (ClinicaDTO) marker.getData();
-        convenios = Arrays.asList(conveniosArray);
-        carregarConvenios();
+    public void onRowSelect(SelectEvent<ClinicaDTO> event) {
+        try {
+            model = new DefaultMapModel<>();
+            Double latitude = Double.parseDouble(event.getObject().getCoordenada().split(",")[0]);
+            Double longitude = Double.parseDouble(event.getObject().getCoordenada().split(",")[1]);
+
+            coordenadaEndereco = latitude + ", " + longitude;
+
+            model.addOverlay(new Marker<>(new LatLng(latitude, longitude), event.getObject().getNome()));
+            this.clinica = event.getObject();
+            convenios = Arrays.asList(conveniosArray);
+            carregarConvenios();
+            addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Clinica selecionada");
+        }catch (Exception e){
+            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao selecionar clinica");
+            e.printStackTrace();
+        }
     }
 
     public void onFiltroSelect(@NotNull AjaxBehaviorEvent event) {
@@ -110,25 +122,18 @@ public class PacienteBean {
             convenio = "Todos";
         }
 
-        model = new DefaultMapModel<>();
+        clinicasFiltradas = new ArrayList<>();
+
         if (convenio.equals("Todos") && especialidade.equals("Todos")) {
             for (ClinicaDTO clinicaDTO : clinicas) {
-                String[] coordenadas = clinicaDTO.getCoordenada().split(",");
-                LatLng coord = new LatLng(Double.parseDouble(coordenadas[0]), Double.parseDouble(coordenadas[1]));
-                Marker<ClinicaDTO> marker = new Marker<>(coord, clinicaDTO.getNome());
-                marker.setData(clinicaDTO);
-                model.addOverlay(marker);
+                clinicasFiltradas.add(clinicaDTO);
             }
         } else {
             for (ClinicaDTO clinicaDTO : clinicas) {
                 List<String> conveniosCopy = Arrays.asList(clinicaDTO.getConvenios());
                 if ((convenio.equals("Todos") || conveniosCopy.contains(convenio)) &&
                         (especialidade.equals("Todos") || clinicaDTO.getEspecialidade().equals(especialidade))) {
-                    String[] coordenadas = clinicaDTO.getCoordenada().split(",");
-                    LatLng coord = new LatLng(Double.parseDouble(coordenadas[0]), Double.parseDouble(coordenadas[1]));
-                    Marker<ClinicaDTO> marker = new Marker<>(coord, clinicaDTO.getNome());
-                    marker.setData(clinicaDTO);
-                    model.addOverlay(marker);
+                    clinicasFiltradas.add(clinicaDTO);
                 }
             }
         }
@@ -168,15 +173,9 @@ public class PacienteBean {
     }
 
     public void carregarClinicas() throws ClassNotFoundException, NumberFormatException, IOException {
+        clinicasFiltradas = new ArrayList<>();
         clinicas = clinicaService.listarClinicas();
-        model = new DefaultMapModel<>();
-        for (ClinicaDTO clinicaDTO : clinicas) {
-            String[] coordenadas = clinicaDTO.getCoordenada().split(",");
-            LatLng coord = new LatLng(Double.parseDouble(coordenadas[0]), Double.parseDouble(coordenadas[1]));
-            marker = new Marker<>(coord, clinicaDTO.getNome());
-            marker.setData(clinicaDTO);
-            model.addOverlay(marker);
-        }
+        clinicasFiltradas.addAll(clinicas);
         ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
         context.redirect(context.getRequestContextPath() + "/faces/consultaPaciente.xhtml?faces-redirect=true");
     }
@@ -245,6 +244,7 @@ public class PacienteBean {
             session.setAttribute("usuario", paciente);
             documentos = documentoService.listar(paciente.getCpf());
             resultadosTriagem = resultadoTriagemService.listar(paciente);
+            coordenadaEndereco = pacienteService.obterCoordenada(paciente.getEndereco());
             carregarConsultas();
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             context.redirect(context.getRequestContextPath() + "/faces/inicioPaciente.xhtml?faces-redirect=true");
@@ -269,7 +269,4 @@ public class PacienteBean {
         }
     }
 
-    public String getCoordenadaEndereco() {
-        return pacienteService.obterCoordenada(paciente.getEndereco());
-    }
 }
