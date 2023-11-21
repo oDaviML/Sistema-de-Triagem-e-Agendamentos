@@ -5,6 +5,7 @@ import java.util.List;
 
 import quickcheckmodel.dao.MedicoDAO;
 import quickcheckmodel.dto.MedicoDTO;
+import quickcheckmodel.dto.PacienteDTO;
 
 public class MedicoService {
 
@@ -20,5 +21,17 @@ public class MedicoService {
 
     public MedicoDTO login(String cpf, String senha) {
         return medicoDAO.login(cpf, senha);
+    }
+
+    public void alterarSenha(MedicoDTO medicoDTO){
+        medicoDAO.alterarSenha(medicoDTO);
+    }
+
+    public void editar(MedicoDTO medicoDTO){
+        medicoDAO.editar(medicoDTO);
+    }
+
+    public MedicoDTO verificar(MedicoDTO medico) {
+        return medicoDAO.verificar(medico);
     }
 }

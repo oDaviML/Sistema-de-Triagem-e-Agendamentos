@@ -1,0 +1,144 @@
+* {
+    margin:0px;
+    border:0px;
+    padding: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.header{
+    max-height: 130px;
+    display: flex;
+}
+a{
+    text-decoration: none;
+    color:black;
+  }
+a:hover{
+    color:lightslategray;
+}
+.logoInicio{
+    margin-left: 3%;
+    margin-right: 2%;
+}
+#imgLogoPrinc{
+    height: 100px;
+    flex:1;
+}
+.linksHeader{
+    flex:1;
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align:center;
+}
+.pesqHeader{
+    flex: 0 0 auto ;
+    width: 30%;
+}
+.inputPesq{
+    border-radius: 20px;
+    height: 30px;
+    width: 250px;
+    border: 3px black solid;
+    background-image: url("https://media.istockphoto.com/id/1151843591/pt/vetorial/loupe-sign-icon-in-transparent-style-magnifier-vector-illustration-on-isolated-background.jpg?s=612x612&w=0&k=20&c=aFS8gdcNtX4gS6Igermq75eztxVdDvHp0S-Rw3aRLD8=");
+    background-position: right;
+    background-size: 30px;
+    background-repeat: no-repeat;
+    padding-left: 20px; 
+}
+
+.tituloAba{
+    height: 60px;
+    width: auto;
+    background-color: #3FC1C8;
+    color: white;
+    padding-left: 6%;
+    margin-bottom: auto;
+    line-height: 60px;
+}
+.conteudo {
+    display: flex;
+}
+
+.Description {
+    padding: 37px 55px 27px;
+    position: relative;
+    align-items: center;
+}
+
+.Description p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#bolha1 {
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Inter', sans-serif;
+    text-align: justify;
+    border-radius: 7px;
+    border: 4px dashed black;
+}
+
+#medica {
+    display: flex;
+    justify-content: center;
+    padding-right: 25px;
+    padding-left: 35%;
+    float: right;
+}
+
+.Sign-In_Bubble {
+    border-radius: 12px;
+    background: #CDDEDF;
+    opacity: 88%;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+}
+
+.Sign-In_Bubble {
+    margin-bottom: 3rem;
+    display: flex;
+    justify-content: center;
+}
+
+.input-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 1rem 0;
+}
+
+.input-box {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.1rem;
+}
+
+.input-box input {
+    margin: 0.6rem 0;
+    padding: 0.8rem 1.2rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.8rem;
+}
+
+.input-box input:hover {
+    background-color: #eeeeee75;
+}
+
+.input-box input:focus-visible {
+    outline: 1px solid #0abbaf;
+}
+
+.titulo-1b {
+  border-right: 7px solid transparent;
+  border-left: 7px solid transparent;
+  border: 7px solid black;
+  margin: 5px;
+  padding: 5px;
+}
