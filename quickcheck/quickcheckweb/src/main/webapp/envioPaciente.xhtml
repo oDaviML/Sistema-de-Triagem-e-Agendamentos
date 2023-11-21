@@ -31,11 +31,15 @@
                 </div>
 
                 <div class="linksHeader">
-                    <h4 id="btnDiagnostico"><a href="">Pré-Diagnóstico</a></h4>
+                    <p:commandLink action="#{pacienteBean.resetarTriagem}" style="text-decoration: none; color: black;">
+                        <h4 id="btnDiagnostico">Pré-Diagnóstico</h4>
+                    </p:commandLink>
                 </div>
 
                 <div class="linksHeader">
-                    <h4 id="btnPerfil"><a href="perfilPaciente.xhtml">Perfil</a></h4>
+                    <p:commandLink action="#{pacienteBean.carregarPerfil}" style="text-decoration: none; color: black;">
+                        <h4 id="btnPerfil">Perfil</h4>
+                    </p:commandLink>
                 </div>
                 <p:commandButton value="Sair" action="#{pacienteBean.logout()}" styleClass="ui-button-secondary ui-button-flat" />
                 <p:remoteCommand name="carregarSair" action="#{pacienteBean.logout()}" />

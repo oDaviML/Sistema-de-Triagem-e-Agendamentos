@@ -181,6 +181,12 @@
                             <h:outputText value="#{arquivo.tipo}" />
                         </p:column>
 
+                        <p:column headerText="Data de envio">
+                            <h:outputText value="#{arquivo.data}" >
+                                <f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm" />
+                            </h:outputText>
+                        </p:column>
+
                         <p:column >
                             <p:commandButton value="Download" onclick="PrimeFaces.monitorDownload(start, stop);"
                                              icon="pi pi-arrow-down" styleClass="rounded-button ui-button-primary ui-button-flat">

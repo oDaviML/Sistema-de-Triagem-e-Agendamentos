@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="resources/css/bootstrap.css"/>
     <link rel="stylesheet" href="resources/css/style.css"/>
     <link rel="stylesheet" href="resources/css/acessibilidade.css"/>
-    <title>QuickCheck - Login Paciente</title>
+    <title>QuickCheck - Recuperar Senha</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -99,7 +99,7 @@
             margin-top: 20px;
         }
 
-        #paciente {
+        #medico {
             width: 550px;
             display: block;
             margin: 0 auto;
@@ -128,6 +128,18 @@
         #linkInicio img:hover {
             opacity: 0.7;
         }
+
+        .code-input {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .code-input input {
+            width: 50px;
+            text-align: center;
+            padding: 5px;
+            margin: 0.2rem;
+        }
     </style>
 </h:head>
 
@@ -135,28 +147,57 @@
     <div id="container">
         <div id="left">
             <a id="linkInicio" href="index.xhtml" ><img id="logo" src="resources/images/logo.png" alt="" /></a>
-            <h3>Login Paciente</h3>
-            <h:form>
-                <p:growl id="growl" showDetail="true"/>
-                <div class=" form-group-container">
-                    <div class="form-group">
+            <h2>Recuperar Senha</h2>
+            <h4>Médico</h4>
+            <div class=" form-group-container">
+                <h:form id="form1">
+                    <p:growl id="growl" showDetail="true"/>
+                    <div class="form-group" id="divenviar">
                         <label for="cpf">CPF</label>
-                        <p:inputMask styleClass="small-input" mask="999.999.999-99" validateMask="true" id="cpf" value="#{pacienteBean.paciente.cpf}"
+                        <p:inputMask styleClass="small-input" mask="999.999.999-99" validateMask="true" id="cpf" value="#{medicoBean.medico.cpf}"
                                      required="true" label="CPF"/>
+                        <p:commandButton id="enviarcodigo" value="Enviar código" style="align-self: center; margin-top: 1rem" validateClient="true" action="#{medicoBean.enviarEmailRecuperarSenha}" class="btn btn-success w-50"
+                                         update="growl" />
                     </div>
-                    <div class="form-group">
-                        <label for="senha">Senha</label>
-                        <p:password label="Senha" styleClass="small-input" id="senha" value="#{pacienteBean.paciente.senha}" toggleMask="true" redisplay="true" required="true"/>
+                </h:form>
+                <h:form id="form2">
+                    <p:growl id="growl2" showDetail="true"/>
+                    <div id="divcodigo" class="form-group" style="display: none">
+                        <p:outputLabel value="Código de 6 dígitos" style="text-align: center"/>
+                        <div id="code" class="code-input">
+                            <p:inputText id="digit1" maxlength="1" value="#{medicoBean.inputsRecuperarSenha[0]}"/>
+                            <p:inputText id="digit2" maxlength="1" value="#{medicoBean.inputsRecuperarSenha[1]}"/>
+                            <p:inputText id="digit3" maxlength="1" value="#{medicoBean.inputsRecuperarSenha[2]}"/>
+                            <p:inputText id="digit4" maxlength="1" value="#{medicoBean.inputsRecuperarSenha[3]}"/>
+                            <p:inputText id="digit5" maxlength="1" value="#{medicoBean.inputsRecuperarSenha[4]}"/>
+                            <p:inputText id="digit6" maxlength="1" value="#{medicoBean.inputsRecuperarSenha[5]}"/>
+                        </div>
+                        <p:commandButton id="verificar" style="align-self: center; margin-top: 1rem" value="Verificar" action="#{medicoBean.verificarCodigo}" class="btn btn-success w-50"
+                                         update="growl2"/>
                     </div>
-                    <p:commandButton id="entrar" value="Entrar" action="#{pacienteBean.login()}" class="btn btn-success w-100"
-                                     update="growl"/>
-                    <p>Não tem uma conta? <a style="color: blue; text-decoration: underline"  href="cdsPaciente.xhtml">Crie uma</a></p>
-                    <a href="recPaciente.xhtml">Esqueci minha senha</a>
-                </div>
-            </h:form>
+                </h:form>
+                <h:form id="form3">
+                    <p:growl id="growl3" showDetail="true"/>
+                    <div id="divsenha" class="form-group" style="display: none; flex-basis: 100%">
+                        <p:outputLabel for="senha1" value="Insira a senha nova" style="text-align: center"/>
+                        <p:password id="senha1" value="#{medicoBean.medico.senha}" toggleMask="true" redisplay="true"
+                                    feedback="true"
+                                    promptLabel="Insira sua senha" weakLabel="Fraca" goodLabel="Média"
+                                    strongLabel="Forte" match="senha2" label="Senha" required="true">
+                            <f:validateLength minimum="8" maximum="16"/>
+                        </p:password>
+
+                        <p:outputLabel for="senha2" value="Confirme a senha" style="text-align: center"/>
+                        <p:password id="senha2" value="#{medicoBean.medico.senha}" toggleMask="true"
+                                    redisplay="true" label="Confirmação senha" required="true"/>
+                        <p:commandButton id="alterarSenha" style="align-self: center; margin-top: 1rem;" value="Alterar Senha" action="#{medicoBean.recuperarSenha}" class="btn btn-success w-75"
+                                         update="growl3" validateClient="true"/>
+                    </div>
+                </h:form>
+            </div>
         </div>
         <div id="right">
-            <img id="paciente" src="resources/images/paciente.png" alt=""/>
+            <img id="medico" src="resources/images/medico.png" alt=""/>
         </div>
     </div>
     <div class="acessbilidade">
@@ -258,6 +299,57 @@
             crossorigin="anonymous"></script>
     <script src="resources/js/acessibilidade.js"></script>
     <script src="resources/js/funcoesMicrofone/microfoneLoginPaciente.js"></script>
+    <script>
+        function setupCodeInputs() {
+            let inputs = document.querySelectorAll('.code-input input');
+
+            for (let i = 0; i &lt; inputs.length; i++) {
+                inputs[i].addEventListener('input', function () {
+                    let nextInput = this.nextElementSibling;
+                    let prevInput = this.previousElementSibling;
+
+                    if (this.value.length === 1 &amp;&amp; nextInput) {
+                        nextInput.focus();
+                    } else if (this.value.length === 0 &amp;&amp; prevInput) {
+                        prevInput.focus();
+
+                        if (prevInput.setSelectionRange) {
+                            let len = prevInput.value.length;
+                            prevInput.setSelectionRange(len, len);
+                        } else {
+                            prevInput.value = prevInput.value;
+                        }
+                    }
+                });
+            }
+        }
+
+
+        let contador = 0;
+        function alterarVisibilidade() {
+            console.log(contador)
+            let div1 = document.querySelector('#divenviar');
+            let div2 = document.querySelector('#divcodigo');
+            let div3 = document.querySelector('#divsenha');
+
+            contador++;
+            if (contador === 1) {
+                div1.style.display = 'none';
+                div2.style.display = 'flex';
+                div3.style.display = 'none';
+            } else if (contador === 2) {
+                div1.style.display = 'none';
+                div2.style.display = 'none';
+                div3.style.display = 'flex';
+            } else {
+                div1.style.display = 'flex';
+                div2.style.display = 'none';
+                div3.style.display = 'none';
+                contador = 0;
+            }
+        }
+
+    </script>
 </h:body>
 
 </html>

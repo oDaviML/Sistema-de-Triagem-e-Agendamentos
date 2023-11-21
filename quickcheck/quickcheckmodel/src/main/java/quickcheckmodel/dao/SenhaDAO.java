@@ -8,6 +8,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Random;
 
@@ -40,11 +41,46 @@ public class SenhaDAO implements PasswordEncryptionStrategy  {
         StringBuilder randomKey = new StringBuilder();
         Random random = new Random();
 
-        for (int i = 0; i < 6; i++) {
-            int index = random.nextInt(characters.length());
+        for (int i = 0; i < 3; i++) {
+            int index = random.nextInt(10);
+            randomKey.append(characters.charAt(index + 52));
+        }
+
+        for (int i = 0; i < 3; i++) {
+            int index = random.nextInt(52);
             randomKey.append(characters.charAt(index));
         }
 
+        for (int i = randomKey.length() - 1; i > 0; i--) {
+            int j = random.nextInt(i + 1);
+            char temp = randomKey.charAt(i);
+            randomKey.setCharAt(i, randomKey.charAt(j));
+            randomKey.setCharAt(j, temp);
+        }
+
         return randomKey.toString();
+    }
+
+    public Boolean verificarSenha(String cpf, String senha, int medicooupaciente) {
+        encrypt(senha);
+        try(Connection connection = DBConnector.getConexao()) {
+            if (medicooupaciente == 1) {
+                String query = "SELECT * FROM senhasmedico WHERE cpf = ? AND senha = ?";
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, cpf);
+                preparedStatement.setString(2, encrypt(senha));
+                ResultSet resultSet = preparedStatement.executeQuery();
+                return resultSet.next();
+            } else {
+                String query = "SELECT * FROM senhaspacientes WHERE cpf = ? AND senha = ?";
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, cpf);
+                preparedStatement.setString(2, encrypt(senha));
+                ResultSet resultSet = preparedStatement.executeQuery();
+                return resultSet.next();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao verificar a senha: " + e.getMessage());
+        }
     }
 }

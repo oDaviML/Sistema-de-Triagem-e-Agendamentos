@@ -8,6 +8,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.servlet.http.HttpSession;
 import lombok.Getter;
 import lombok.Setter;
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -37,15 +38,90 @@ public class MedicoBean {
     private DocumentoService documentoService = new DocumentoService();
     private EmailService emailService = new EmailService();
     private PacienteService pacienteService = new PacienteService();
+    private SenhaService senhaService = new SenhaService();
 
     private List<MedicoDTO> medicos = new ArrayList<>();
     private List<PacienteDTO> pacientes = new ArrayList<>();
     private List<DocumentoDTO> documentos = new ArrayList<>();
     private List<ConsultaDTO> consultas = new ArrayList<>();
 
+    private String senhaAntiga, novaSenha, key;
+    private String[] inputsRecuperarSenha = new String[6];
     private MapModel model;
     private Marker<String> marker;
     private List<ConsultaDTO> consultasFiltradas;
+    private Boolean edit = false;
+    private Boolean editSenha = false;
+
+    public void recuperarSenha() throws IOException {
+        medicoService.alterarSenha(medico);
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+        context.redirect(context.getRequestContextPath() + "/faces/lgnMedico.xhtml?faces-redirect=true");
+        emailService.alterarSenha(medico.getEmail(), medico.getNome());
+        addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Senha alterada");
+        medico = new MedicoDTO();
+    }
+
+    public void verificarCodigo() {
+        String recuperarSenhaString = String.join("", inputsRecuperarSenha);
+        if (recuperarSenhaString.equals(key)) {
+            PrimeFaces.current().executeScript("alterarVisibilidade();");
+        }
+        else {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Código inválido");
+        }
+    }
+
+    public void enviarEmailRecuperarSenha() {
+        medico = medicoService.verificar(medico);
+        if (medico != null) {
+            key = senhaService.generateRandomKey();
+            emailService.recuperarSenha(medico.getEmail(), key);
+            PrimeFaces.current().executeScript("setupCodeInputs();");
+            PrimeFaces.current().executeScript("alterarVisibilidade();");
+            addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Email enviado");
+        } else {
+            medico = new MedicoDTO();
+            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Usuario inexistente");
+        }
+    }
+
+
+    public void editarSenha() {
+        if (senhaService.verificar(medico.getCpf(), senhaAntiga, 1)) {
+            try {
+                medico.setSenha(novaSenha);
+                medicoService.alterarSenha(medico);
+                editSenha = !editSenha;
+                emailService.alterarSenha(medico.getEmail(), medico.getNome());
+                addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Senha atualizada");
+            } catch (Exception e) {
+                addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao atualizar senha");
+                e.printStackTrace();
+            }
+        } else {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Senha antiga inválida");
+        }
+    }
+
+    public void editarPerfil() {
+        try {
+            medicoService.editar(medico);
+            edit = !edit;
+            addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Informações atualizadas");
+        }catch (Exception e){
+            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao atualizar informações");
+            e.printStackTrace();
+        }
+    }
+
+    public void habilitarEdicaoSenha() {
+        editSenha = !editSenha;
+    }
+
+    public void habilitarEdicao() {
+        edit = !edit;
+    }
 
     public void removerConsulta(ConsultaDTO consulta) {
         consultaService.removerConsultaMedico(consulta);

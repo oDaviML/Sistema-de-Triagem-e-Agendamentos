@@ -38,7 +38,7 @@ public class DocumentoDAO {
                 .withRegion(Regions.US_EAST_2)
                 .withCredentials(
                         new AWSStaticCredentialsProvider(
-                                new BasicAWSCredentials("AKIAXLOZWAXEWQJ5XPWF", "O2Z8T++jnJ8Epme7q6PSTH8o4vHoKVlvoeHwIxq7")
+                                new BasicAWSCredentials("", "retirei para não excluirem")
                         )
                 )
                 .build();
@@ -52,7 +52,7 @@ public class DocumentoDAO {
     }
     
     public static void inserirDocumento(DocumentoDTO documentoDTO, InputStream inputStream, ObjectMetadata metadata, PacienteDTO paciente) {
-        String nome = documentoDTO.getNome();
+        String nome = documentoDTO.getNomeArquivo();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd_MM_yyyy_HH_mm_ss");
         dateFormat.setTimeZone(TimeZone.getTimeZone("America/Sao_Paulo"));
@@ -134,7 +134,11 @@ public class DocumentoDAO {
                 documentoDTO.setNomeArquivo(resultSet.getString("nomereal"));
                 documentoDTO.setId(resultSet.getInt("id"));
                 documentoDTO.setCpf(resultSet.getString("cpfpaciente"));
-                documentoDTO.setData(resultSet.getTimestamp("data"));
+                Timestamp timestamp = resultSet.getTimestamp("data");
+                java.util.Date date = new java.util.Date(timestamp.getTime());
+                TimeZone timeZone = TimeZone.getTimeZone("America/Sao_Paulo");
+                date.setTime(date.getTime() + timeZone.getRawOffset());
+                documentoDTO.setData(date);
                 documentoDTO.setTamanhoFormatado(resultSet.getString("tamanho"));
 
                 documentos.add(documentoDTO);

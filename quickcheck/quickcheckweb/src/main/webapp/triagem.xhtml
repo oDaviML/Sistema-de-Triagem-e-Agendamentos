@@ -2,7 +2,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui">
-
 <h:head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="resources/css/bootstrap.css"/>
@@ -176,11 +175,15 @@
             </div>
 
             <div class="linksHeader">
-                <h4 id="btnDiagnostico"><a href="">Pré-Diagnóstico</a></h4>
+                <p:commandLink action="#{pacienteBean.resetarTriagem}" style="text-decoration: none; color: black;">
+                    <h4 id="btnDiagnostico">Pré-Diagnóstico</h4>
+                </p:commandLink>
             </div>
 
             <div class="linksHeader">
-                <h4 id="btnPerfil"><a href="perfilPaciente.xhtml">Perfil</a></h4>
+                <p:commandLink action="#{pacienteBean.carregarPerfil}" style="text-decoration: none; color: black;">
+                    <h4 id="btnPerfil">Perfil</h4>
+                </p:commandLink>
             </div>
             <p:commandButton value="Sair" action="#{pacienteBean.logout()}"
                              styleClass="ui-button-secondary ui-button-flat"/>
@@ -193,6 +196,7 @@
         </div>
     </h:form>
     <h:form id="form2">
+        <p:growl id="growl" showDetail="true" />
         <section id="perguntasTriagem">
             <div class="tab">
                 <div class="grupo grupoAtivo">Grupo 1</div>
@@ -290,17 +294,17 @@
 
                         <div class="form-group">
                             <label for="tempo-inicio">Tempo de Início dos Sintomas (dias):</label>
-                            <p:inputNumber styleClass="form-control" required="true" id="tempo-inicio" value="#{pacienteBean.triagem.inicioSintomas}" minValue="1" decimalPlaces="0"/>
+                            <p:inputNumber styleClass="form-control" label="Tempo de início" required="true" id="tempo-inicio" value="#{pacienteBean.triagem.inicioSintomas}" minValue="1" decimalPlaces="0"/>
                         </div>
 
                         <div class="form-group">
                             <label for="historico-viagem">Histórico de Viagem Recentes:</label>
-                            <p:inputText id="historico-viagem" value="#{pacienteBean.triagem.historicoViagem}" styleClass="form-control" />
+                            <p:inputText id="historico-viagem" label="Histórico de viagens" required="true" value="#{pacienteBean.triagem.historicoViagem}" styleClass="form-control" />
                         </div>
 
                         <div class="form-group">
                             <label for="contato-infectados">Teve contato com Pessoas Infectadas?</label>
-                            <p:inputText id="contato-infectados" value="#{pacienteBean.triagem.contatoInfectados}" styleClass="form-control" />
+                            <p:inputText id="contato-infectados" label="Contato com infectados" required="true" value="#{pacienteBean.triagem.contatoInfectados}" styleClass="form-control" />
                         </div>
                     </div>
 
@@ -308,12 +312,12 @@
 
                         <div class="form-group">
                             <label for="atividade-fisica">Realizou alguma atividade física intensa nas últimas semanas?</label>
-                            <p:inputText id="atividade-fisica" value="#{pacienteBean.triagem.atividadeFisica}" styleClass="form-control" />
+                            <p:inputText id="atividade-fisica" label="Atividades físicas" required="true" value="#{pacienteBean.triagem.atividadeFisica}" styleClass="form-control" />
                         </div>
 
                         <div class="form-group">
                             <label for="mudanca-dieta">Fez alguma mudança significativa em sua dieta recentemente?</label>
-                            <p:inputText id="mudanca-dieta" styleClass="form-control" value="#{pacienteBean.triagem.mudancaDieta}" />
+                            <p:inputText id="mudanca-dieta" label="Mudança de dieta" required="true" styleClass="form-control" value="#{pacienteBean.triagem.mudancaDieta}" />
                         </div>
 
                         <div class="form-group">
@@ -341,7 +345,7 @@
 
                     <div class="form-group">
                         <label for="historico-alergias">Tem histórico de alergias conhecidas?</label>
-                        <p:inputText id="historico-alergias" styleClass="form-control" value="#{pacienteBean.triagem.alergias}" />
+                        <p:inputText id="historico-alergias" label="Alergias" required="true" styleClass="form-control" value="#{pacienteBean.triagem.alergias}" />
                     </div>
 
                     <div class="form-group">
@@ -382,13 +386,13 @@
 
                     <div class="form-group">
                         <label for="metodo-contraceptivo-hormonio">Utiliza algum método contraceptivo ou hormônios?</label>
-                        <p:inputText id="metodo-contraceptivo-hormonio" styleClass="form-control"
+                        <p:inputText label="Utiliza algum método contraceptivo ou hormônios" required="true" id="metodo-contraceptivo-hormonio" styleClass="form-control"
                                      value="#{pacienteBean.triagem.metodoContraceptivoHormonio}" />
                     </div>
 
                     <div class="form-group">
                         <label for="cirurgia-procedimento-medico">Teve alguma cirurgia ou procedimento médico anteriormente?</label>
-                        <p:inputText id="cirurgia-procedimento-medico" styleClass="form-control"
+                        <p:inputText label="Cirurgias anteriores" required="true" id="cirurgia-procedimento-medico" styleClass="form-control"
                                      value="#{pacienteBean.triagem.cirugiaAnterior}" />
                     </div>
                 </div>
@@ -396,20 +400,14 @@
                 <div class="button-container">
                     <p:commandButton styleClass="ui-button-secondary previous-button" style="margin-right: 1rem" type="button" value="Voltar" onclick="showGroup('group2')" />
 
-                    <p:commandButton name="realizarTriagem" validateClient="true" styleClass="submit-button" value="Enviar" actionListener="#{pacienteBean.resultadoTriagem()}"
-                                     onclick="PF('resultadoTriagem').show();PF('pbAjax').start();PF('voltarInicio').disable()" />
+                    <p:commandButton name="realizarTriagem" validateClient="true" styleClass="submit-button" value="Enviar" actionListener="#{pacienteBean.resultadoTriagem}"
+                                     oncomplete="if (args.validationFailed !== true) { PF('resultadoTriagem').show(); }" update="growl resultadoTriagem"/>
                 </div>
             </div>
         </section>
 
-        <p:dialog draggable="false" header="Resultado" closable="false" widgetVar="resultadoTriagem" minHeight="400" width="600" showEffect="fade" modal="true">
+        <p:dialog id="resultadoTriagem" draggable="false" header="Resultado" closable="false" widgetVar="resultadoTriagem" minHeight="400" width="600" showEffect="fade" modal="true">
             <h:outputText id="resultado" style="font-size: 1.5rem;display: flex;justify-content: center;" value="#{pacienteBean.resultadoTriagemstr}" />
-
-            <p:progressBar widgetVar="pbAjax" ajax="true" value="#{pacienteBean.progresso}"
-                           labelTemplate="{value}%" styleClass="mt-3" global="false">
-                <p:ajax event="complete" update="resultado"
-                        oncomplete="PF('voltarInicio').enable()" />
-            </p:progressBar>
 
             <p:commandButton value="Início" styleClass="ui-button-outlined" widgetVar="voltarInicio" style="margin-top: 1rem" action="inicioPaciente?faces-redirect=true" />
         </p:dialog>

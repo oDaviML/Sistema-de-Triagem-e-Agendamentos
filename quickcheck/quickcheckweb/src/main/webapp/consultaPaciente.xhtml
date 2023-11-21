@@ -65,11 +65,15 @@
             </div>
 
             <div class="linksHeader">
-                <h4 id="btnDiagnostico"><a href="">Pré-Diagnóstico</a></h4>
+                <p:commandLink action="#{pacienteBean.resetarTriagem}" style="text-decoration: none; color: black;">
+                    <h4 id="btnDiagnostico">Pré-Diagnóstico</h4>
+                </p:commandLink>
             </div>
 
             <div class="linksHeader">
-                <h4 id="btnPerfil"><a href="perfilPaciente.xhtml">Perfil</a></h4>
+                <p:commandLink action="#{pacienteBean.carregarPerfil}" style="text-decoration: none; color: black;">
+                    <h4 id="btnPerfil">Perfil</h4>
+                </p:commandLink>
             </div>
             <p:commandButton value="Sair" action="#{pacienteBean.logout()}"
                              styleClass="ui-button-secondary ui-button-flat"/>
@@ -183,11 +187,17 @@
                                     </p:selectOneMenu>
                                 </div>
                                 <p:commandButton value="Agendar Consulta" validateClient="true"
-                                                 action="#{pacienteBean.cadastrarConsulta()}" update="form2 growl"/>
+                                                 disabled="#{pacienteBean.botaoAgendar}" action="#{pacienteBean.cadastrarConsulta()}" update="form2 growl" >
+                                    <p:confirm header="Confirmação" message="Tem certeza que deseja agendar uma consulta com #{pacienteBean.clinica.nomemedico} na clínica #{pacienteBean.clinica.nome}?"  icon="pi pi-info-circle"/>
+                                </p:commandButton>
                             </div>
                             <p:gmap id="mapa" center="#{pacienteBean.coordenadaEndereco}" model="#{pacienteBean.model}" zoom="15" type="HYBRID"
                                     style="width:100%;height:400px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); margin-top: 1rem">
                             </p:gmap>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                                <p:commandButton value="Agendar" type="button" styleClass="ui-confirmdialog-yes" />
+                            </p:confirmDialog>
                         </h:form>
                     </div>
                 </div>

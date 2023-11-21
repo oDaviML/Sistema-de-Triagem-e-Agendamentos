@@ -108,4 +108,44 @@ public class MedicoDAO extends BaseDAO<MedicoDTO> {
         return list;
     }
 
+    @Override
+    protected String getUpdateQuery() {
+        return "UPDATE medico SET nome = ?, email = ?, telefone = ?, nascimento = ?, endereco = ? WHERE cpf = ?";
+    }
+
+    @Override
+    protected void setUpdateParameters(PreparedStatement preparedStatement, MedicoDTO dto) throws SQLException {
+        preparedStatement.setString(1, dto.getNome());
+        preparedStatement.setString(2, dto.getEmail());
+        preparedStatement.setString(3, dto.getTelefone());
+        java.sql.Date sqlDate = new java.sql.Date(dto.getDataNascimento().getTime());
+        preparedStatement.setDate(4, sqlDate);
+        preparedStatement.setString(5, dto.getEndereco());
+        preparedStatement.setString(6, dto.getCpf());
+    }
+
+    @Override
+    protected MedicoDTO processVerificarResult(ResultSet resultSet) throws SQLException {
+        MedicoDTO medicoDTO = new MedicoDTO();
+        if (resultSet.next()) {
+            medicoDTO.setCpf(resultSet.getString("cpf"));
+            medicoDTO.setNome(resultSet.getString("nome"));
+            medicoDTO.setEmail(resultSet.getString("email"));
+            medicoDTO.setCrm(resultSet.getString("crm"));
+            medicoDTO.setTelefone(resultSet.getString("telefone"));
+            return medicoDTO;
+        }
+        return null;
+    }
+
+    @Override
+    protected String getVerificarQuery() {
+        return "SELECT * FROM medico WHERE cpf = ?";
+    }
+
+    @Override
+    protected void setVerificarParameters(PreparedStatement preparedStatement, MedicoDTO dto) throws SQLException {
+        preparedStatement.setString(1, dto.getCpf());
+    }
+
 }

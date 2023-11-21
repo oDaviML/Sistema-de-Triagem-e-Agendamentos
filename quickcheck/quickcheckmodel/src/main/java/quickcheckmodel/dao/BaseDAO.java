@@ -104,4 +104,36 @@ public abstract class BaseDAO<T> {
 
     protected abstract List<T> processListResult(ResultSet resultSet) throws SQLException;
 
+    public void editar(T dto) {
+        try (Connection connection = DBConnector.getConexao()) {
+            String sql = getUpdateQuery();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            setUpdateParameters(preparedStatement, dto);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected abstract String getUpdateQuery();
+    protected abstract void setUpdateParameters(PreparedStatement preparedStatement, T dto) throws SQLException;
+
+    public T verificar(T dto) {
+        try (Connection connection = DBConnector.getConexao()) {
+            String sql = getVerificarQuery();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            setVerificarParameters(preparedStatement, dto);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return processVerificarResult(resultSet);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected abstract <T> T processVerificarResult(ResultSet resultSet) throws SQLException;
+
+    protected abstract String getVerificarQuery();
+
+    protected abstract void setVerificarParameters(PreparedStatement preparedStatement, T dto) throws SQLException;
+
 }

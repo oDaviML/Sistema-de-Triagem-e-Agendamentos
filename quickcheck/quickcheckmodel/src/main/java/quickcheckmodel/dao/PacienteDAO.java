@@ -73,7 +73,6 @@ public class PacienteDAO extends BaseDAO<PacienteDTO> {
     protected List<PacienteDTO> processListResult(ResultSet resultSet) throws SQLException {
         List<PacienteDTO> pacientes = new ArrayList<>();
         while (resultSet.next()) {
-            // Aqui você pode criar objetos Paciente com os dados do resultSet e adicioná-los à lista
             PacienteDTO paciente = new PacienteDTO();
             paciente.setCpf(resultSet.getString("cpf"));
             paciente.setNome(resultSet.getString("nome"));
@@ -85,6 +84,47 @@ public class PacienteDAO extends BaseDAO<PacienteDTO> {
             pacientes.add(paciente);
         }
         return pacientes;
+    }
+
+    @Override
+    protected String getUpdateQuery() {
+        return "UPDATE paciente SET nome = ?, email = ?, convenio = ?, telefone = ?, nascimento = ?, endereco = ? WHERE cpf = ?";
+    }
+
+    @Override
+    protected void setUpdateParameters(PreparedStatement preparedStatement, PacienteDTO dto) throws SQLException {
+        preparedStatement.setString(1, dto.getNome());
+        preparedStatement.setString(2, dto.getEmail());
+        preparedStatement.setString(3, dto.getConvenio());
+        preparedStatement.setString(4, dto.getTelefone());
+        java.sql.Date sqlDate = new java.sql.Date(dto.getDatanascimento().getTime());
+        preparedStatement.setDate(5, sqlDate);
+        preparedStatement.setString(6, dto.getEndereco());
+        preparedStatement.setString(7, dto.getCpf());
+
+    }
+
+    @Override
+    protected PacienteDTO processVerificarResult(ResultSet resultSet) throws SQLException {
+        PacienteDTO pacienteDTO = new PacienteDTO();
+        if (resultSet.next()) {
+            pacienteDTO.setCpf(resultSet.getString("cpf"));
+            pacienteDTO.setNome(resultSet.getString("nome"));
+            pacienteDTO.setEmail(resultSet.getString("email"));
+            pacienteDTO.setTelefone(resultSet.getString("telefone"));
+            return pacienteDTO;
+        }
+        return null;
+    }
+
+    @Override
+    protected String getVerificarQuery() {
+        return "SELECT * FROM paciente WHERE cpf = ?";
+    }
+
+    @Override
+    protected void setVerificarParameters(PreparedStatement preparedStatement, PacienteDTO dto) throws SQLException {
+        preparedStatement.setString(1, dto.getCpf());
     }
 
     //Login

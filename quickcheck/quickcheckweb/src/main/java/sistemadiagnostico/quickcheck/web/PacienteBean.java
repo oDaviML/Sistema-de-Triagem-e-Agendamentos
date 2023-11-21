@@ -11,6 +11,8 @@ import jakarta.servlet.http.HttpSession;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
+import org.primefaces.PrimeFaces;
+import org.primefaces.behavior.ajax.AjaxBehavior;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.map.OverlaySelectEvent;
@@ -49,6 +51,7 @@ public class PacienteBean {
     private ConsultaService consultaService = new ConsultaService();
     private TriagemService triagemService = new TriagemService();
     private ResultadoTriagemService resultadoTriagemService = new ResultadoTriagemService();
+    private SenhaService senhaService = new SenhaService();
 
     private List<PacienteDTO> pacientes = new ArrayList<>();
     private List<DocumentoDTO> documentos = new ArrayList<>();
@@ -62,23 +65,106 @@ public class PacienteBean {
     private List<String> convenios = new ArrayList<>();
     private List<ResultadoTriagemDTO> resultadosTriagem = new ArrayList<>();
 
-
-    private String coordenadaEndereco;
+    private String coordenadaEndereco, resultadoTriagemstr, senhaAntiga, novaSenha, key;
+    private String[] inputsRecuperarSenha = new String[6];
     private MapModel<Long> model;
     private Date dataSelecionada;
     private Date dataAtual = new Date();
-    private int progresso = 0;
     private UploadedFile file;
-    private String resultadoTriagemstr;
+    private Boolean edit = false;
+    private Boolean editSenha = false;
+    private Boolean botaoAgendar = true;
 
-    public void resetarTriagem() {
+    public void recuperarSenha() throws IOException {
+        pacienteService.alterarSenha(paciente);
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+        context.redirect(context.getRequestContextPath() + "/faces/lgnPaciente.xhtml?faces-redirect=true");
+        emailService.alterarSenha(paciente.getEmail(), paciente.getNome());
+        addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Senha alterada");
+        paciente = new PacienteDTO();
+    }
+
+    public void verificarCodigo() {
+        String recuperarSenhaString = String.join("", inputsRecuperarSenha);
+        if (recuperarSenhaString.equals(key)) {
+            PrimeFaces.current().executeScript("alterarVisibilidade();");
+        }
+        else {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Código inválido");
+        }
+    }
+
+    public void enviarEmailRecuperarSenha() {
+        paciente = pacienteService.verificar(paciente);
+        if (paciente != null) {
+            key = senhaService.generateRandomKey();
+            emailService.recuperarSenha(paciente.getEmail(), key);
+            PrimeFaces.current().executeScript("setupCodeInputs();");
+            PrimeFaces.current().executeScript("alterarVisibilidade();");
+            addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Email enviado");
+        } else {
+            paciente = new PacienteDTO();
+            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Usuario inexistente");
+        }
+    }
+
+    public void editarSenha() {
+        if (senhaService.verificar(paciente.getCpf(), senhaAntiga, 0)) {
+                try {
+                paciente.setSenha(novaSenha);
+                pacienteService.alterarSenha(paciente);
+                editSenha = !editSenha;
+                emailService.alterarSenha(paciente.getEmail(), paciente.getNome());
+                addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Senha atualizada");
+            } catch (Exception e) {
+                addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao atualizar senha");
+                e.printStackTrace();
+            }
+        } else {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Senha antiga inválida");
+        }
+    }
+
+    public void editarPerfil() {
+        try {
+            pacienteService.editar(paciente);
+            edit = !edit;
+            addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Informações atualizadas");
+        }catch (Exception e){
+            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao atualizar informações");
+            e.printStackTrace();
+        }
+    }
+
+    public void habilitarEdicaoSenha() {
+        editSenha = !editSenha;
+    }
+
+    public void habilitarEdicao() {
+        edit = !edit;
+    }
+
+    public void carregarPerfil() throws IOException {
+        resultadosTriagem = resultadoTriagemService.listar(paciente);
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+        context.redirect(context.getRequestContextPath() + "/faces/perfilPaciente.xhtml?faces-redirect=true");
+    }
+
+    public void resetarTriagem() throws IOException {
         resultadoTriagemstr = "";
-        progresso = 0;
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+        context.redirect(context.getRequestContextPath() + "/faces/triagem.xhtml?faces-redirect=true");
     }
 
     public void resultadoTriagem() {
-        resultadoTriagemstr = triagemService.resultadoTriagem(triagem, paciente);
-        progresso = 100;
+
+        if (triagem.getCabeca().length == 0 && triagem.getRespiratorio().length == 0 && triagem.getGastrointestinal().length == 0 && triagem.getPelve().length == 0 && triagem.getMuscular().length == 0 && triagem.getVisual().length == 0) {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Selecione pelo menos um sintoma");
+            resultadoTriagemstr = "Selecione pelo menos um sintoma";
+        } else {
+            resultadoTriagemstr = triagemService.resultadoTriagem(triagem, paciente);
+        }
+
     }
 
     public void removerConsulta(ConsultaDTO event) throws SQLException {
@@ -93,6 +179,7 @@ public class PacienteBean {
     }
 
     public void onRowSelect(SelectEvent<ClinicaDTO> event) {
+        botaoAgendar = false;
         try {
             model = new DefaultMapModel<>();
             Double latitude = Double.parseDouble(event.getObject().getCoordenada().split(",")[0]);
@@ -183,7 +270,7 @@ public class PacienteBean {
     public void inserirDocumento() {
         try {
             if (file != null) {
-                documento.setNome(file.getFileName());
+                documento.setNomeArquivo(file.getFileName());
                 documento.setCpf(paciente.getCpf());
                 documento.setTamanho(file.getSize());
                 InputStream inputStream = file.getInputStream();
@@ -196,6 +283,7 @@ public class PacienteBean {
                 documentoService.inserirDocumento(documento, inputStream, metadata, paciente);
                 documentos = documentoService.listar(paciente.getCpf());
                 addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Documento inserido");
+                documento = new DocumentoDTO();
             }
             else {
                 throw new Exception();

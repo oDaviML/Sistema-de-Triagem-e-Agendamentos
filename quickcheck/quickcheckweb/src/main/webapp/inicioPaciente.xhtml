@@ -24,14 +24,15 @@
             </div>
 
             <div class="linksHeader">
-                <p:commandLink action="#{pacienteBean.resetarTriagem()}">
-                    <h4 id="btnDiagnostico"><a href="triagem.xhtml">Pré-Diagnóstico</a></h4>
+                <p:commandLink action="#{pacienteBean.resetarTriagem}" style="text-decoration: none; color: black;">
+                    <h4 id="btnDiagnostico">Pré-Diagnóstico</h4>
                 </p:commandLink>
-
             </div>
 
             <div class="linksHeader">
-                <h4 id="btnPerfil"><a href="perfilPaciente.xhtml">Perfil</a></h4>
+                <p:commandLink action="#{pacienteBean.carregarPerfil}" style="text-decoration: none; color: black;">
+                    <h4 id="btnPerfil">Perfil</h4>
+                </p:commandLink>
             </div>
             <p:commandButton value="Sair" action="#{pacienteBean.logout()}"
                               styleClass="ui-button-secondary ui-button-flat"/>
@@ -71,12 +72,14 @@
 
                     <p:column style="width:6rem">
                         <p:commandButton styleClass="rounded-button ui-button-secondary ui-button-flat" process="@this" actionListener="#{pacienteBean.removerConsulta(consulta)}" update="form2:consultas form2:growl" icon="pi pi-trash">
+                            <p:confirm header="Confirmação" message="Tem certeza que deseja desmarcar?" icon="pi pi-info-circle"/>
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>
-                <p:commandButton value="Imprimir" type="button" icon="pi pi-print" styleClass="shadow-1 mb-3 mr-2">
-                    <p:printer target="consultas"/>
-                </p:commandButton>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" />
+                </p:confirmDialog>
             </div>
             <p:commandLink styleClass="func" id="botaoAgendar" action="#{pacienteBean.carregarClinicas()}"
                            style="text-decoration: none; color: black;">

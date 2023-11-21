@@ -13,10 +13,10 @@ import java.time.ZoneId;
 
 public class TriagemDAO {
 
-    private static final String api = "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";
+    private static final String api = "Retirei para não excluirem";
     public String resultadoTriagem(TriagemDTO triagem, PacienteDTO paciente) {
 
-        LocalDate dataFormatada =paciente.getDatanascimento().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate dataFormatada = paciente.getDatanascimento().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         int idade = LocalDate.now().getYear() - dataFormatada.getYear();
 
         String prompt = "Atue como um sistema de triagem e com base no banco de dados de doenças a seguir:" +

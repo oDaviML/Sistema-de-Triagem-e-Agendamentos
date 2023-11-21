@@ -148,4 +148,70 @@ public class EmailService {
         emailDTO = new EmailDTO(pacienteDTO.getEmail(), assunto, mensagem);
         EmailDAO.enviarEmail(emailDTO);
     }
+
+    public void alterarSenha(String email, String nome) {
+        String assuntoSenha, mensagemSenha;
+        assuntoSenha = "Alteração de Senha - QuickCheck";
+        mensagemSenha = "<!DOCTYPE html>"
+                + "<html>"
+                + "<head>"
+                + "<style>"
+                + "body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }"
+                + ".container { max-width: 600px; margin: 0 auto; padding: 20px; }"
+                + ".logo { text-align: center; }"
+                + "img { max-width: 150px; height: auto; }"
+                + ".message { background-color: #ffffff; padding: 20px; border-radius: 5px; box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1); }"
+                + "</style>"
+                + "</head>"
+                + "<body>"
+                + "<div class='container'>"
+                + "<div class='logo'><img src='https://i.imgur.com/kmygeVq.png' alt='Logo QuickCheck'></div>"
+                + "<div class='message'>"
+                + "<h2>Olá, " + nome + "!</h2>"
+                + "<p>Queremos informar que a senha da sua conta no QuickCheck foi alterada.</p>"
+                + "<p>Se você realizou essa alteração, ignore este e-mail. Caso contrário, entre em contato conosco imediatamente.</p>"
+                + "<p>Estamos aqui para garantir a segurança da sua conta.</p>"
+                + "<p>Atenciosamente,</p>"
+                + "<p>A equipe QuickCheck</p>"
+                + "</div>"
+                + "</div>"
+                + "</body>"
+                + "</html>";
+        EmailDTO emailDTOSenha = new EmailDTO(email, assuntoSenha, mensagemSenha);
+        EmailDAO.enviarEmail(emailDTOSenha);
+    }
+
+    public void recuperarSenha(String email, String chaveSeguranca) {
+        String assuntoRecuperacao, mensagemRecuperacao;
+        assuntoRecuperacao = "Recuperação de Senha - QuickCheck";
+        mensagemRecuperacao = "<!DOCTYPE html>"
+                + "<html>"
+                + "<head>"
+                + "<style>"
+                + "body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }"
+                + ".container { max-width: 600px; margin: 0 auto; padding: 20px; }"
+                + ".logo { text-align: center; }"
+                + "img { max-width: 150px; height: auto; }"
+                + ".message { background-color: #ffffff; padding: 20px; border-radius: 5px; box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1); }"
+                + "h1 { text-align: center; }"
+                + "</style>"
+                + "</head>"
+                + "<body>"
+                + "<div class='container'>"
+                + "<div class='logo'><img src='https://i.imgur.com/kmygeVq.png' alt='Logo QuickCheck'></div>"
+                + "<div class='message'>"
+                + "<h2>Olá!</h2>"
+                + "<p>Recebemos uma solicitação para recuperação de senha associada a esta conta.</p>"
+                + "<h1 style='color: #0088cc;'>" + chaveSeguranca + "</h1>"
+                + "<p>Use a chave de segurança acima para redefinir sua senha.</p>"
+                + "<p>Se você não solicitou a recuperação de senha, por favor, ignore este e-mail.</p>"
+                + "<p>Atenciosamente,</p>"
+                + "<p>A equipe QuickCheck</p>"
+                + "</div>"
+                + "</div>"
+                + "</body>"
+                + "</html>";
+        EmailDTO emailDTORecuperacao = new EmailDTO(email, assuntoRecuperacao, mensagemRecuperacao);
+        EmailDAO.enviarEmail(emailDTORecuperacao);
+    }
 }
