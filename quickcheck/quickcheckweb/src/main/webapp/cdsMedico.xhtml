@@ -26,6 +26,7 @@
             background-color: rgb(201, 221, 216);
             display: flex;
             width: 100%;
+            height: 100vh;
         }
 
         #left {
@@ -35,8 +36,11 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
             background-color: white;
+            max-width: 700px;
         }
+
 
         #right {
             flex: 1;
@@ -63,11 +67,6 @@
             flex-basis: 50%;
             margin-right: 10px;
             margin-left: 10px;
-        }
-
-        .form-group-container {
-            display: flex;
-            margin-bottom: 20px;
         }
 
         label {
@@ -150,7 +149,7 @@
                 <div class="col-md-6">
 
                     <div class="form-group">
-                        <label for="nome">Nome completo</label>
+                        <p:outputLabel for="nome" value="Nome"/>
                         <p:inputText id="nome" value="#{medicoBean.medico.nome}" type="text"
                                      required="true" label="Nome" validatorMessage="Nome: Espaços extras ou formato inválido &quot;Nome Sobrenome&quot;">
                             <f:validateRegex pattern="^(?:[\p{Lu}&amp;&amp;[\p{IsLatin}]])(?:(?:')?(?:[\p{Ll}&amp;&amp;[\p{IsLatin}]]))+(?:\-(?:[\p{Lu}&amp;&amp;[\p{IsLatin}]])(?:(?:')?(?:[\p{Ll}&amp;&amp;[\p{IsLatin}]]))+)*(?: (?:(?:e|y|de(?:(?: la| las| lo| los))?|do|dos|da|das|del|van|von|bin|le) )?(?:(?:(?:d'|D'|O'|Mc|Mac|al\-))?(?:[\p{Lu}&amp;&amp;[\p{IsLatin}]])(?:(?:')?(?:[\p{Ll}&amp;&amp;[\p{IsLatin}]]))+|(?:[\p{Lu}&amp;&amp;[\p{IsLatin}]])(?:(?:')?(?:[\p{Ll}&amp;&amp;[\p{IsLatin}]]))+(?:\-(?:[\p{Lu}&amp;&amp;[\p{IsLatin}]])(?:(?:')?(?:[\p{Ll}&amp;&amp;[\p{IsLatin}]]))+)*))+(?: (?:Jr\.|II|III|IV))?$"/>
@@ -158,13 +157,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="email">E-mail</label>
+                        <p:outputLabel for="email" value="E-mail"/>
                         <p:inputText id="email" value="#{medicoBean.medico.email}" type="email"
                                      required="true" label="E-mail"/>
                     </div>
 
                     <div class="form-group">
-                        <label for="senha">Senha</label>
+                        <p:outputLabel for="senha" value="Senha"/>
                         <p:password id="senha" value="#{medicoBean.medico.senha}" toggleMask="true" redisplay="true"
                                     feedback="true"
                                     promptLabel="Insira sua senha" weakLabel="Fraca" goodLabel="Média"
@@ -174,13 +173,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="telefone">Telefone</label>
+                        <p:outputLabel for="telefone" value="Telefone"/>
                         <p:inputMask mask="(99) 99999-9999" validateMask="true" id="telefone"
                                      value="#{medicoBean.medico.telefone}" required="true" label="Telefone"/>
                     </div>
 
                     <div class="form-group">
-                        <label for="crm">CRM</label>
+                        <p:outputLabel for="crm" value="CRM"/>
                         <p:inputMask id="crm" value="#{medicoBean.medico.crm}" mask="a*-999999" validateMask="true" label="CRM" required="true"/>
                     </div>
                 </div>
@@ -188,26 +187,34 @@
                 <div class="col-md-6">
 
                     <div class="form-group">
-                        <label for="cpf">CPF</label>
+                        <p:outputLabel for="cpf" value="CPF"/>
                         <p:inputMask mask="999.999.999-99" validateMask="true" id="cpf"
                                      value="#{medicoBean.medico.cpf}" required="true" label="CPF"/>
                     </div>
 
                     <div class="form-group">
-                        <label for="endereco">Endereço</label>
+                        <p:outputLabel for="sexo" value="Sexo"/>
+                        <p:selectOneMenu id="sexo" value="#{medicoBean.medico.sexo}" required="true"
+                                         label="Sexo">
+                            <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
+                            <f:selectItem itemLabel="Feminino" itemValue="Feminino"/>
+                        </p:selectOneMenu>
+                    </div>
+
+                    <div class="form-group">
+                        <p:outputLabel for="senha2" value="Confirme a senha:"/>
+                        <p:password id="senha2" value="#{medicoBean.medico.senha}" toggleMask="true"
+                                    redisplay="true" label="Confirmação senha"/>
+                    </div>
+
+                    <div class="form-group">
+                        <p:outputLabel for="endereco" value="Endereço"/>
                         <p:inputText id="endereco" value="#{medicoBean.medico.endereco}" type="text"
                                      required="true" label="Endereço"/>
                     </div>
 
                     <div class="form-group">
-                        <label for="senha2">Confirme a Senha</label>
-                        <p:password id="senha2" value="#{medicoBean.medico.senha}" toggleMask="true"
-                                    redisplay="true" label="Confirmação senha"/>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label for="dataNascimento">Data de Nascimento</label>
+                        <p:outputLabel for="dataNascimento" value="Data de nascimento"/>
                         <p:datePicker id="dataNascimento" monthNavigator="true" yearNavigator="true"
                                       yearRange="1900:2023"
                                       showWeek="true" value="#{medicoBean.medico.dataNascimento}" required="true"

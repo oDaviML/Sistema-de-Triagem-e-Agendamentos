@@ -15,7 +15,7 @@ public class MedicoDAO extends BaseDAO<MedicoDTO> {
     // Cadastro Medico e Senha
     @Override
     protected String getInsertQuery() {
-        return "INSERT INTO medico (cpf, nome, endereco, email, crm, telefone, nascimento) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        return "INSERT INTO medico (cpf, nome, endereco, email, crm, telefone, nascimento, sexo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     }
 
     @Override
@@ -29,6 +29,7 @@ public class MedicoDAO extends BaseDAO<MedicoDTO> {
 
         java.sql.Date sqlDate = new java.sql.Date(medicoDTO.getDataNascimento().getTime());
         preparedStatement.setDate(7, sqlDate);
+        preparedStatement.setString(8, medicoDTO.getSexo());
     }
 
     @Override
@@ -79,6 +80,7 @@ public class MedicoDAO extends BaseDAO<MedicoDTO> {
            medicoDTO.setCrm(resultSet.getString("crm"));
            medicoDTO.setTelefone(resultSet.getString("telefone"));
            Date data = new Date(resultSet.getDate("nascimento").getTime());
+           medicoDTO.setSexo(resultSet.getString("sexo"));
            medicoDTO.setDataNascimento(data);
            return medicoDTO;
        }
@@ -103,6 +105,7 @@ public class MedicoDAO extends BaseDAO<MedicoDTO> {
             medicoDTO.setCrm(resultSet.getString("crm"));
             medicoDTO.setTelefone(resultSet.getString("telefone"));
             medicoDTO.setDataNascimento(resultSet.getDate("nascimento"));
+            medicoDTO.setSexo(resultSet.getString("sexo"));
             list.add(medicoDTO);
         }
         return list;

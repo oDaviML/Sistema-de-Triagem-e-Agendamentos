@@ -26,6 +26,7 @@
             background-color: rgb(201, 221, 216);
             display: flex;
             width: 100%;
+            height: 100vh;
         }
 
         #left {
@@ -35,7 +36,9 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
             background-color: white;
+            max-width: 700px;
         }
 
         #right {
@@ -63,11 +66,6 @@
             flex-basis: 50%;
             margin-right: 10px;
             margin-left: 10px;
-        }
-
-        .form-group-container {
-            display: flex;
-            margin-bottom: 20px;
         }
 
         label {
@@ -131,6 +129,52 @@
             margin-top: 10px;
         }
 
+        @media only screen and (max-width: 768px) {
+            body {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            #left,
+            #right {
+                flex: auto;
+            }
+
+            #left {
+                padding: 20px;
+                text-align: center;
+            }
+
+            #right {
+                display: none;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+        }
+        body, html {
+            height: 100%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(201, 221, 216);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            min-height: 100vh;
+        }
+
+        #container {
+            background-color: rgb(201, 221, 216);
+            display: flex;
+            flex: 1;
+        }
+
     </style>
 </h:head>
 
@@ -151,7 +195,7 @@
                 <div class="col-md-6">
 
                     <div class="form-group">
-                        <label for="nome">Nome completo</label>
+                        <p:outputLabel for="nome" value="Nome completo"/>
                         <p:inputText id="nome" value="#{pacienteBean.paciente.nome}" type="text"
                                      required="true" label="Nome" validatorMessage="Nome: Espaços extras ou formato inválido &quot;Nome Sobrenome&quot;">
                             <f:validateRegex pattern="^(?:[\p{Lu}&amp;&amp;[\p{IsLatin}]])(?:(?:')?(?:[\p{Ll}&amp;&amp;[\p{IsLatin}]]))+(?:\-(?:[\p{Lu}&amp;&amp;[\p{IsLatin}]])(?:(?:')?(?:[\p{Ll}&amp;&amp;[\p{IsLatin}]]))+)*(?: (?:(?:e|y|de(?:(?: la| las| lo| los))?|do|dos|da|das|del|van|von|bin|le) )?(?:(?:(?:d'|D'|O'|Mc|Mac|al\-))?(?:[\p{Lu}&amp;&amp;[\p{IsLatin}]])(?:(?:')?(?:[\p{Ll}&amp;&amp;[\p{IsLatin}]]))+|(?:[\p{Lu}&amp;&amp;[\p{IsLatin}]])(?:(?:')?(?:[\p{Ll}&amp;&amp;[\p{IsLatin}]]))+(?:\-(?:[\p{Lu}&amp;&amp;[\p{IsLatin}]])(?:(?:')?(?:[\p{Ll}&amp;&amp;[\p{IsLatin}]]))+)*))+(?: (?:Jr\.|II|III|IV))?$"/>
@@ -159,13 +203,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="email">E-mail</label>
+                        <p:outputLabel for="email" value="E-mail"/>
                         <p:inputText id="email" value="#{pacienteBean.paciente.email}" type="email"
                                      required="true" label="E-mail"/>
                     </div>
 
                     <div class="form-group">
-                        <label for="senha">Senha</label>
+                        <p:outputLabel for="senha" value="Senha"/>
                         <p:password id="senha" value="#{pacienteBean.paciente.senha}" toggleMask="true" redisplay="true"
                                     feedback="true"
                                     promptLabel="Insira sua senha" weakLabel="Fraca" goodLabel="Média"
@@ -175,13 +219,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="telefone">Telefone</label>
+                        <p:outputLabel for="telefone" value="Telefone"/>
                         <p:inputMask mask="(99) 99999-9999" validateMask="true" id="telefone"
                                      value="#{pacienteBean.paciente.telefone}" required="true" label="Telefone"/>
                     </div>
 
                     <div class="form-group">
-                        <label for="convenio">Convênio</label>
+                        <p:outputLabel for="convenio" value="Convênio"/>
                         <p:selectOneMenu id="convenio" value="#{pacienteBean.paciente.convenio}" required="true"
                                          label="Convênio">
                             <f:selectItem itemLabel="Unimed" itemValue="Unimed"/>
@@ -197,25 +241,34 @@
                 <div class="col-md-6">
 
                     <div class="form-group">
-                        <label for="cpf">CPF</label>
+                        <p:outputLabel for="cpf" value="CPF"/>
                         <p:inputMask mask="999.999.999-99" validateMask="true" id="cpf"
                                      value="#{pacienteBean.paciente.cpf}" required="true" label="CPF"/>
                     </div>
 
                     <div class="form-group">
-                        <label for="endereco">Endereço</label>
-                        <p:inputText id="endereco" value="#{pacienteBean.paciente.endereco}" type="text"
-                                     required="true" label="Endereço"/>
+                        <p:outputLabel for="sexo" value="Sexo"/>
+                        <p:selectOneMenu id="sexo" value="#{pacienteBean.paciente.sexo}" required="true"
+                                         label="Sexo">
+                            <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
+                            <f:selectItem itemLabel="Feminino" itemValue="Feminino"/>
+                        </p:selectOneMenu>
                     </div>
 
                     <div class="form-group">
-                        <label for="senha2">Confirme a Senha</label>
+                        <p:outputLabel for="senha2" value="Confirme a senha"/>
                         <p:password id="senha2" value="#{pacienteBean.paciente.senha}" toggleMask="true"
                                     redisplay="true" label="Confirmação senha"/>
                     </div>
 
                     <div class="form-group">
-                        <label for="dataNascimento">Data de Nascimento</label>
+                        <p:outputLabel for="endereco" value="Endereço"/>
+                        <p:inputText id="endereco" value="#{pacienteBean.paciente.endereco}" type="text"
+                                     required="true" label="Endereço"/>
+                    </div>
+
+                    <div class="form-group">
+                        <p:outputLabel for="dataNascimento" value="Data de Nascimento"/>
                         <p:datePicker id="dataNascimento" monthNavigator="true" yearNavigator="true"
                                       yearRange="1900:2023"
                                       showWeek="true" value="#{pacienteBean.paciente.datanascimento}" required="true"

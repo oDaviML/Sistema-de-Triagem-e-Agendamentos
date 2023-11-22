@@ -142,6 +142,7 @@ public class PacienteBean {
 
     public void habilitarEdicao() {
         edit = !edit;
+        PrimeFaces.current().executeScript("completarEndereço();");
     }
 
     public void carregarPerfil() throws IOException {

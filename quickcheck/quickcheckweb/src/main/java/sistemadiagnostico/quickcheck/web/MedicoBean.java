@@ -121,6 +121,7 @@ public class MedicoBean {
 
     public void habilitarEdicao() {
         edit = !edit;
+        PrimeFaces.current().executeScript("completarEndereço();");
     }
 
     public void removerConsulta(ConsultaDTO consulta) {

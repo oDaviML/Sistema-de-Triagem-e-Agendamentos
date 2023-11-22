@@ -38,7 +38,7 @@ public class DocumentoDAO {
                 .withRegion(Regions.US_EAST_2)
                 .withCredentials(
                         new AWSStaticCredentialsProvider(
-                                new BasicAWSCredentials("", "retirei para não excluirem")
+                                new BasicAWSCredentials("", "")
                         )
                 )
                 .build();

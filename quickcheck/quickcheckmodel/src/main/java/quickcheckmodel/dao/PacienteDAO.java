@@ -22,7 +22,7 @@ public class PacienteDAO extends BaseDAO<PacienteDTO> {
     //Cadastro Paciente e Senha
     @Override
     protected String getInsertQuery() {
-        return "INSERT INTO paciente (cpf, nome, endereco, email, convenio, telefone, nascimento) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        return "INSERT INTO paciente (cpf, nome, endereco, email, convenio, telefone, nascimento, sexo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     }
 
     @Override
@@ -36,6 +36,7 @@ public class PacienteDAO extends BaseDAO<PacienteDTO> {
 
         java.sql.Date sqlDate = new java.sql.Date(pacienteDTO.getDatanascimento().getTime());
         preparedStatement.setDate(7, sqlDate);
+        preparedStatement.setString(8, pacienteDTO.getSexo());
     }
 
     @Override
@@ -80,7 +81,8 @@ public class PacienteDAO extends BaseDAO<PacienteDTO> {
             paciente.setEmail(resultSet.getString("email"));
             paciente.setConvenio(resultSet.getString("convenio"));
             paciente.setTelefone(resultSet.getString("telefone"));
-            paciente.setDatanascimento(resultSet.getDate("nascimento"));      
+            paciente.setDatanascimento(resultSet.getDate("nascimento"));
+            paciente.setSexo(resultSet.getString("sexo"));
             pacientes.add(paciente);
         }
         return pacientes;
@@ -152,6 +154,7 @@ public class PacienteDAO extends BaseDAO<PacienteDTO> {
             pacienteDTO.setConvenio(resultSet.getString("convenio"));
             pacienteDTO.setTelefone(resultSet.getString("telefone"));
             Date data = new Date(resultSet.getDate("nascimento").getTime());
+            pacienteDTO.setSexo(resultSet.getString("sexo"));
             pacienteDTO.setDatanascimento(data);
             return pacienteDTO;
         }
@@ -190,6 +193,7 @@ public class PacienteDAO extends BaseDAO<PacienteDTO> {
                 paciente.setConvenio(resultSet.getString("convenio"));
                 paciente.setTelefone(resultSet.getString("telefone"));
                 paciente.setDatanascimento(resultSet.getDate("nascimento"));
+                paciente.setSexo(resultSet.getString("sexo"));
                 pacientes.add(paciente);
             }
             return pacientes;

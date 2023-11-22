@@ -13,7 +13,7 @@ import java.time.ZoneId;
 
 public class TriagemDAO {
 
-    private static final String api = "Retirei para não excluirem";
+    private static final String api = "";
     public String resultadoTriagem(TriagemDTO triagem, PacienteDTO paciente) {
 
         LocalDate dataFormatada = paciente.getDatanascimento().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
