@@ -142,7 +142,16 @@ public class ConsultaDAO {
 
     public static List<ConsultaDTO> listarConsultasMedicos(String cpf) {
         try (Connection connection = DBConnector.getConexao()) {
-            String sql = "SELECT c.*, p.nome FROM consulta c JOIN paciente p ON c.cpfpaciente = p.cpf WHERE c.cpfmedico='"+cpf+"';";
+            String sql = "SELECT c.*, p.nome, t.resultado " +
+                    "FROM consulta c " +
+                    "JOIN paciente p ON c.cpfpaciente = p.cpf " +
+                    "LEFT JOIN triagem t ON c.cpfpaciente = t.cpfpaciente AND t.horario = (" +
+                    "SELECT MAX(horario) " +
+                    "FROM triagem " +
+                    "WHERE cpfpaciente = c.cpfpaciente" +
+                    ") " +
+                    "WHERE c.cpfmedico = '"+cpf+"';";
+
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
             List<ConsultaDTO> consultas = new ArrayList<>();
@@ -157,6 +166,7 @@ public class ConsultaDAO {
                 consultaDTO.setData(resultSet.getDate("data"));
                 consultaDTO.setHorario(resultSet.getString("horario"));
                 consultaDTO.setNome(resultSet.getString("nome"));
+                consultaDTO.setUltimatriagem(resultSet.getString("resultado"));
                 consultas.add(consultaDTO);
             }
             return consultas;

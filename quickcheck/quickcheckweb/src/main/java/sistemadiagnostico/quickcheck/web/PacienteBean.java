@@ -68,6 +68,7 @@ public class PacienteBean {
     private String coordenadaEndereco, resultadoTriagemstr, senhaAntiga, novaSenha, key;
     private String[] inputsRecuperarSenha = new String[6];
     private MapModel<Long> model;
+    private Marker<Long> marker;
     private Date dataSelecionada;
     private Date dataAtual = new Date();
     private UploadedFile file;
@@ -158,7 +159,6 @@ public class PacienteBean {
     }
 
     public void resultadoTriagem() {
-
         if (triagem.getCabeca().length == 0 && triagem.getRespiratorio().length == 0 && triagem.getGastrointestinal().length == 0 && triagem.getPelve().length == 0 && triagem.getMuscular().length == 0 && triagem.getVisual().length == 0) {
             addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Selecione pelo menos um sintoma");
             resultadoTriagemstr = "Selecione pelo menos um sintoma";
@@ -182,13 +182,10 @@ public class PacienteBean {
     public void onRowSelect(SelectEvent<ClinicaDTO> event) {
         botaoAgendar = false;
         try {
-            model = new DefaultMapModel<>();
             Double latitude = Double.parseDouble(event.getObject().getCoordenada().split(",")[0]);
             Double longitude = Double.parseDouble(event.getObject().getCoordenada().split(",")[1]);
 
             coordenadaEndereco = latitude + ", " + longitude;
-
-            model.addOverlay(new Marker<>(new LatLng(latitude, longitude), event.getObject().getNome()));
             this.clinica = event.getObject();
             convenios = Arrays.asList(conveniosArray);
             carregarConvenios();
@@ -264,6 +261,13 @@ public class PacienteBean {
         clinicasFiltradas = new ArrayList<>();
         clinicas = clinicaService.listarClinicas();
         clinicasFiltradas.addAll(clinicas);
+        model = new DefaultMapModel<>();
+        for (ClinicaDTO clinicaDTO : clinicas) {
+            String[] coordenadas = clinicaDTO.getCoordenada().split(",");
+            LatLng coord = new LatLng(Double.parseDouble(coordenadas[0]), Double.parseDouble(coordenadas[1]));
+            marker = new Marker<>(coord, clinicaDTO.getNome());
+            model.addOverlay(marker);
+        }
         ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
         context.redirect(context.getRequestContextPath() + "/faces/consultaPaciente.xhtml?faces-redirect=true");
     }

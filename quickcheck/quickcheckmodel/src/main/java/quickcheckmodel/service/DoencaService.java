@@ -34,8 +34,8 @@ public class DoencaService {
         DoencaDAO.removerDoenca(doencaDTO);
     }
     
-    /*public List<DoencaDTO> listarDoencas() throws SQLException, ClassNotFoundException {
-        return DoencaDAO.listarDoencas();
-    }*/
+    public List<DoencaDTO> listarNomeDoencas() {
+        return DoencaDAO.listarNomeDoencas();
+    }
     
 }

@@ -77,7 +77,6 @@
             </div>
             <p:commandButton value="Sair" action="#{pacienteBean.logout()}"
                              styleClass="ui-button-secondary ui-button-flat"/>
-            <p:remoteCommand name="carregarSair" action="#{pacienteBean.logout()}"/>
         </header>
     </h:form>
     <div class="tituloAba">
@@ -164,7 +163,7 @@
                                 <h4><h:outputText value="Medico: #{pacienteBean.clinica.nomemedico}"/></h4>
                                 <div class="divInputs">
                                     <p:outputLabel for="@next" value="Data: " style="margin-right: 0.5rem;"/>
-                                    <p:calendar id="agenda" disabledWeekends="true" mindate="#{pacienteBean.dataAtual}"
+                                    <p:calendar required="true" label="Dia" id="agenda" disabledWeekends="true" mindate="#{pacienteBean.dataAtual}"
                                                 value="#{pacienteBean.consulta.data}">
                                         <p:ajax event="dateSelect" listener="#{pacienteBean.onDateSelect}"
                                                 update="horarios"/>
@@ -173,7 +172,7 @@
 
                                 <div class="divInputs">
                                     <p:outputLabel for="@next" value="Horário: " style="margin-right: 0.5rem;"/>
-                                    <p:selectOneMenu id="horarios" value="#{pacienteBean.consulta.horario}">
+                                    <p:selectOneMenu required="true" label="Horário" id="horarios" value="#{pacienteBean.consulta.horario}">
                                         <f:selectItems value="#{pacienteBean.horarios}" var="horario" itemLabel="#{horario}"
                                                        itemValue="#{horario}"/>
                                     </p:selectOneMenu>

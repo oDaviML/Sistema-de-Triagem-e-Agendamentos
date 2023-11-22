@@ -23,7 +23,7 @@
                 </div>
 
                 <div class="linksHeader">
-                    <h4 id="btnClinica"><a href="doencas.xhtml">Doencas</a></h4>
+                    <h4 id="btnClinica"><a href="clinica.xhtml">Clínica</a></h4>
                 </div>
 
                 <div class="linksHeader">
@@ -31,7 +31,6 @@
                 </div>
                 <p:commandButton value="Sair" action="#{medicoBean.logout()}"
                                  styleClass="ui-button-secondary ui-button-flat"/>
-                <p:remoteCommand name="sair" action="#{medicoBean.logout()}" />
             </header>
             <div class="tituloAba">
                 <h2>CONSULTAS(Área Médica)</h2>
@@ -63,7 +62,6 @@
                         <h1>CONSULTAS AGENDADAS</h1>
                     </div>
                 </p:commandLink>
-                <p:remoteCommand name="carregarConsulta" action="#{medicoBean.consultasMedico()}" />
             </div>
         </h:form>
         <div class="acessbilidade">

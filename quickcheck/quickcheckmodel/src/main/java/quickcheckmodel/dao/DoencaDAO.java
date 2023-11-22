@@ -160,6 +160,25 @@ public class DoencaDAO {
         return doencas;
 
     }
+
+    public static List<DoencaDTO> listarNomeDoencas()  {
+        List<DoencaDTO> doencas = new ArrayList<>();
+        try (Connection connection = DBConnector.getConexao()) {
+            String sql = "SELECT nome FROM doenca";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    DoencaDTO doenca = new DoencaDTO();
+                    doenca.setNome(resultSet.getString("nome"));
+                    doencas.add(doenca);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return doencas;
+
+    }
     
     public static void removerDoenca(DoencaDTO doencaDTO) throws SQLException {
 

@@ -32,7 +32,6 @@
                 </div>
                 <p:commandButton value="Sair" action="#{medicoBean.logout()}"
                                  styleClass="ui-button-secondary ui-button-flat" />
-                <p:remoteCommand name="carregarSair" action="#{medicoBean.logout()}" />
             </header>
             <div class="tituloAba">
                 <h2>CONSULTAS</h2>
@@ -67,7 +66,12 @@
                         <h:outputText id="horarioConsulta" value="#{consulta.horario}" />
                     </p:column>
 
-                    <p:column style="width:6rem">
+                    <p:column headerText="Ultima triagem" >
+                        <h:outputText id="triagem" value="#{consulta.ultimatriagem}" />
+                    </p:column>
+
+
+                    <p:column style="width:10rem">
 
                         <p:commandButton styleClass="rounded-button ui-button-secondary ui-button-flat" process="@this" actionListener="#{medicoBean.removerConsulta(consulta)}" update="form2" icon="pi pi-trash">
                             <p:confirm header="Confirmação" message="Tem certeza que deseja desmarcar?" icon="pi pi-info-circle"/>
