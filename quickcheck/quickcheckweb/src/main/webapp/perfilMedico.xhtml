@@ -121,21 +121,29 @@
                 <p:commandButton style="margin-left: 1rem" value="Salvar" validateClient="true" update="form2" disabled="#{!(medicoBean.editSenha)}" action="#{medicoBean.editarSenha}" />
             </h:form>
             <p:separator/>
-            <h:form>
+            <h:form id="form">
             <div class="tabela">
                 <h2>Doenças Cadastradas</h2>
-                <p:dataTable id="triagens" scrollable="true" scrollHeight="250" var="triagem" value="#{medicoBean.doencas}"
+                <p:dataTable id="doencas" scrollable="true" scrollHeight="250" var="doenca" value="#{medicoBean.doencas}"
                              style="margin-bottom:20px">
                     <p:column headerText="Nome">
-                        <h:outputText id="especialidade" value="#{doencas.nome}"/>
+                        <h:outputText id="nome" value="#{doenca.nome}"/>
                     </p:column>
 
                     <p:column headerText="Descrição">
-                        <h:outputText id="nomeMedico" value="#{doencas.descricao}" >
-                            <f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm" />
-                        </h:outputText>
+                        <h:outputText id="descricao" value="#{doenca.descricao}" />
+                    </p:column>
+                    
+                    <p:column style="width:6rem">
+                        <p:commandButton styleClass="rounded-button ui-button-secondary ui-button-flat" process="@this" actionListener="#{medicoBean.removerDoenca(doenca)}" update="form:doencas"  icon="pi pi-trash">
+                            <p:confirm header="Confirmação" message="Tem certeza que deseja remover doença?" icon="pi pi-info-circle"/>
+                        </p:commandButton>
                     </p:column>
                 </p:dataTable>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" />
+                </p:confirmDialog>
             </div>
         </h:form>
         </div>

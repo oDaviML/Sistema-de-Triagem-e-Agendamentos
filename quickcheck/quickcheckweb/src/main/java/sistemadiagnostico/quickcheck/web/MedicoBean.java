@@ -196,18 +196,12 @@ public class MedicoBean {
                 clinica = clinicaService.obterClinicaPorCPF(medico.getCpf());
                 carregarMapa(clinica);
                 pacientes = pacienteService.listarPacientes(medico.getCpf());
+                carregarDoencas();
             } else {
                 clinica = new ClinicaDTO("", "", "", new String[0], "", "", "", "");
             }
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             context.redirect(context.getRequestContextPath() + "/faces/inicioMedico.xhtml?faces-redirect=true");
-            
-            if (doencaService.obterDoencaPorCPF(medico.getCpf()) != null) {
-                doenca = doencaService.obterDoencaPorCPF(medico.getCpf());
-                doencas = doencaService.listarDoencas(medico.getCpf());
-            } else {
-                doenca = new DoencaDTO("", "", "", "", "", "", "", new String[0], new String[0], new String[0], new String[0], new String[0], new String[0]);
-            }
 
         } else {
             medico = new MedicoDTO();
@@ -239,10 +233,23 @@ public class MedicoBean {
             doenca.setCpfMedico(medico.getCpf());
             doenca.setNomeMedico(medico.getNome());
             doenca = doencaService.inserirDoenca(doenca);
-            addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Doenca cadastrada");
+            addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Doença cadastrada");
+            carregarDoencas();
         } catch (Exception e) {
-            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao cadastrar doenca");
+            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao cadastrar doença");
         }
     }
+    
+    public void removerDoenca(DoencaDTO event) throws SQLException, ClassNotFoundException {
+        doencaService.removerDoenca(event);
+        addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Doença removida");
+        carregarDoencas();
+    }
+    
+    public void carregarDoencas() throws ClassNotFoundException {
+        doencas = doencaService.listarDoencas(medico.getCpf());
+    }
+    
+    
     
 }
