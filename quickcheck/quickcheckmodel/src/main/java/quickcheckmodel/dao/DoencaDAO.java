@@ -23,7 +23,6 @@ public class DoencaDAO {
 
         PreparedStatement ps = null; //Interage com o banco de dados a partir de comandos SQL
         
-        System.out.println("Cheguei aqui");
         
         try {
 
@@ -196,10 +195,11 @@ public class DoencaDAO {
             - ps se tornar a instância de prepareStatement que se relaciona com o banco de dados conectado.
             - Cada '?' é um campo subtstituído por um valor.
              */
-            ps = connection.prepareStatement("DELETE FROM doenca WHERE id = ?");
+            ps = connection.prepareStatement("DELETE FROM doenca WHERE nome AND cpfMedico = ?, ?");
 
             //Executa a função SQL recebida como parâmetro.
-            //ps.setInt(1, doencaDTO.getId());
+            ps.setString(1, doencaDTO.getNome());
+            ps.setString(2, doencaDTO.getCpfMedico());
 
             ps.executeUpdate();
 
