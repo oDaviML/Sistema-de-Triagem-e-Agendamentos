@@ -1,31 +1,33 @@
 package sistemadiagnostico.quickcheck.web;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.primefaces.event.SelectEvent;
-import org.primefaces.event.map.OverlaySelectEvent;
-import org.primefaces.model.DefaultScheduleEvent;
-import org.primefaces.model.ScheduleEvent;
-import org.primefaces.model.ScheduleModel;
-import org.primefaces.model.map.DefaultMapModel;
-import org.primefaces.model.map.LatLng;
-import org.primefaces.model.map.MapModel;
-import org.primefaces.model.map.Marker;
-
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.servlet.http.HttpSession;
+import lombok.Getter;
+import lombok.Setter;
+import org.primefaces.PrimeFaces;
+import org.primefaces.event.map.OverlaySelectEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
 import quickcheckmodel.dto.*;
 import quickcheckmodel.service.*;
 
+import java.io.*;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 @SessionScoped
 @ManagedBean
+@Getter
+@Setter
 public class MedicoBean {
     private MedicoDTO medico = new MedicoDTO();
     private MedicoService medicoService = new MedicoService();
@@ -36,15 +38,94 @@ public class MedicoBean {
     private DocumentoService documentoService = new DocumentoService();
     private EmailService emailService = new EmailService();
     private PacienteService pacienteService = new PacienteService();
+    private SenhaService senhaService = new SenhaService();
+    private DoencaDTO doenca = new DoencaDTO();
+    private DoencaService doencaService = new DoencaService();
 
     private List<MedicoDTO> medicos = new ArrayList<>();
     private List<PacienteDTO> pacientes = new ArrayList<>();
     private List<DocumentoDTO> documentos = new ArrayList<>();
     private List<ConsultaDTO> consultas = new ArrayList<>();
+    private List<DoencaDTO> doencas = new ArrayList<>();
 
+    private String senhaAntiga, novaSenha, key;
+    private String[] inputsRecuperarSenha = new String[6];
     private MapModel model;
     private Marker<String> marker;
     private List<ConsultaDTO> consultasFiltradas;
+    private Boolean edit = false;
+    private Boolean editSenha = false;
+
+    public void recuperarSenha() throws IOException {
+        medicoService.alterarSenha(medico);
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+        context.redirect(context.getRequestContextPath() + "/faces/lgnMedico.xhtml?faces-redirect=true");
+        emailService.alterarSenha(medico.getEmail(), medico.getNome());
+        addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Senha alterada");
+        medico = new MedicoDTO();
+    }
+
+    public void verificarCodigo() {
+        String recuperarSenhaString = String.join("", inputsRecuperarSenha);
+        if (recuperarSenhaString.equals(key)) {
+            PrimeFaces.current().executeScript("alterarVisibilidade();");
+        }
+        else {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Código inválido");
+        }
+    }
+
+    public void enviarEmailRecuperarSenha() {
+        medico = medicoService.verificar(medico);
+        if (medico != null) {
+            key = senhaService.generateRandomKey();
+            emailService.recuperarSenha(medico.getEmail(), key);
+            PrimeFaces.current().executeScript("setupCodeInputs();");
+            PrimeFaces.current().executeScript("alterarVisibilidade();");
+            addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Email enviado");
+        } else {
+            medico = new MedicoDTO();
+            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Usuario inexistente");
+        }
+    }
+
+
+    public void editarSenha() {
+        if (senhaService.verificar(medico.getCpf(), senhaAntiga, 1)) {
+            try {
+                medico.setSenha(novaSenha);
+                medicoService.alterarSenha(medico);
+                editSenha = !editSenha;
+                emailService.alterarSenha(medico.getEmail(), medico.getNome());
+                addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Senha atualizada");
+            } catch (Exception e) {
+                addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao atualizar senha");
+                e.printStackTrace();
+            }
+        } else {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Senha antiga inválida");
+        }
+    }
+
+    public void editarPerfil() {
+        try {
+            medicoService.editar(medico);
+            edit = !edit;
+            addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Informações atualizadas");
+        }catch (Exception e){
+            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao atualizar informações");
+            e.printStackTrace();
+        }
+    }
+
+    public void habilitarEdicaoSenha() {
+        editSenha = !editSenha;
+    }
+
+    public void habilitarEdicao() {
+        edit = !edit;
+        PrimeFaces.current().executeScript("completarEndereço();");
+    }
 
     public void removerConsulta(ConsultaDTO consulta) {
         consultaService.removerConsultaMedico(consulta);
@@ -63,7 +144,14 @@ public class MedicoBean {
         documentos = documentoService.listar(cpf);
     }
 
-    public void inserirOuAtualizarClinica() throws ClassNotFoundException {
+    public StreamedContent baixarArquivo(DocumentoDTO documento) throws FileNotFoundException {
+        File file = documentoService.baixarArquivo(documento.getNomeArquivo());
+        InputStream inputStream = new FileInputStream(file);
+        String fileName = file.getName();
+        return DefaultStreamedContent.builder().name(fileName).stream(() -> inputStream).build();
+    }
+
+    public void inserirOuAtualizarClinica() {
         try {
             clinica.setCpfmedico(medico.getCpf());
             clinica.setNomemedico(medico.getNome());
@@ -71,7 +159,7 @@ public class MedicoBean {
             carregarMapa(clinica);
             addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Clinica atualizada");
         } catch (Exception e) {
-            e.printStackTrace();
+            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao atualizar clinica");
         }
     }
 
@@ -87,116 +175,74 @@ public class MedicoBean {
     }
 
     public String inserirMedico() throws ClassNotFoundException, SQLException {
-        medicoService.cadastrarMedico(medico);
-        emailService.confimarCadastro(medico.getEmail(), medico.getNome());
-        medico = new MedicoDTO();
-        return "/loginFunc.xhtml?faces-redirect=true";
+        try {
+            medicoService.cadastrarMedico(medico);
+            emailService.confimarCadastro(medico.getEmail(), medico.getNome());
+            medico = new MedicoDTO();
+            return "/lgnMedico.xhtml?faces-redirect=true";
+        } catch (Exception e) {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Usuário já existe");
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public void listar() {
-        medicos = medicoService.listar();
-    }
-    
     public void login() throws IOException, ClassNotFoundException, SQLException {
         medico = medicoService.login(medico.getCpf(), medico.getSenha());
         if (medico != null) {
-            HttpSession session = (HttpSession)FacesContext.getCurrentInstance( ).getExternalContext().getSession(false);
+            HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
             session.setAttribute("usuario", medico);
             if (clinicaService.obterClinicaPorCPF(medico.getCpf()) != null) {
                 clinica = clinicaService.obterClinicaPorCPF(medico.getCpf());
                 carregarMapa(clinica);
-                pacientes = documentoService.listarPacientes(medico.getCpf());
-            }
-            else {
+                pacientes = pacienteService.listarPacientes(medico.getCpf());
+            } else {
                 clinica = new ClinicaDTO("", "", "", new String[0], "", "", "", "");
             }
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             context.redirect(context.getRequestContextPath() + "/faces/inicioMedico.xhtml?faces-redirect=true");
-        }
-        else {
+            
+            if (doencaService.obterDoencaPorCPF(medico.getCpf()) != null) {
+                doenca = doencaService.obterDoencaPorCPF(medico.getCpf());
+                doencas = doencaService.listarDoencas(medico.getCpf());
+            } else {
+                doenca = new DoencaDTO("", "", "", "", "", "", "", new String[0], new String[0], new String[0], new String[0], new String[0], new String[0]);
+            }
+
+        } else {
             medico = new MedicoDTO();
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Usuário ou senha incorretos");
-            FacesContext.getCurrentInstance().addMessage(null,message);
+            FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
-    
+
     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, detail));
     }
-    
+
     public void logout() {
         try {
             FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-            context.redirect(context.getRequestContextPath() + "/faces/loginFunc.xhtml?faces-redirect=true");
+            context.redirect(context.getRequestContextPath() + "/faces/lgnMedico.xhtml?faces-redirect=true");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public MedicoDTO getMedico() {
-        return medico;
-    }
-
-    public void setMedico(MedicoDTO medico) {
-        this.medico = medico;
-    }
-
-    public List<MedicoDTO> getMedicos() {
-        return medicos;
-    }
-
-    public void setMedicos(List<MedicoDTO> medicos) {
-        this.medicos = medicos;
-    }
-
-    public ClinicaDTO getClinica(){
-        return clinica;
-    }
-
-    public void setClinica(ClinicaDTO clinica){
-        this.clinica = clinica;
-    }
-
-    public MapModel getModel() { 
-        return model; 
-    }
-    public Marker getMarker() { 
-        return marker; 
-    }
     public void onMarkerSelect(OverlaySelectEvent event) {
         this.marker = (Marker) event.getOverlay();
     }
-
-    public List<PacienteDTO> getPacientes() {
-        return pacientes;
+    
+    public void inserirDoenca() {
+        try {
+            doenca.setCpfMedico(medico.getCpf());
+            doenca.setNomeMedico(medico.getNome());
+            doenca = doencaService.inserirDoenca(doenca);
+            addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Doenca cadastrada");
+        } catch (Exception e) {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao cadastrar doenca");
+        }
     }
-
-    public void setPacientes(List<PacienteDTO> pacientes) {
-        this.pacientes = pacientes;
-    }
-
-    public List<DocumentoDTO> getDocumentos() {
-        return documentos;
-    }
-
-    public void setDocumentos(List<DocumentoDTO> documentos) {
-        this.documentos = documentos;
-    }
-
-    public List<ConsultaDTO> getConsultas() {
-        return consultas;
-    }
-
-    public void setConsultas(List<ConsultaDTO> consultas) {
-        this.consultas = consultas;
-    }
-
-    public List<ConsultaDTO> getConsultasFiltradas() {
-        return consultasFiltradas;
-    }
-
-    public void setConsultasFiltradas(List<ConsultaDTO> consultasFiltradas) {
-        this.consultasFiltradas = consultasFiltradas;
-    }
+    
 }

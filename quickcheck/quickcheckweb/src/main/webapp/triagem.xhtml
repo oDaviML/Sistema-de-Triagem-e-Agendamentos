@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="resources/css/bootstrap.css"/>
+    <link rel="stylesheet" href="resources/css/style.css"/>
+    <link rel="stylesheet" href="resources/css/acessibilidade.css"/>
+    <title>QuickCheck</title>
+
+    <style>
+        .container {
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            margin-top: 1rem;
+        }
+
+        .checkbox-group-1 {
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 10px;
+            grid-column-gap: 50px;
+        }
+
+        .checkbox-group-3 {
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 10px;
+            grid-column-gap: 50px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            justify-content: center;
+        }
+
+        .form-group {
+            flex: 1;
+            margin: 10px;
+            text-align: center;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 5px;
+            margin-top: 5px;
+            display: block;
+            border: none;
+        }
+
+        .checkbox {
+            margin-bottom: 10px;
+        }
+
+        .checkbox-2 {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        .next-button {
+            padding: 15px 25px;
+            background-color: rgb(0, 173, 145);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .submit-button {
+            padding: 15px 25px;
+            background-color: rgb(0, 173, 145);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .next-button:hover {
+            background-color: rgb(0, 126, 105);
+        }
+
+        .submit-button:hover {
+            background-color: rgb(0, 126, 105);
+        }
+
+        @media only screen and (max-width: 1000px) {
+            .checkbox-group-1,
+            .checkbox-group-3 {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media only screen and (max-width: 790px) {
+            .checkbox-group-1,
+            .checkbox-group-3 {
+                grid-template-columns: 1fr;
+            }
+
+            div {
+              margin-bottom: 10px;
+            }
+
+            .checkbox-group {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+
+        .previous-button {
+            padding: 15px 25px;
+            background-color: #f2f2f2;
+            color: #333;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .previous-button:hover {
+            background-color: #ddd;
+        }
+
+        .tab {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f2f2f2;
+            width: 240px;
+            margin-top: -25px;
+            display: flex;
+        }
+
+        .grupo {
+            background-color: #eee;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .grupoAtivo {
+            border-bottom: 3px solid rgb(0, 173, 145);
+        }
+
+        section {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+    </style>
+</h:head>
+<h:body>
+    <h:form id="form1">
+        <header class="header">
+            <div class="logoInicio">
+                <img src="resources/images/logo.png" id="imgLogoPrinc" alt=""/>
+            </div>
+
+            <div class="linksHeader">
+                <h4 id="btnInicio"><a href="inicioPaciente.xhtml">Início</a></h4>
+            </div>
+
+            <div class="linksHeader">
+                <p:commandLink action="#{pacienteBean.resetarTriagem}" style="text-decoration: none; color: black;">
+                    <h4 id="btnDiagnostico">Pré-Diagnóstico</h4>
+                </p:commandLink>
+            </div>
+
+            <div class="linksHeader">
+                <p:commandLink action="#{pacienteBean.carregarPerfil}" style="text-decoration: none; color: black;">
+                    <h4 id="btnPerfil">Perfil</h4>
+                </p:commandLink>
+            </div>
+            <p:commandButton value="Sair" action="#{pacienteBean.logout()}"
+                             styleClass="ui-button-secondary ui-button-flat"/>
+
+            <p:remoteCommand name="sair" action="#{pacienteBean.logout()}"/>
+        </header>
+
+        <div class="tituloAba">
+            <h2>TRIAGEM</h2>
+        </div>
+    </h:form>
+    <h:form id="form2">
+        <p:growl id="growl" showDetail="true" />
+        <section id="perguntasTriagem">
+            <div class="tab">
+                <div class="grupo grupoAtivo">Grupo 1</div>
+                <div class="grupo">Grupo 2</div>
+                <div class="grupo">Grupo 3</div>
+            </div>
+
+            <div class="container" id="group1">
+                <h2>Grupo 1: Sintomas Específicos</h2>
+                <div class="checkbox-group-1">
+                    <div>
+                        <h3>Cabeça e Pescoço</h3>
+                        <p:selectManyCheckbox id="cabeca" value="#{pacienteBean.triagem.cabeca}" layout="responsive" columns="1">
+                            <f:selectItem type="checkbox" name="sintomas" itemLabel="Dor de cabeça" itemValue="Dor de cabeça"/>
+                            <f:selectItem itemValue="Garganta doendo" itemLabel="Garganta doendo" />
+                            <f:selectItem itemValue="Garganta inflamada" itemLabel="Garganta inflamada" />
+                            <f:selectItem itemValue="Febre" itemLabel="Febre" />
+                            <f:selectItem itemValue="Tontura" itemLabel="Tontura" />
+                            <f:selectItem itemValue="Inchaço no pescoço" itemLabel="Inchaço no pescoço" />
+                            <f:selectItem itemValue="Dor no ouvido" itemLabel="Dor no ouvido" />
+                        </p:selectManyCheckbox>
+                    </div>
+
+                    <div>
+                        <h3>Sistema respiratório:</h3>
+                        <p:selectManyCheckbox id="respiratorio" value="#{pacienteBean.triagem.respiratorio}" layout="responsive" columns="1">
+                            <f:selectItem itemValue="Coriza" itemLabel="Coriza" />
+                            <f:selectItem itemValue="Tosse seca persistente" itemLabel="Tosse seca persistente" />
+                            <f:selectItem itemValue="Congestão nasal" itemLabel="Congestão nasal" />
+                            <f:selectItem itemValue="Dificuldade para respirar" itemLabel="Dificuldade para respirar" />
+                        </p:selectManyCheckbox>
+                    </div>
+
+                    <div>
+                        <h3>Sistema gastrointestinal:</h3>
+                        <p:selectManyCheckbox id="gastrointestinal" value="#{pacienteBean.triagem.gastrointestinal}" layout="responsive" columns="1">
+                            <f:selectItem itemValue="Diarreia" itemLabel="Diarreia" />
+                            <f:selectItem itemValue="Vômitos frequentes" itemLabel="Vômitos frequentes" />
+                            <f:selectItem itemValue="Náuseas intensas" itemLabel="Náuseas intensas" />
+                            <f:selectItem itemValue="Dor abdominal" itemLabel="Dor abdominal" />
+                            <f:selectItem itemValue="Perda de apetite" itemLabel="Perda de apetite" />
+                            <f:selectItem itemValue="Alterações no hábito intestinal" itemLabel="Alterações no hábito intestinal" />
+                        </p:selectManyCheckbox>
+                    </div>
+
+                    <div>
+                        <h3>Sistema urinário e reprodutor:</h3>
+                        <p:selectManyCheckbox id="pelve" value="#{pacienteBean.triagem.pelve}" layout="responsive" columns="1">
+                            <f:selectItem itemValue="Urina com sangue" itemLabel="Urina com sangue" />
+                            <f:selectItem itemValue="Sensação de queimação ao urinar" itemLabel="Sensação de queimação ao urinar" />
+                            <f:selectItem itemValue="Dificuldade para urinar" itemLabel="Dificuldade para urinar" />
+                            <f:selectItem itemValue="Sangramento menstrual excessivo" itemLabel="Sangramento menstrual excessivo" />
+                            <f:selectItem itemValue="Irregularidades menstruais" itemLabel="Irregularidades menstruais" />
+                            <f:selectItem itemValue="Sangramento intermenstrual" itemLabel="Sangramento intermenstrual" />
+                        </p:selectManyCheckbox>
+                    </div>
+
+                    <div>
+                        <h3>Sistema tegumentar e muscular:</h3>
+                        <p:selectManyCheckbox id="pele-musculos" value="#{pacienteBean.triagem.muscular}" layout="responsive" columns="1">
+                            <f:selectItem itemValue="Coceira intensa na pele" itemLabel="Coceira intensa na pele" />
+                            <f:selectItem itemValue="Manchas vermelhas na pele" itemLabel="Manchas vermelhas na pele" />
+                            <f:selectItem itemValue="Suores noturnos" itemLabel="Suores noturnos" />
+                            <f:selectItem itemValue="Tremores ou espasmos musculares" itemLabel="Tremores ou espasmos musculares" />
+                            <f:selectItem itemValue="Inchaço nas articulações" itemLabel="Inchaço nas articulações" />
+                        </p:selectManyCheckbox>
+                    </div>
+
+                    <div>
+                        <h3>Sistema visual:</h3>
+                        <p:selectManyCheckbox id="visual" value="#{pacienteBean.triagem.visual}" layout="responsive" columns="1">
+                            <f:selectItem itemValue="Perda de visão" itemLabel="Perda de visão" />
+                            <f:selectItem itemValue="Sensibilidade à luz" itemLabel="Sensibilidade à luz" />
+                            <f:selectItem itemValue="Olhos vermelhos" itemLabel="Olhos vermelhos" />
+                            <f:selectItem itemValue="Coceira nos olhos" itemLabel="Coceira nos olhos" />
+                            <f:selectItem itemValue="Dor nos olhos" itemLabel="Dor nos olhos" />
+                            <f:selectItem itemValue="Olhos lacrimejando" itemLabel="Olhos lacrimejando" />
+                            <f:selectItem itemValue="Visão embaçada" itemLabel="Visão embaçada" />
+                        </p:selectManyCheckbox>
+                    </div>
+                </div>
+
+                <div class="button-container">
+                    <p:commandButton styleClass="ui-button-success next-button" type="button" value="Próximo" onclick="showGroup('group2')" />
+                </div>
+            </div>
+
+            <div class="container" id="group2" style="display: none;">
+
+                <h2>Grupo 2: Histórico e Comportamento</h2>
+
+                <div class="checkbox-group">
+
+                    <div class="form-group upper-group">
+
+                        <div class="form-group">
+                            <label for="tempo-inicio">Tempo de Início dos Sintomas (dias):</label>
+                            <p:inputNumber styleClass="form-control" label="Tempo de início" required="true" id="tempo-inicio" value="#{pacienteBean.triagem.inicioSintomas}" minValue="1" decimalPlaces="0"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="historico-viagem">Histórico de Viagem Recentes:</label>
+                            <p:inputText id="historico-viagem" label="Histórico de viagens" required="true" value="#{pacienteBean.triagem.historicoViagem}" styleClass="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contato-infectados">Teve contato com Pessoas Infectadas?</label>
+                            <p:inputText id="contato-infectados" label="Contato com infectados" required="true" value="#{pacienteBean.triagem.contatoInfectados}" styleClass="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group lower-group">
+
+                        <div class="form-group">
+                            <label for="atividade-fisica">Realizou alguma atividade física intensa nas últimas semanas?</label>
+                            <p:inputText id="atividade-fisica" label="Atividades físicas" required="true" value="#{pacienteBean.triagem.atividadeFisica}" styleClass="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mudanca-dieta">Fez alguma mudança significativa em sua dieta recentemente?</label>
+                            <p:inputText id="mudanca-dieta" label="Mudança de dieta" required="true" styleClass="form-control" value="#{pacienteBean.triagem.mudancaDieta}" />
+                        </div>
+
+                        <div class="form-group">
+                            <h3>Condições Pré-Existentes</h3>
+                            <p:selectManyCheckbox style="text-align: left" id="condicoes-preexistentes" value="#{pacienteBean.triagem.condicoesExistentes}" layout="responsive" columns="1">
+                                <f:selectItem itemValue="Diabetes" itemLabel="Diabetes" />
+                                <f:selectItem itemValue="Asma" itemLabel="Asma" />
+                                <f:selectItem itemValue="Hipertensão" itemLabel="Hipertensão" />
+                            </p:selectManyCheckbox>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-container">
+                    <p:commandButton styleClass="ui-button-secondary previous-button" style="margin-right: 1rem" type="button" value="Voltar" onclick="showGroup('group1')" />
+                    <p:commandButton styleClass="ui-button-success next-button" type="button" value="Próximo" onclick="showGroup('group3')" />
+                </div>
+            </div>
+
+            <div class="container" id="group3" style="display: none;">
+
+                <h2>Grupo 3: Fatores de Risco e Estilo de Vida</h2>
+
+                <div class="checkbox-group-3">
+
+                    <div class="form-group">
+                        <label for="historico-alergias">Tem histórico de alergias conhecidas?</label>
+                        <p:inputText id="historico-alergias" label="Alergias" required="true" styleClass="form-control" value="#{pacienteBean.triagem.alergias}" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="historico-doencas-cardiacas">Tem histórico de doenças cardíacas na família?</label>
+                        <p:selectBooleanCheckbox id="historico-doencas-cardiacas" styleClass="form-control"
+                                                 value="#{pacienteBean.triagem.historicoDoencasCardiacas}" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="historico-cancer">Tem histórico de câncer na família?</label>
+                        <p:selectBooleanCheckbox id="historico-cancer" styleClass="form-control"
+                                                 value="#{pacienteBean.triagem.historicoCancer}" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="historico-doencas-renais">Tem histórico de doenças renais?</label>
+                        <p:selectBooleanCheckbox id="historico-doencas-renais" styleClass="form-control"
+                                                 value="#{pacienteBean.triagem.historicoDoencasRenais}" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="historico-tabagismo-alcool">Tem histórico de tabagismo ou consumo de álcool?</label>
+                        <p:selectBooleanCheckbox id="historico-tabagismo-alcool" styleClass="form-control"
+                                                 value="#{pacienteBean.triagem.tabagismoalcool}" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="historico-transtornos-psiquiatricos">Tem histórico de transtornos psiquiátricos, como depressão ou ansiedade?</label>
+                        <p:selectBooleanCheckbox id="historico-transtornos-psiquiatricos" styleClass="form-control"
+                                                 value="#{pacienteBean.triagem.transtornosPsiquiatricos}" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exercicios-fisicos">Pratica exercícios físicos regularmente?</label>
+                        <p:selectBooleanCheckbox id="exercicios-fisicos" styleClass="form-control"
+                                                 value="#{pacienteBean.triagem.exerciciosRegulares}" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="metodo-contraceptivo-hormonio">Utiliza algum método contraceptivo ou hormônios?</label>
+                        <p:inputText label="Utiliza algum método contraceptivo ou hormônios" required="true" id="metodo-contraceptivo-hormonio" styleClass="form-control"
+                                     value="#{pacienteBean.triagem.metodoContraceptivoHormonio}" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cirurgia-procedimento-medico">Teve alguma cirurgia ou procedimento médico anteriormente?</label>
+                        <p:inputText label="Cirurgias anteriores" required="true" id="cirurgia-procedimento-medico" styleClass="form-control"
+                                     value="#{pacienteBean.triagem.cirugiaAnterior}" />
+                    </div>
+                </div>
+
+                <div class="button-container">
+                    <p:commandButton styleClass="ui-button-secondary previous-button" style="margin-right: 1rem" type="button" value="Voltar" onclick="showGroup('group2')" />
+
+                    <p:commandButton name="realizarTriagem" validateClient="true" styleClass="submit-button" value="Enviar" actionListener="#{pacienteBean.resultadoTriagem}"
+                                     oncomplete="if (args.validationFailed !== true) { PF('resultadoTriagem').show(); }" update="growl resultadoTriagem"/>
+                </div>
+            </div>
+        </section>
+
+        <p:dialog id="resultadoTriagem" draggable="false" header="Resultado" closable="false" widgetVar="resultadoTriagem" minHeight="400" width="600" showEffect="fade" modal="true">
+            <h:outputText id="resultado" style="font-size: 1.5rem;display: flex;justify-content: center;" value="#{pacienteBean.resultadoTriagemstr}" />
+
+            <p:commandButton value="Início" styleClass="ui-button-outlined" widgetVar="voltarInicio" style="margin-top: 1rem" action="inicioPaciente?faces-redirect=true" />
+        </p:dialog>
+
+    </h:form>
+    <script>
+        function showGroup(groupId) {
+            let groups = document.querySelectorAll('.container');
+            for (let i = 0; i &lt; groups.length; i++) {
+                groups[i].style.display = 'none';
+            }
+            document.getElementById(groupId).style.display = 'flex';
+            const grupos = document.querySelectorAll('.grupo');
+            const grupo1 = grupos[0];
+            const grupo2 = grupos[1];
+            const grupo3 = grupos[2];
+            console.log(groupId);
+            if (groupId === 'group1') {
+                grupo1.classList.add('grupoAtivo');
+                grupo2.classList.remove('grupoAtivo');
+                grupo3.classList.remove('grupoAtivo');
+            }
+            if (groupId === 'group2') {
+                grupo2.classList.add('grupoAtivo');
+                grupo1.classList.remove('grupoAtivo');
+                grupo3.classList.remove('grupoAtivo');
+            } else if (groupId === 'group3') {
+                grupo3.classList.add('grupoAtivo');
+                grupo2.classList.remove('grupoAtivo');
+                grupo1.classList.remove('grupoAtivo');
+            }
+        }
+    </script>
+</h:body>
+</html>

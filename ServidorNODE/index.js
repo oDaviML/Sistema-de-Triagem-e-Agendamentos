@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
     secure : "false",
     auth: {
         user: "quickcheck380@gmail.com",
-        pass: "hvdulpovykyeupra"
+        pass: "etcvankoiwbgnhmi"
     },
     tls: {
         rejectUnauthorized: false
@@ -26,7 +26,7 @@ app.post('/enviaremail', (req, res) =>{
         subject: subject,
         html: html
     }).then(() => {
-        res.send('enviado');
+        res.status(200).send(req.body);
         console.log('enviado');
     }).catch((err) => {
         console.log(err);

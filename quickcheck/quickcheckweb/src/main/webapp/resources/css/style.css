@@ -26,10 +26,11 @@ a:hover {
 .logoInicio {
     margin-left: 3%;
     margin-right: 2%;
+    padding: 1rem;
 }
 
 #imgLogoPrinc {
-    height: 100px;
+    height: 50px;
 }
 
 .linksHeader {
@@ -46,15 +47,22 @@ a:hover {
 }
 
 .conteudo {
+    padding-top: 1rem;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
     width: 80%;
     margin: 0 auto;
+    margin-bottom: 1rem;
 }
 
 .func {
-    padding: 0 30px;
+    padding: 1rem;
+}
+
+.func:hover {
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
 }
 
 .position {
@@ -79,9 +87,9 @@ a:hover {
 .legendaBelow {
     margin-top: 15px;
     text-align: center;
-    font-size: 60%;
+    font-size: 2rem;
 }
 
-.func:hover {
-    opacity: 0.7;
+.tabela {
+    grid-column-start: span 2;
 }

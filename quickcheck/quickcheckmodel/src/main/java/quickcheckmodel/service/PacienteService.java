@@ -23,4 +23,21 @@ public class PacienteService {
     public String obterCoordenada(String endereco) {
         return pacienteDAO.obterCoordenada(endereco);
     }
+
+    public List<PacienteDTO> listarPacientes(String cpf){
+        return pacienteDAO.listarPacientes(cpf);
+    }
+
+    public void alterarSenha(PacienteDTO pacienteDTO){
+        pacienteDAO.alterarSenha(pacienteDTO);
+    }
+
+    public void editar(PacienteDTO pacienteDTO){
+        pacienteDAO.editar(pacienteDTO);
+    }
+
+    public PacienteDTO verificar(PacienteDTO pacienteDTO){
+        return pacienteDAO.verificar(pacienteDTO);
+    }
+
 }
