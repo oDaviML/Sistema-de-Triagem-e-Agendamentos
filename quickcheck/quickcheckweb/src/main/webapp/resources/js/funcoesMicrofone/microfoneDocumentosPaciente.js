@@ -16,7 +16,8 @@ const EFEITOS_SONOROS = [
 const COMANDOS_DE_VOZ = {
     acessoPerfil: ['perfil', 'acessarperfil'],
     acessoInicio: ['voltar', 'inicio', 'acessarinicio'],
-    acessoLogin: ['login', 'acessarlogin', 'sair']
+    acessoLogin: ['login', 'acessarlogin', 'sair'],
+    acessoClinica: ['clinica', 'clinicas', 'cadastrar']
 };
 
 const GRAMATICA = `#JSGF V1.0; grammar comando; public <comando> = ${Object.values(COMANDOS_DE_VOZ).reduce((prev, cur) => prev.concat(cur, [])).join(' | ')} ;`;
@@ -104,8 +105,9 @@ const inicializaReconhecimentoDeFala = (callback, microfoneEl) => {
 
 const INSTRUCOES_ELS = [
     'Perfil',
-    'Inicio',
-    'Sair'
+    'Voltar',
+    'Sair',
+    'Cadastrar'
 ].map(i => {
     let instrucaoEl = document.createElement('span');
     instrucaoEl.className = 'instrucao';
@@ -149,10 +151,15 @@ class Bando {
                 this.reconhecimento = inicializaReconhecimentoDeFala({
                     acessoInicio: this.inicio.bind(this),
                     acessoLogin: this.sair.bind(this),
-                    acessoPerfil: this.perfil.bind(this)
+                    acessoPerfil: this.perfil.bind(this),
+                    acessoClinica: this.clinica.bind(this)
                 }, animatedEl);
             }
         });
+    }
+    
+    clinica() {
+        window.location.href = "clinica.xhtml";
     }
     
     inicio() {

@@ -17,8 +17,8 @@ const COMANDOS_DE_VOZ = {
     acessoPerfil: ['perfil', 'acessarperfil'],
     acessoInicio: ['voltar', 'inicio', 'acessarinicio'],
     acessoLogin: ['login', 'acessarlogin', 'sair'],
-    acessoDiagnostico: ['triagem', 'diagnostico'],
-    agendarConsulta: ['agendar', 'agendarconsulta']
+    acessoProximo: ['proximo', 'avancar', 'seguir'],
+    acessoRetornar: ['retornar', 'antes', 'anterior']
 };
 
 const GRAMATICA = `#JSGF V1.0; grammar comando; public <comando> = ${Object.values(COMANDOS_DE_VOZ).reduce((prev, cur) => prev.concat(cur, [])).join(' | ')} ;`;
@@ -105,8 +105,6 @@ const inicializaReconhecimentoDeFala = (callback, microfoneEl) => {
 };
 
 const INSTRUCOES_ELS = [
-    'Agendar',
-    'Triagem',
     'Perfil',
     'Voltar',
     'Sair'
@@ -154,8 +152,8 @@ class Bando {
                     acessoInicio: this.inicio.bind(this),
                     acessoLogin: this.sair.bind(this),
                     acessoPerfil: this.perfil.bind(this),
-                    acessoDiagnostico: this.triagem.bind(this),
-                    agendarConsulta: this.agendar.bind(this) 
+                    acessoProximo: this.proximo.bind(this),
+                    acessoRetornar: this.retornar.bind(this)
                 }, animatedEl);
             }
         });
@@ -173,12 +171,12 @@ class Bando {
         window.location.href = "perfilPaciente.xhtml";
     }
     
-    triagem() {
-        carregarTriagem();
+    proximo() {
+        inserirDocumento();
     }
     
-    agendar() {
-        agendarConsulta();
+    retornar() {
+        escolherDocumento();
     }
 
 }

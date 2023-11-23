@@ -14,7 +14,7 @@ const EFEITOS_SONOROS = [
 }, {});
 
 const COMANDOS_DE_VOZ = {
-    acessoConsulta: ['consulta', 'consultas', 'acessarconsulta', 'acessarconsultas'],
+    acessoConsulta: ['consulta', 'consultas', 'acessarconsulta', 'acessarconsultas', 'consultar'],
     acessoPerfil: ['perfil', 'acessarperfil'],
     acessoDocumento: ['documento', 'documentos', 'acessardocumento', 'acessardocumentos'],
     acessoLogin: ['voltar', 'login', 'acessarlogin', 'sair']
@@ -104,7 +104,7 @@ const inicializaReconhecimentoDeFala = (callback, microfoneEl) => {
 };
 
 const INSTRUCOES_ELS = [
-    'Login',
+    'Sair',
     'Consultas',
     'Documentos',
     'Perfil'

@@ -358,12 +358,12 @@
   transition: all 250ms ease-out;
 }
 
-.instrucao:nth-child(1) { transform: rotate(75deg); }
-.instrucao:nth-child(2) { transform: rotate(45deg); }
-.instrucao:nth-child(3) { transform: rotate(90deg); }
-.instrucao:nth-child(4) { transform: rotate(120deg); }
+.instrucao:nth-child(1) { transform: rotate(0deg); }
+.instrucao:nth-child(2) { transform: rotate(0deg); }
+.instrucao:nth-child(3) { transform: rotate(0deg); }
+.instrucao:nth-child(4) { transform: rotate(0deg); }
 .instrucao:nth-child(5) { transform: rotate(0deg); }
-.instrucao:nth-child(6) { transform: rotate(-75deg); }
+.instrucao:nth-child(6) { transform: rotate(0deg); }
 
 .ativa .instrucao {
   opacity: 1;
@@ -380,21 +380,21 @@
 }
 
 .ativa .instrucao:nth-child(3) {
-  transform: rotate(-150deg) translateX(-3em);
+  transform: rotate(-45deg) translateX(-3em);
   transition-delay: 120ms;
 }
 
 .ativa .instrucao:nth-child(4) {
-  transform: rotate(280deg) translateX(-3em);
+  transform: rotate(-75deg) translateX(-3em);
   transition-delay: 180ms;
 }
 
 .ativa .instrucao:nth-child(5) {
-  transform: rotate(120deg) translateX(-3em);
+  transform: rotate(45deg) translateX(-3em);
   transition-delay: 160ms;
 }
 
 .ativa .instrucao:nth-child(6) {
-  transform: rotate(-75deg) translateX(-3em);
+  transform: rotate(90deg) translateX(-3em);
   transition-delay: 200ms;
 }
