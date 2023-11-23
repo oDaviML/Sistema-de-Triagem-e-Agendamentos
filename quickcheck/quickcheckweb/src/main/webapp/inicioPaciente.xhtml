@@ -82,6 +82,7 @@
             </div>
             <p:commandLink styleClass="func" id="botaoAgendar" action="#{pacienteBean.carregarClinicas()}"
                            style="text-decoration: none; color: black;">
+                <p:remoteCommand name="carregarConsulta" action="#{pacienteBean.carregarClinicas()}"/>
                 <div class="position">
                     <img src="resources/images/imgAgendar.png" class="imgCont" alt=""/>
                     <div class="legendaAbove">

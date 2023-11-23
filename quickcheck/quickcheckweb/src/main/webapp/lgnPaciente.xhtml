@@ -150,6 +150,7 @@
                     </div>
                     <p:commandButton id="entrar" value="Entrar" action="#{pacienteBean.login()}" class="btn btn-success w-100"
                                      update="growl"/>
+                    <p:remoteCommand name="loginPaciente" action="#{pacienteBean.login()}" update="growl"/>
                     <p>Não tem uma conta? <a style="color: blue; text-decoration: underline"  href="cdsPaciente.xhtml">Crie uma</a></p>
                     <a href="recPaciente.xhtml">Esqueci minha senha</a>
                 </div>

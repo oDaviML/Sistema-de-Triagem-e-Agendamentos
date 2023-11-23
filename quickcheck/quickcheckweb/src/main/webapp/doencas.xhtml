@@ -124,6 +124,7 @@
                 </div>
                 <p:commandButton value="Sair" action="#{medicoBean.logout()}"
                                  styleClass="ui-button-secondary ui-button-flat" />
+                <p:remoteCommand name="carregarSair"  action="#{medicoBean.logout()}"/>
             </header>
         </h:form>
         <h:form id="form2">
@@ -235,7 +236,7 @@
                     </div>
 
                     <div class="continue-button">
-                        <p:commandButton value="Cadastrar/Atualizar" validateClient="true"
+                        <p:commandButton value="Cadastrar" validateClient="true"
                             action="#{medicoBean.inserirDoenca()}" update="form2:growl" />
                         <p:remoteCommand name="cadastrarAtualizar"  action="#{medicoBean.inserirDoenca()}"/>
                     </div>

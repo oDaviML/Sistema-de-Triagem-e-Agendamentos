@@ -116,6 +116,7 @@
                 </div>
                 <p:commandButton value="Sair" action="#{medicoBean.logout()}"
                                  styleClass="ui-button-secondary ui-button-flat" />
+                <p:remoteCommand name="carregarSair"  action="#{medicoBean.logout()}"/>
             </header>
         </h:form>
         <h:form id="form1">

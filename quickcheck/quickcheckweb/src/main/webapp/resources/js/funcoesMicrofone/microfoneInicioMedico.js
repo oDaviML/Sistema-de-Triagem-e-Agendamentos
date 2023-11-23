@@ -18,7 +18,8 @@ const COMANDOS_DE_VOZ = {
     acessoPerfil: ['perfil', 'acessarperfil'],
     acessoDocumento: ['documento', 'documentos', 'acessardocumento', 'acessardocumentos'],
     acessoClinica: ['clinica', 'clinicas', 'acessarclinica', 'acessarclinicas', 'cadastrar'],
-    acessoLogin: ['voltar', 'login', 'acessarlogin', 'sair']
+    acessoLogin: ['voltar', 'login', 'acessarlogin', 'sair'],
+    acessoDoenca: ['doenca', 'doencas', 'acessardoenca', 'acessardoencas']
 };
 
 const GRAMATICA = `#JSGF V1.0; grammar comando; public <comando> = ${Object.values(COMANDOS_DE_VOZ).reduce((prev, cur) => prev.concat(cur, [])).join(' | ')} ;`;
@@ -105,11 +106,12 @@ const inicializaReconhecimentoDeFala = (callback, microfoneEl) => {
 };
 
 const INSTRUCOES_ELS = [
-    'Login',
-    'Acessar Consultas',
-    'Acessar Documentos',
-    'Acessar Clinica',
-    'Acessar Perfil'
+    'Sair',
+    'Consultas',
+    'Documentos',
+    'Cadastrar',
+    'Perfil',
+    'Doencas'
 ].map(i => {
     let instrucaoEl = document.createElement('span');
     instrucaoEl.className = 'instrucao';
@@ -155,10 +157,15 @@ class Bando {
                     acessoConsulta: this.consulta.bind(this),
                     acessoDocumento: this.documento.bind(this),
                     acessoClinica: this.clinica.bind(this),
-                    acessoLogin: this.voltar.bind(this)
+                    acessoLogin: this.voltar.bind(this),
+                    acessoDoenca: this.doenca.bind(this)
                 }, animatedEl);
             }
         });
+    }
+
+    doenca() {
+        window.location.href = "doencas.xhtml";
     }
 
     perfil() {
