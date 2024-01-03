@@ -43,6 +43,17 @@
   <li>A versão atual da aplicação se limita em um primeiro momento as principais doenças catalogadas no Brasil.</li>
 </ul>
 
+<h2>Imagens</h2>
+![image](https://github.com/oDaviML/Sistema-de-Triagem-e-Agendamentos/assets/85958184/95766dee-877e-4102-8873-c32ea6356e41)
+#
+![tela inical](https://github.com/oDaviML/Sistema-de-Triagem-e-Agendamentos/assets/85958184/9b624c70-99e8-40b9-8899-ff7bcd3c1711)
+#
+![image](https://github.com/oDaviML/Sistema-de-Triagem-e-Agendamentos/assets/85958184/7f2609e0-00f2-4688-857c-00aebd237c8e)
+#
+![documentos](https://github.com/oDaviML/Sistema-de-Triagem-e-Agendamentos/assets/85958184/7a00ea86-0224-4e47-80e1-13c8cfa02aeb)
+
+
+
 <h2>Tecnologias Usadas</h2>
 <ul>
   <li>Java 11</li>
