@@ -44,15 +44,34 @@
 </ul>
 
 <h2>Imagens</h2>
-![image](https://github.com/oDaviML/Sistema-de-Triagem-e-Agendamentos/assets/85958184/95766dee-877e-4102-8873-c32ea6356e41)
-#
-![tela inical](https://github.com/oDaviML/Sistema-de-Triagem-e-Agendamentos/assets/85958184/9b624c70-99e8-40b9-8899-ff7bcd3c1711)
-#
-![image](https://github.com/oDaviML/Sistema-de-Triagem-e-Agendamentos/assets/85958184/7f2609e0-00f2-4688-857c-00aebd237c8e)
-#
-![documentos](https://github.com/oDaviML/Sistema-de-Triagem-e-Agendamentos/assets/85958184/7a00ea86-0224-4e47-80e1-13c8cfa02aeb)
 
+<div align="center">
+  <img src="https://github.com/oDaviML/Sistema-de-Triagem-e-Agendamentos/assets/85958184/95766dee-877e-4102-8873-c32ea6356e41">
+</div>
 
+#
+
+<div align="center">
+  <img src="https://github.com/oDaviML/Sistema-de-Triagem-e-Agendamentos/assets/85958184/9b624c70-99e8-40b9-8899-ff7bcd3c1711">
+</div>
+
+#
+
+<div align="center">
+   <img src="https://github.com/oDaviML/Sistema-de-Triagem-e-Agendamentos/assets/85958184/7f2609e0-00f2-4688-857c-00aebd237c8e">
+</div>
+
+#
+
+<div align="center">
+   <img src="https://github.com/oDaviML/Sistema-de-Triagem-e-Agendamentos/assets/85958184/7a00ea86-0224-4e47-80e1-13c8cfa02aeb">
+</div>
+
+#
+
+<div align="center">
+   <img src="https://github.com/oDaviML/Sistema-de-Triagem-e-Agendamentos/assets/85958184/0fbcc5a7-e80f-4b7d-8d2c-1d6480450c8a">
+</div>
 
 <h2>Tecnologias Usadas</h2>
 <ul>
