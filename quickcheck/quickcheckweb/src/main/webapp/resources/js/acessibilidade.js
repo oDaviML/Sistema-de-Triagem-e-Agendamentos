@@ -1,5 +1,3 @@
-new window.VLibras.Widget('https://vlibras.gov.br/app');
-
 const openButton = document.querySelector('#btn-verde');
 const reviewPopup = document.querySelector('#review-popup');
 const fecharMenu = document.querySelector('#fecharMenu');
@@ -207,3 +205,5 @@ const mouseMoveHandlerVoz = (e) => {
         }
     }, 1000);
 }
+
+new window.VLibras.Widget('https://vlibras.gov.br/app');

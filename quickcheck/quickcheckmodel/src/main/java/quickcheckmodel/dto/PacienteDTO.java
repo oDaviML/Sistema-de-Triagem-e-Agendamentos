@@ -10,7 +10,7 @@ import java.util.Date;
 @Getter@Setter
 @NoArgsConstructor
 public class PacienteDTO {
-    private String nome, endereco, email, convenio, cpf, telefone, senha;
+    private String nome, endereco, email, convenio, cpf, telefone, senha, sexo;
     private Date datanascimento;
     private String dataFormatada;
 
@@ -26,8 +26,4 @@ public class PacienteDTO {
         this.datanascimento = datanascimento;
     }
 
-    public String getDataFormatada() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        return dateFormat.format(datanascimento);
-    }
 }

@@ -9,3 +9,4 @@ const options = {
 
 const input = document.querySelector('#form1\\:endereco');
 const autocomplete = new google.maps.places.Autocomplete(input, options);
+

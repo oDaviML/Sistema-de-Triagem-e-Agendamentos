@@ -34,6 +34,7 @@
                     <p:commandLink action="#{pacienteBean.resetarTriagem}" style="text-decoration: none; color: black;">
                         <h4 id="btnDiagnostico">Pré-Diagnóstico</h4>
                     </p:commandLink>
+                    <p:remoteCommand name="carregarTriagem" action="#{pacienteBean.resetarTriagem}" />
                 </div>
 
                 <div class="linksHeader">
@@ -42,7 +43,6 @@
                     </p:commandLink>
                 </div>
                 <p:commandButton value="Sair" action="#{pacienteBean.logout()}" styleClass="ui-button-secondary ui-button-flat" />
-                <p:remoteCommand name="carregarSair" action="#{pacienteBean.logout()}" />
             </header>
             <div class="tituloAba">
                 <h2>Documentos</h2>
@@ -58,8 +58,9 @@
 
                         <p:fileUpload label="Escolha um arquivo" style="margin-left: 1rem" value="#{pacienteBean.file}" mode="simple" skinSimple="true" sizeLimit="7000000" allowTypes="/(\.|\/)(jpe?g|png|pdf)$/"
                                       validateContentType="true" accept=".pdf,.jpg,.jpeg,.png"/>
-
+                        <p:remoteCommand name="escolherDocumento" action="#{pacienteBean.file}" />
                         <p:commandButton value="Adicionar documento" action="#{pacienteBean.inserirDocumento()}" styleClass="mt-3 ui-button-outlined block" update="formtabela:tabela form2"/>
+                        <p:remoteCommand name="inserirDocumento" action="#{pacienteBean.inserirDocumento()}" />
                     </div>
                 </div>
             </div>
@@ -91,7 +92,7 @@
                             <p:fileDownload value="#{pacienteBean.baixarArquivo(arquivo)}"/>
                         </p:commandButton>
 
-                        <p:commandButton styleClass="rounded-button ui-button-secondary ui-button-flat" action="#{pacienteBean.removerDocumento(arquivo)}" update="tabela form2:msgs" icon="pi pi-trash">
+                        <p:commandButton styleClass="rounded-button ui-button-secondary ui-button-flat" action="#{pacienteBean.removerDocumento(arquivo)}" update="tabela form2:msgs" icon="pi pi-trash">   
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>

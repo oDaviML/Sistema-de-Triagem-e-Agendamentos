@@ -12,7 +12,7 @@ import java.util.Date;
 public class ConsultaDTO {
 
     private int id;
-    private String cpfpaciente, cpfmedico, especialidade, convenio, horario, nome;
+    private String cpfpaciente, cpfmedico, especialidade, convenio, horario, nome, ultimatriagem;
     private Date data;
 
     public ConsultaDTO(int id, String cpfpaciente, String cpfmedico, String especialidade, String convenio, String horario, String nome, Date data) {

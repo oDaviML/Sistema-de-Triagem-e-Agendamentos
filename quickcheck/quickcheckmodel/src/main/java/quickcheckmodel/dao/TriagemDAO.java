@@ -3,21 +3,31 @@ package quickcheckmodel.dao;
 import com.theokanning.openai.completion.CompletionRequest;
 import com.theokanning.openai.service.OpenAiService;
 import quickcheckmodel.db.DBConnector;
+import quickcheckmodel.dto.DoencaDTO;
 import quickcheckmodel.dto.PacienteDTO;
 import quickcheckmodel.dto.TriagemDTO;
+import quickcheckmodel.service.DoencaService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.List;
 
 public class TriagemDAO {
 
-    private static final String api = "Retirei para não excluirem";
+    private static final String api = "";
+    private DoencaService doencaService = new DoencaService();
     public String resultadoTriagem(TriagemDTO triagem, PacienteDTO paciente) {
 
         LocalDate dataFormatada = paciente.getDatanascimento().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         int idade = LocalDate.now().getYear() - dataFormatada.getYear();
+
+        List<DoencaDTO> doencas = doencaService.listarNomeDoencas();
+        StringBuilder doencasStr = new StringBuilder();
+        for (int i = 0; i < doencas.size(); i++) {
+            doencasStr.append(doencas.get(i).getNome()).append(", ");
+        }
 
         String prompt = "Atue como um sistema de triagem e com base no banco de dados de doenças a seguir:" +
                 "Gripe (Influenza), " +
@@ -29,47 +39,33 @@ public class TriagemDAO {
                 "Sinusite, " +
                 "Conjuntivite, " +
                 "Bronquite aguda, " +
-                "Anemia ferropriva, " +
+                "Anemia, " +
                 "Virose, " +
                 "Asma, " +
                 "Dermatite de contato, " +
                 "Apendicite, " +
                 "Constipação, " +
                 "Enxaqueca, " +
-                "Infecção de ouvido (otite), " +
                 "Doença de Crohn, " +
                 "Endometriose, " +
                 "Doença do refluxo gastroesofágico (DRGE), " +
                 "Hipertensão arterial, " +
                 "Diabetes tipo 2, " +
-                "Infecção por fungos nas unhas (onicomicose), " +
-                "Hipertireoidismo, " +
-                "Hipotireoidismo, " +
-                "Artrite reumatoide, " +
                 "Síndrome do intestino irritável (SII), " +
                 "Infecção por herpes simplex, " +
                 "Infecção por salmonela, " +
-                "Infecção por E. coli, " +
                 "Candidíase, " +
-                "Conjuntivite viral, " +
-                "Varizes, " +
                 "Urticária, " +
-                "Pedras nos rins (cálculos renais), " +
                 "Eczema, " +
                 "Hemorroidas, " +
                 "Pneumonia, " +
-                "Cálculo biliar, " +
-                "Úlcera péptica, " +
                 "Candidíase oral (sapinho), " +
                 "Herpes labial, " +
-                "Infecção do trato respiratório superior ," +
-                "Impetigo, " +
-                "Herpes z Gota, " +
-                "Doença de Parkinson, " +
-                "Câncer de pele (melanoma) " +
+                doencasStr +
                 "A partir disso você deve estimar qual possa ser a enfermidade, com base na entrada do paciente. Você deve escrever apenas o nome da doença, em uma única linha e nada além disso. " +
                 "Estou ciente que um diagnóstico preciso só pode ser feito por um profissional de saúde após uma avaliação clínica adequada. Lembrando retorne apenas o nome da doença com base nesse banco de dados que lhe foi informado" +
                 "Idade:"+ idade + "\n" +
+                "Sexo:" + paciente.getSexo() + "\n" +
                 triagem.toString();
         String resposta = "";
        try {
@@ -86,7 +82,6 @@ public class TriagemDAO {
         }
         resposta = resposta.trim();
         salvarTriagem(resposta, paciente);
-        System.out.println(resposta);
         return resposta;
 
     }

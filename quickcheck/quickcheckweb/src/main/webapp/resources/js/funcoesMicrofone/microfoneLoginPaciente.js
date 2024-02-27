@@ -103,9 +103,9 @@ const inicializaReconhecimentoDeFala = (callback, microfoneEl) => {
 };
 
 const INSTRUCOES_ELS = [
-    'Inicio',
-    'Login Paciente',
-    'Cadastro Paciente'
+    'Voltar',
+    'Entrar',
+    'Cadastrar'
 ].map(i => {
     let instrucaoEl = document.createElement('span');
     instrucaoEl.className = 'instrucao';

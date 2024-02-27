@@ -132,7 +132,6 @@
             </div>
             <p:commandButton value="Sair" action="#{medicoBean.logout()}"
                              styleClass="ui-button-secondary ui-button-flat"/>
-            <p:remoteCommand name="carregarSair" action="#{medicoBean.logout()}"/>
         </header>
         <div class="tituloAba">
             <h2>Documentos</h2>
@@ -160,6 +159,11 @@
                                     <p>Convenio:
                                         <strong>
                                             <h:outputText id="convenioPaciente" value="#{paciente.convenio}"/>
+                                        </strong>
+                                    </p>
+                                    <p>Sexo:
+                                        <strong>
+                                            <h:outputText id="sexoPaciente" value="#{paciente.sexo}"/>
                                         </strong>
                                     </p>
                                 </p:card>

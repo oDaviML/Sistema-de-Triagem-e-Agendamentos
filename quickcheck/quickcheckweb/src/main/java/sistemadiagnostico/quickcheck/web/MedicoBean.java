@@ -39,11 +39,14 @@ public class MedicoBean {
     private EmailService emailService = new EmailService();
     private PacienteService pacienteService = new PacienteService();
     private SenhaService senhaService = new SenhaService();
+    private DoencaDTO doenca = new DoencaDTO();
+    private DoencaService doencaService = new DoencaService();
 
     private List<MedicoDTO> medicos = new ArrayList<>();
     private List<PacienteDTO> pacientes = new ArrayList<>();
     private List<DocumentoDTO> documentos = new ArrayList<>();
     private List<ConsultaDTO> consultas = new ArrayList<>();
+    private List<DoencaDTO> doencas = new ArrayList<>();
 
     private String senhaAntiga, novaSenha, key;
     private String[] inputsRecuperarSenha = new String[6];
@@ -121,6 +124,7 @@ public class MedicoBean {
 
     public void habilitarEdicao() {
         edit = !edit;
+        PrimeFaces.current().executeScript("completarEndereço();");
     }
 
     public void removerConsulta(ConsultaDTO consulta) {
@@ -192,11 +196,13 @@ public class MedicoBean {
                 clinica = clinicaService.obterClinicaPorCPF(medico.getCpf());
                 carregarMapa(clinica);
                 pacientes = pacienteService.listarPacientes(medico.getCpf());
+                carregarDoencas();
             } else {
                 clinica = new ClinicaDTO("", "", "", new String[0], "", "", "", "");
             }
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             context.redirect(context.getRequestContextPath() + "/faces/inicioMedico.xhtml?faces-redirect=true");
+
         } else {
             medico = new MedicoDTO();
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Usuário ou senha incorretos");
@@ -221,4 +227,29 @@ public class MedicoBean {
     public void onMarkerSelect(OverlaySelectEvent event) {
         this.marker = (Marker) event.getOverlay();
     }
+    
+    public void inserirDoenca() {
+        try {
+            doenca.setCpfMedico(medico.getCpf());
+            doenca.setNomeMedico(medico.getNome());
+            doenca = doencaService.inserirDoenca(doenca);
+            addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Doença cadastrada");
+            carregarDoencas();
+        } catch (Exception e) {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao cadastrar doença");
+        }
+    }
+    
+    public void removerDoenca(DoencaDTO event) throws SQLException, ClassNotFoundException {
+        doencaService.removerDoenca(event);
+        addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Doença removida");
+        carregarDoencas();
+    }
+    
+    public void carregarDoencas() throws ClassNotFoundException {
+        doencas = doencaService.listarDoencas(medico.getCpf());
+    }
+    
+    
+    
 }

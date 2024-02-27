@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:jsf="http://xmlns.jcp.org/jsf"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui">
     <h:head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="resources/css/bootstrap.css" />
@@ -86,18 +86,26 @@
 
             gmp-map {
                 width: 100%;
-                
+
             }
             .cardMapa {
                 margin-top: 20px;
                 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
             }
             
+            .input-group label:first-child  {
+                font-size: 1.5em; /* Tamanho da fonte */
+                font-weight: bold; /* Peso da fonte (negrito) */
+                color: #333; /* Cor do texto */
+                margin-bottom: 10px; /* Espaçamento inferior */
+
+            }
+
         </style>
     </h:head>
 
     <h:body>
-        <h:form id="form">
+        <h:form id="form1">
             <header class="header">
                 <div class="logoInicio">
                     <img src="resources/images/logo.png" id="imgLogoPrinc" alt="" />
@@ -119,76 +127,121 @@
                 <p:remoteCommand name="carregarSair"  action="#{medicoBean.logout()}"/>
             </header>
         </h:form>
-        <h:form id="form1">
+        <h:form id="form2">
             <p:growl id="growl" showDetail="true" />
             <div class="tituloAba">
-                <h2>Clínica</h2>
+                <h2>Cadastro Doenças</h2>
             </div>
             <div class="container">
-                <h1>Cadastro de clínica</h1>
+                <h1>Cadastro de Doenças</h1>
                 <div class="input-group">
                     <div class="input-box">
-                        <label for="nome">Nome da clínica</label>
-                        <p:inputText id="nome" value="#{medicoBean.clinica.nome}" type="text" required="true" label="Nome" />
+                        <label for="nome">Nome da Doença:</label>
+                        <p:inputText id="nome" value="#{medicoBean.doenca.nome}" type="text" required="true" label="Nome" />
+                    </div>
+                    
+                    <div class="input-group">
+                    <label for="sintomasCabecaPescoso">Sintomas Cabeça e Pescoço</label>
+                    <p:selectManyCheckbox id="sintomasCabecaPescoco" value="#{medicoBean.doenca.sintomasCabecaPescoso}" layout="grid" columns="3" styleClass="grid-checkbox" required="false">
+                        <f:selectItem itemLabel="Dor de cabeça" itemValue="Dor de cabeça"/>
+                        <f:selectItem itemValue="Garganta doendo" itemLabel="Garganta doendo" />
+                        <f:selectItem itemValue="Garganta inflamada" itemLabel="Garganta inflamada" />
+                        <f:selectItem itemValue="Febre" itemLabel="Febre" />
+                        <f:selectItem itemValue="Tontura" itemLabel="Tontura" />
+                        <f:selectItem itemValue="Inchaço no pescoço" itemLabel="Inchaço no pescoço" />
+                        <f:selectItem itemValue="Dor no ouvido" itemLabel="Dor no ouvido" />
+                    </p:selectManyCheckbox>
+                    </div>
+                    
+                    <div class="input-group">
+                    <label for="sintomasRespiratorio">Sintomas Respiratório</label>
+                    <p:selectManyCheckbox id="sintomasRespiratorio" value="#{medicoBean.doenca.sintomasRespiratorio}" layout="grid" columns="3" styleClass="grid-checkbox" required="false">
+                        <f:selectItem itemValue="Coriza" itemLabel="Coriza" />
+                        <f:selectItem itemValue="Tosse seca persistente" itemLabel="Tosse seca persistente" />
+                        <f:selectItem itemValue="Congestão nasal" itemLabel="Congestão nasal" />
+                        <f:selectItem itemValue="Dificuldade para respirar" itemLabel="Dificuldade para respirar" />
+                    </p:selectManyCheckbox>
+                    </div>
+                    
+                    <div class="input-group">
+                    <label for="sintomasGastrointestinal">Sintomas Gastrointestinal</label>
+                    <p:selectManyCheckbox id="sintomasGastrointestinal" value="#{medicoBean.doenca.sintomasGastrointestinal}" layout="grid" columns="3" styleClass="grid-checkbox" required="false">
+                        <f:selectItem itemValue="Diarreia" itemLabel="Diarreia" />
+                            <f:selectItem itemValue="Vômitos frequentes" itemLabel="Vômitos frequentes" />
+                            <f:selectItem itemValue="Náuseas intensas" itemLabel="Náuseas intensas" />
+                            <f:selectItem itemValue="Dor abdominal" itemLabel="Dor abdominal" />
+                            <f:selectItem itemValue="Perda de apetite" itemLabel="Perda de apetite" />
+                            <f:selectItem itemValue="Alterações no hábito intestinal" itemLabel="Alterações no hábito intestinal" />
+                    </p:selectManyCheckbox>
+                    </div>
+                    
+                    <div class="input-group">
+                    <label for="sintomasPelve">Sintomas Urinário e Reprodutor</label>
+                    <p:selectManyCheckbox id="sintomasPelve" value="#{medicoBean.doenca.sintomasPelve}" layout="grid" columns="3" styleClass="grid-checkbox" required="false">
+                        <f:selectItem itemValue="Diarreia" itemLabel="Diarreia" />
+                            <f:selectItem itemValue="Urina com sangue" itemLabel="Urina com sangue" />
+                            <f:selectItem itemValue="Sensação de queimação ao urinar" itemLabel="Sensação de queimação ao urinar" />
+                            <f:selectItem itemValue="Dificuldade para urinar" itemLabel="Dificuldade para urinar" />
+                            <f:selectItem itemValue="Sangramento menstrual excessivo" itemLabel="Sangramento menstrual excessivo" />
+                            <f:selectItem itemValue="Irregularidades menstruais" itemLabel="Irregularidades menstruais" />
+                            <f:selectItem itemValue="Sangramento intermenstrual" itemLabel="Sangramento intermenstrual" />
+                    </p:selectManyCheckbox>
+                    </div>
+                    
+                    <div class="input-group">
+                    <label for="sintomasMuscular">Sintomas Tegumentar e Muscular</label>
+                    <p:selectManyCheckbox id="sintomasMuscular" value="#{medicoBean.doenca.sintomasMuscular}" layout="grid" columns="3" styleClass="grid-checkbox" required="false">
+                        <f:selectItem itemValue="Diarreia" itemLabel="Diarreia" />
+                            <f:selectItem itemValue="Coceira intensa na pele" itemLabel="Coceira intensa na pele" />
+                            <f:selectItem itemValue="Manchas vermelhas na pele" itemLabel="Manchas vermelhas na pele" />
+                            <f:selectItem itemValue="Suores noturnos" itemLabel="Suores noturnos" />
+                            <f:selectItem itemValue="Tremores ou espasmos musculares" itemLabel="Tremores ou espasmos musculares" />
+                            <f:selectItem itemValue="Inchaço nas articulações" itemLabel="Inchaço nas articulações" />
+                    </p:selectManyCheckbox>
+                    </div>
+                    
+                    <div class="input-group">
+                    <label for="sintomasVisual">Sintomas Visuais</label>
+                    <p:selectManyCheckbox id="sintomasVisual" value="#{medicoBean.doenca.sintomasVisual}" layout="grid" columns="3" styleClass="grid-checkbox" required="false">
+                        <f:selectItem itemValue="Diarreia" itemLabel="Diarreia" />
+                            <f:selectItem itemValue="Perda de visão" itemLabel="Perda de visão" />
+                            <f:selectItem itemValue="Sensibilidade à luz" itemLabel="Sensibilidade à luz" />
+                            <f:selectItem itemValue="Olhos vermelhos" itemLabel="Olhos vermelhos" />
+                            <f:selectItem itemValue="Coceira nos olhos" itemLabel="Coceira nos olhos" />
+                            <f:selectItem itemValue="Dor nos olhos" itemLabel="Dor nos olhos" />
+                            <f:selectItem itemValue="Olhos lacrimejando" itemLabel="Olhos lacrimejando" />
+                            <f:selectItem itemValue="Visão embaçada" itemLabel="Visão embaçada" />
+                    </p:selectManyCheckbox>
+                    </div>
+                    
+
+                    <div class="input-box">
+                        <label for="gravidade">Gravidade da Doença:</label>
+                        <p:inputText id="gravidade" value="#{medicoBean.doenca.gravidade}" type="text" required="true" label="Gravidade" />
                     </div>
                     
                     <div class="input-box">
-                        <label for="especialidade">Especialidade</label>
-                        <p:selectOneMenu id="especialidade" value="#{medicoBean.clinica.especialidade}" required="true">
-                            <f:selectItem itemLabel="Clinico Geral" itemValue="Clinico Geral" />
-                            <f:selectItem itemLabel="Pediatra" itemValue="Pediatra" />
-                            <f:selectItem itemLabel="Cardiologista" itemValue="Cardiologista" />
-                            <f:selectItem itemLabel="Psiquiatra" itemValue="Psiquiatra" />
-                            <f:selectItem itemLabel="Oftalmologista" itemValue="Oftalmologista" />
-                            <f:selectItem itemLabel="Otorrinolaringologista" itemValue="Otorrinolaringologista" />
-                            <f:selectItem itemLabel="Oncologista" itemValue="Oncologista" />
-                            <f:selectItem itemLabel="Urologista" itemValue="Urologista" />
-                            <f:selectItem itemLabel="Dermatologista" itemValue="Dermatologista" />
-                            <f:selectItem itemLabel="Ginecologista" itemValue="Ginecologista" />
-                        </p:selectOneMenu>
+                        <label for="regiao">Região da Doença:</label>
+                        <p:inputText id="regiao" value="#{medicoBean.doenca.regiao}" type="text" required="true" label="Regiao" />
                     </div>
-
+                    
                     <div class="input-box">
-                        <label for="telefone">Telefone</label>
-                        <p:inputMask mask="(99) 99999-9999" validateMask="true" id="telefone" value="#{medicoBean.clinica.telefone}" required="true" label="Telefone" />
+                        <label for="descricao">Descrição da Doença:</label>
+                        <p:inputText id="descricao" value="#{medicoBean.doenca.descricao}" type="text" required="true" label="Descricao" />
                     </div>
-
+                    
                     <div class="input-box">
-                        <label for="endereco">Endereço</label>
-                        <p:inputText id="endereco" value="#{medicoBean.clinica.endereco}" type="text" required="true" label="Endereço" />
+                        <label for="tratamento">Tratamento da Doença:</label>
+                        <p:inputText id="tratamento" value="#{medicoBean.doenca.tratamento}" type="text" required="true" label="Tratamento" />
                     </div>
 
-                    <label for="Convenios">Convenios</label>
-                    <p:selectManyCheckbox id="Convenios" value="#{medicoBean.clinica.convenios}" layout="grid" columns="3" styleClass="grid-checkbox" required="true">
-                        <f:selectItem itemLabel="Unimed" itemValue="Unimed"/>
-                        <f:selectItem itemLabel="Amil" itemValue="Amil"/>
-                        <f:selectItem itemLabel="NotreDame" itemValue="NotreDame"/>
-                        <f:selectItem itemLabel="Ipsemg" itemValue="Ipsemg"/>
-                        <f:selectItem itemLabel="Medsênior" itemValue="Medsênior" />
-                        <f:selectItem itemLabel="Particular" itemValue="Particular"/>
-                    </p:selectManyCheckbox>
+                    <div class="continue-button">
+                        <p:commandButton value="Cadastrar" validateClient="true"
+                            action="#{medicoBean.inserirDoenca()}" update="form2:growl" />
+                        <p:remoteCommand name="cadastrarAtualizar"  action="#{medicoBean.inserirDoenca()}"/>
+                    </div>
                 </div>
-
-                <div class="continue-button">
-                    <p:commandButton value="Cadastrar/Atualizar" validateClient="true"
-                        action="#{medicoBean.inserirOuAtualizarClinica()}" update="mapa growl" />
-
-                </div>
-
-                <div class="cardMapa">
-                    <p:gmap id="mapa" center="#{medicoBean.clinica.coordenada}" model="#{medicoBean.model}" zoom="15" type="HYBRID" style="width:100%;height:400px;" >
-                        <p:ajax event="overlaySelect" listener="#{medicoBean.onMarkerSelect}"/>
-
-                        <p:gmapInfoWindow id="infoWindow">
-                            <p:outputPanel style="text-align: center; display: block; margin: auto">
-                                <h:outputText value="#{medicoBean.clinica.nome}"/>
-                                <br/>
-                                <h:outputText value="#{medicoBean.clinica.endereco}"/>
-                            </p:outputPanel>
-                        </p:gmapInfoWindow>
-                    </p:gmap>
-                </div>
-            </div>
+            </div>    
         </h:form>
         <div class="acessbilidade">
             <div class="btns-acessibilidade">
@@ -275,7 +328,7 @@
 
         <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous" ></script>
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous" ></script>
         <script src="resources/js/acessibilidade.js"></script> 
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0QG_G0LdTKu_AIzR9awlnzqIMOU0g3pI" type="text/javascript"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0QG_G0LdTKu_AIzR9awlnzqIMOU0g3pI&amp;libraries=places"></script>

@@ -23,7 +23,7 @@
                 </div>
 
                 <div class="linksHeader">
-                    <h4 id="btnClinica"><a href="clinica.xhtml">Clinica</a></h4>
+                    <h4 id="btnClinica"><a href="clinica.xhtml">Clinicas</a></h4>
                 </div>
 
                 <div class="linksHeader">
@@ -50,6 +50,9 @@
                         <h1>DOCUMENTOS PACIENTES</h1>
                     </div>
                 </a>
+                
+                
+                
                 <p:commandLink id="consultas" styleClass="func" action="#{medicoBean.consultasMedico()}"
                                style="text-decoration: none; color: black;">
                     <div class="position">
@@ -64,6 +67,33 @@
                     </div>
                 </p:commandLink>
                 <p:remoteCommand name="carregarConsulta" action="#{medicoBean.consultasMedico()}" />
+                
+                <a id="documentos" class="func" href="doencas.xhtml">
+                    <div class="position">
+                        <img src="resources/images/imgDoenca.avif" class="imgCont" alt=""/>
+                        <div class="legendaAbove">
+                            <h1>Cadastrar</h1>
+                        </div>
+                    </div>
+
+                    <div class="legendaBelow">
+                        <h1>DOENÇAS</h1>
+                    </div>
+                </a>
+                
+                <a id="documentos" class="func" href="clinica.xhtml">
+                    <div class="position">
+                        <img src="resources/images/imgClinica.avif" class="imgCont" alt=""/>
+                        <div class="legendaAbove">
+                            <h1>Cadastrar</h1>
+                        </div>
+                    </div>
+
+                    <div class="legendaBelow">
+                        <h1>CLINICAS</h1>
+                    </div>
+                </a>
+                
             </div>
         </h:form>
         <div class="acessbilidade">
